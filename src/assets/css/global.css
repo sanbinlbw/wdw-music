@@ -1,0 +1,13 @@
+html,body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+span{
+    font-weight: 200;
+}
+.el-table td, .el-table th.is-leaf{
+    border-bottom: none;
+}
