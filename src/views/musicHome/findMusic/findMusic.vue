@@ -1,20 +1,40 @@
 <template>
   <div class="findMusic">
-    findMusic
+    <div id="headTab">
+      <!-- 头部导航栏 -->
+    <headTab/>
   </div>
+  <div>
+    <!-- 二级路由 -->
+    <router-view/>
+  </div>
+  </div>
+  
 </template>
 
 <script>
-export default {
-  name: 'findMusic',
-  components: {},
-  data() {
-    return {
+    import headTab from './headTab'
+    export default {
+        name: 'findMusic',
+        components: {
+            headTab
+        },
+        data() {
+            return {
 
+            }
+        }
     }
-  }
-}
 </script>
 
 <style scoped>
+    .findMusic {
+        /* display: grid; */
+        /* justify-content: center; */
+    }
+    
+    #headTab {
+        /* width: 100%; */
+        margin-left: 30%;
+    }
 </style>

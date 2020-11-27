@@ -6,7 +6,7 @@ const router = new VueRouter({
     mode: 'history',
     routes: [{
             path: '',
-            redirect: '/musicHome/findMusic',
+            redirect: '/musicHome/findMusic/personRecom',
         },
         {
             path: '/musicHome',
@@ -17,7 +17,38 @@ const router = new VueRouter({
                     path: '/musicHome/findMusic',
                     name: 'findMusic',
                     component: () =>
-                        import ('@/views/musicHome/findMusic/findMusic')
+                        import ('@/views/musicHome/findMusic/findMusic'),
+                    children: [{
+                            path: '/musicHome/findMusic/personRecom',
+                            name: 'personRecom',
+                            component: () =>
+                                import ('@/views/musicHome/findMusic/personRecom/personRecom')
+                        },
+                        {
+                            path: '/musicHome/findMusic/songList',
+                            name: 'songList',
+                            component: () =>
+                                import ('@/views/musicHome/findMusic/songList/songList')
+                        },
+                        {
+                            path: '/musicHome/findMusic/playList',
+                            name: 'playList',
+                            component: () =>
+                                import ('@/views/musicHome/findMusic/playList/playList')
+                        },
+                        {
+                            path: '/musicHome/findMusic/singerList',
+                            name: 'singerList',
+                            component: () =>
+                                import ('@/views/musicHome/findMusic/singerList/singerList')
+                        },
+                        {
+                            path: '/musicHome/findMusic/newSong',
+                            name: 'newSong',
+                            component: () =>
+                                import ('@/views/musicHome/findMusic/newSong/newSong')
+                        }
+                    ]
                 },
                 {
                     path: '/musicHome/recomVideo',

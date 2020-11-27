@@ -11,10 +11,15 @@
         <loginBar style="position: absolute;right: 5%;"/>
       </el-header>
       <el-container>
+          <!-- 左部导航栏 -->
         <el-aside width="250px"><leftNav/></el-aside>
+        <!-- 展示路由 -->
         <el-main><router-view/></el-main>
       </el-container>
     </el-container>
+    <div class="musicPlay">
+
+    </div>
   </div>
 </template>
 
@@ -87,5 +92,14 @@
         cursor: pointer;
         opacity: 0.5;
         color: aliceblue;
+    }
+    /* 音乐播放栏 */
+    
+    .musicPlay {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 70px;
+        background: #f6f6f8;
     }
 </style>
