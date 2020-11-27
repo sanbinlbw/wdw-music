@@ -1,4 +1,4 @@
-# tmsys
+# wdw-music
 
 ## Project setup
 ```
