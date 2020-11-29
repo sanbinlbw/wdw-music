@@ -18,7 +18,7 @@
       </el-container>
     </el-container>
     <div class="musicPlay">
-
+        播放器
     </div>
   </div>
 </template>
