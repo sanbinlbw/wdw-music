@@ -2,30 +2,31 @@
   <div class="personRecom">
       <!-- 轮播图 -->
       <div id="banner">
-        <el-carousel :interval="4000" type="card" height="280px">
-            <el-carousel-item v-for="(item,index) in bannerInfo" :key="index">
-                <el-image @click="changeUrl(item.targetId)" :src="item.imageUrl" fit="contain"
-                style="height: 250px;"></el-image> 
-                <el-tag :type="item.typeTitle === '独家' ? 'danger' : 'primary'" effect="dark"
-                            style="position: absolute; bottom: 14%;right: 0;border-radius: 5px">
-                        {{item.typeTitle}}
-                    </el-tag>
-            </el-carousel-item>
-          </el-carousel>
+        <banner :bannerInfo="bannerInfo"></banner>
       </div>
+      <!-- 推荐歌单 -->
       <el-divider content-position="left"><p style="font-size: 20px;">推荐歌单</p></el-divider>
       <div id="recomSong">
         <recomSong :recomSongList="recomSongList"></recomSong>
+      </div>
+      <!-- 独家放送 -->
+      <el-divider content-position="left"><p style="font-size: 20px;">独家放送</p></el-divider>
+      <div id="private">
+        <privateRec :privateList="privateList"></privateRec>
       </div>
   </div>
 </template>
 
 <script>
+    import banner from './banner'
     import recomSong from './recomSong'
+    import privateRec from './privateRec'
     export default {
         name: 'personRecom',
         components: {
-            recomSong
+            recomSong,
+            banner,
+            privateRec,
         },
         data() {
             return {
@@ -33,11 +34,17 @@
                 bannerInfo: [],
                 //推荐歌单列表
                 recomSongList: [],
+                // 独家放送列表
+                privateList: []
             }
         },
         created() {
+            // 获取轮播图
             this.getBannerInfo()
+                // 获取推荐歌单
             this.getRecomSongList()
+                // 获取独家放送
+            this.getPrivateList()
         },
         methods: {
             //获取轮播图数据
@@ -58,7 +65,13 @@
                     }
                 }).then(res => {
                     this.recomSongList = res.data.result
-                    console.log(this.recomSongList);
+                })
+            },
+            //获取独家放送
+            getPrivateList() {
+                this.$http.get('/personalized/privatecontent').then(res => {
+                    console.log(res.data);
+                    this.privateList = res.data.result
                 })
             }
         },
@@ -66,17 +79,7 @@
 </script>
 
 <style scoped>
-    /* 轮播图样式 */
-    
     #banner {
         margin-top: 40px;
-    }
-    
-    .el-carousel__item:nth-child(2n) {
-        background-color: #ffffff;
-    }
-    
-    .el-carousel__item:nth-child(2n+1) {
-        background-color: #ffffff;
     }
 </style>

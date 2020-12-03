@@ -17,9 +17,9 @@
         <el-main><router-view/></el-main>
       </el-container>
     </el-container>
-    <div class="musicPlay">
+    <!-- <div class="musicPlay">
         播放器
-    </div>
+    </div> -->
   </div>
 </template>
 
