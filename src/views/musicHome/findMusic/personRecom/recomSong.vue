@@ -5,7 +5,7 @@
   <el-col :span="4" v-for="(item,index) in recomSongList" :key="index" style="margin-bottom: 20px;">
     <!-- 歌单封面 -->
     <div id="playDetail">
-        <el-image :src="item.picUrl" fit="fill" style="position: relative;"></el-image>
+        <el-image :src="item.picUrl" fit="fill"></el-image>
         <!-- 播放量 -->
         <div style="color: white;position:absolute;top: 2%;right: 3%;">
             <i class="el-icon-headset"></i>

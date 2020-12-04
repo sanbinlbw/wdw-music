@@ -5,10 +5,14 @@
       <el-col :span="8" v-for="(item,index) in privateList" :key="index">
         <!-- 推送封面 -->
         <div id="privateDetail">
-          <el-image :src="item.sPicUrl" fit="fill" style="height: 200px;"></el-image>
+          <el-image :src="item.sPicUrl" fit="fill" style="height: 200px;border-radius: 8px;"></el-image>
           <div style="position: absolute;top: 8%;left: 4%;opacity: 0.8;">
             <img src="@/assets/image/play.svg" alt="" style="width: 30px;height: 30px;background: #aca8a1; border-radius: 100%;">
           </div>
+        </div>
+        <!-- 推送介绍 -->
+        <div id="privateIntro">
+          <p id="introName">{{item.name}}</p>
         </div>
       </el-col>
     </el-row>
@@ -33,5 +37,18 @@
 <style scoped>
     #privateDetail {
         position: relative;
+        cursor: pointer;
+    }
+    
+    #introName {
+        font-size: 20px;
+        cursor: pointer;
+        color: #2c2c2d;
+        opacity: 0.9;
+    }
+    
+    #introName:hover {
+        opacity: 1;
+        color: #000000;
     }
 </style>

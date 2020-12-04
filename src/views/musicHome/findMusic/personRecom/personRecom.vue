@@ -14,6 +14,16 @@
       <div id="private">
         <privateRec :privateList="privateList"></privateRec>
       </div>
+      <!-- 最新音乐 -->
+      <el-divider content-position="left"><p style="font-size: 20px;">最新音乐</p></el-divider>
+      <div id="newSong">
+        <newSong :newSongList="newSongList"></newSong>
+      </div>
+      <!-- 推荐mv -->
+      <el-divider content-position="left"><p style="font-size: 20px;">推荐MV</p></el-divider>
+      <div id="mvRecom">
+        <mvRecom :mvRecomList="mvRecomList"></mvRecom>
+      </div>
   </div>
 </template>
 
@@ -21,12 +31,16 @@
     import banner from './banner'
     import recomSong from './recomSong'
     import privateRec from './privateRec'
+    import newSong from './newSong'
+    import mvRecom from './mvRecom'
     export default {
         name: 'personRecom',
         components: {
             recomSong,
             banner,
             privateRec,
+            newSong,
+            mvRecom
         },
         data() {
             return {
@@ -35,7 +49,11 @@
                 //推荐歌单列表
                 recomSongList: [],
                 // 独家放送列表
-                privateList: []
+                privateList: [],
+                // 最新音乐列表
+                newSongList: [],
+                //mv推荐列表
+                mvRecomList: [],
             }
         },
         created() {
@@ -45,6 +63,10 @@
             this.getRecomSongList()
                 // 获取独家放送
             this.getPrivateList()
+                // 获取最新音乐
+            this.getNewSongList()
+                // 获取mv推荐
+            this.getMvRecomList()
         },
         methods: {
             //获取轮播图数据
@@ -70,8 +92,25 @@
             //获取独家放送
             getPrivateList() {
                 this.$http.get('/personalized/privatecontent').then(res => {
-                    console.log(res.data);
                     this.privateList = res.data.result
+                })
+            },
+            // 获取最新音乐
+            getNewSongList() {
+                this.$http.get('/personalized/newsong', {
+                    params: {
+                        limit: 12
+                    }
+                }).then(res => {
+                    this.newSongList = res.data.result
+                })
+            },
+            // 获取mv推荐
+            getMvRecomList() {
+                this.$http.get('/personalized/mv').then(res => {
+                    this.mvRecomList = res.data.result
+                    this.mvRecomList.pop();
+                    console.log(this.mvRecomList);
                 })
             }
         },
