@@ -82,12 +82,22 @@
             //获取推荐歌单
             getRecomSongList() {
                 this.$http.get('/personalized', {
-                    params: {
-                        limit: 12
-                    }
-                }).then(res => {
-                    this.recomSongList = res.data.result
-                })
+                        params: {
+                            limit: 10
+                        }
+                    }).then(res => {
+                        this.recomSongList = res.data.result
+                    })
+                    // 随机取出精品歌单,避免数据是流动的
+                    // this.$http.get('/top/playlist', {
+                    //     params: {
+                    //         offset: (Math.random() * 1297).toFixed(0) - 10,
+                    //         limit: 10
+                    //     }
+                    // }).then(res => {
+                    //     this.recomSongList = res.data.playlists;
+                    //     console.log(res.data.playlists);
+                    // })
             },
             //获取独家放送
             getPrivateList() {

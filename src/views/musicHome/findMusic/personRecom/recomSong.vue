@@ -2,14 +2,18 @@
   <div class="recomSong">
     <!-- 推荐歌单 -->
     <el-row :gutter="40">
-  <el-col :span="4" v-for="(item,index) in recomSongList" :key="index" style="margin-bottom: 20px;">
+  <el-col :span="6" v-for="(item,index) in recomSongList" :key="index" style="margin-bottom: 40px;">
     <!-- 歌单封面 -->
-    <div id="playDetail">
-        <el-image :src="item.picUrl" fit="fill"></el-image>
+    <div id="playDetail" @mouseover="addPlay(index)" @mouseleave="reducePlay">
+        <el-image :src="item.picUrl" fit="fill" style="border-radius: 10px;box-shadow: grey 0px 0px 2px 2px;"></el-image>
         <!-- 播放量 -->
         <div style="color: white;position:absolute;top: 2%;right: 3%;">
             <i class="el-icon-headset"></i>
-                {{item.playCount >= 10000 ? (item.playCount/10000).toFixed(0)+'万' : item.playCount}}
+            {{item.playCount >= 10000 ? (item.playCount/10000).toFixed(0)+'万' : item.playCount}}
+        </div>
+        <!-- 鼠标停靠出现播放键 -->
+        <div :class="{'playAppear':currentIndex === index,'playNone':currentIndex !== index}">
+            <img src="@/assets/image/play_1.svg" alt="" id="playImg">
         </div>
     </div>
     <!-- 歌单介绍 -->
@@ -30,43 +34,26 @@
         },
         data() {
             return {
-
+                //鼠标悬停的判断
+                currentIndex: -1,
             }
         },
-        methods: {},
+        methods: {
+            // 鼠标移入
+            addPlay(index) {
+                this.currentIndex = index
+            },
+            // 鼠标移出
+            reducePlay() {
+                this.currentIndex = -1
+            }
+        },
     }
 </script>
 
 <style scoped>
-    /* 推荐歌单 */
-    
-    .el-row {
-        margin-bottom: 20px;
-        /* &:last-child {
-      margin-bottom: 0;
-    } */
-    }
-    
-    .el-row :last-child {
-        margin-bottom: 0;
-    }
-    
     .el-col {
-        border-radius: 4px;
-    }
-    
-    .bg-purple {
-        background: #d3dce6;
-    }
-    
-    .grid-content {
-        border-radius: 4px;
-        min-height: 36px;
-    }
-    
-    .row-bg {
-        padding: 10px 0;
-        background-color: #f9fafc;
+        width: 20%;
     }
     /* 歌单介绍 */
     
@@ -89,8 +76,43 @@
     /* 歌单封面 */
     
     #playDetail {
+        display: inline-block;
         width: 100%;
         position: relative;
         cursor: pointer;
+    }
+    
+    #playImg {
+        display: inline-block;
+        width: 35px;
+        height: 35px;
+        border-radius: 100%;
+        background: #f2f3f4;
+    }
+    /* 播放键出现 */
+    
+    .playAppear {
+        display: block;
+        position: absolute;
+        bottom: 5%;
+        right: 5%;
+        animation-name: play;
+        animation-duration: 0.8s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+    /* 播放动画 */
+    
+    @keyframes play {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    
+    .playNone {
+        display: none;
     }
 </style>
