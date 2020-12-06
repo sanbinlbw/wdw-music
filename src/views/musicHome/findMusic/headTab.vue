@@ -1,6 +1,6 @@
 <template>
   <div class="headTab">
-    <el-menu default-active="/musicHome/findMusic/personRecom" class="el-menu-demo" mode="horizontal" :router="true">
+    <el-menu :default-active="this.$route.path" class="el-menu-demo" mode="horizontal" :router="true">
   <el-menu-item index="/musicHome/findMusic/personRecom">个性推荐</el-menu-item>
   <el-menu-item index="/musicHome/findMusic/songList">歌单</el-menu-item>
   <el-menu-item index="/musicHome/findMusic/playList">排行榜</el-menu-item>
@@ -18,7 +18,7 @@
             return {
 
             }
-        }
+        },
     }
 </script>
 

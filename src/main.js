@@ -13,7 +13,13 @@ import '@/assets/font_musicHome/iconfont.css'
 Vue.prototype.$http = axios
 axios.defaults.baseURL = '/api'
     // axios.defaults.withCredentials = true;
+    //引入vuescroll
+    // import vuescroll from "vuescroll";
+    //引入vuescroll样式
+    // import "vuescroll/dist/vuescroll.css";
 
+
+// Vue.use(vuescroll); //使用
 Vue.config.productionTip = false
 
 new Vue({
