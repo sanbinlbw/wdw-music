@@ -56,6 +56,7 @@
         width: 100%;
         position: relative;
         cursor: pointer;
+        overflow: hidden;
     }
     
     #mvName {
@@ -87,8 +88,19 @@
         padding-left: 2%;
         border-radius: 8px;
         position: absolute;
-        top: 0;
-        background: rgba(0, 0, 0, 0.4)
+        top: -33px;
+        background: rgba(0, 0, 0, 0.4);
+        animation-name: detail;
+        animation-duration: 0.5s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+    /* 悬停动画 */
+    
+    @keyframes detail {
+        100% {
+            transform: translateY(33px);
+        }
     }
     
     .detailNone {

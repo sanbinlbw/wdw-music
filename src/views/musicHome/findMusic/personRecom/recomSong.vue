@@ -1,27 +1,31 @@
 <template>
   <div class="recomSong">
-    <!-- 推荐歌单 -->
-    <el-row :gutter="40">
-  <el-col :span="6" v-for="(item,index) in recomSongList" :key="index" style="margin-bottom: 40px;">
-    <!-- 歌单封面 -->
-    <div id="playDetail" @mouseover="addPlay(index)" @mouseleave="reducePlay">
-        <el-image :src="item.picUrl" fit="fill" style="border-radius: 10px;box-shadow: grey 0px 0px 2px 2px;"></el-image>
-        <!-- 播放量 -->
-        <div style="color: white;position:absolute;top: 2%;right: 3%;">
-            <i class="el-icon-headset"></i>
-            {{item.playCount >= 10000 ? (item.playCount/10000).toFixed(0)+'万' : item.playCount}}
-        </div>
-        <!-- 鼠标停靠出现播放键 -->
-        <div :class="{'playAppear':currentIndex === index,'playNone':currentIndex !== index}">
-            <img src="@/assets/image/play_1.svg" alt="" id="playImg">
+<!-- <el-row :gutter="40">
+  <el-col v-for="(item,index) in recomSongList" :key="index" style="margin-bottom: 40px;"> -->
+    <div id="recomSongDiv">
+        <!-- 推荐歌单 -->
+        <div id="recomItem" v-for="(item,index) in recomSongList" :key="index" style="margin-bottom: 30px;">
+            <div id="playDetail" @mouseover="addPlay(index)" @mouseleave="reducePlay">
+                <!-- 歌单封面 -->
+                <el-image :src="item.picUrl" fit="fill" style="border-radius: 10px;box-shadow: grey 0px 0px 2px 2px;"></el-image>
+                <!-- 播放量 -->
+                <div style="color: white;position:absolute;top: 2%;right: 3%;">
+                    <i class="el-icon-headset"></i>
+                    {{item.playCount >= 10000 ? (item.playCount/10000).toFixed(0)+'万' : item.playCount}}
+                </div>
+                <!-- 鼠标停靠出现播放键 -->
+                <div :class="{'playAppear':currentIndex === index,'playNone':currentIndex !== index}">
+                    <img src="@/assets/image/play_1.svg" alt="" id="playImg">
+                </div>
+            </div>
+            <!-- 歌单介绍 -->
+            <div class="playListIntro">
+                <p id="playIntro">{{item.name}}</p>
+            </div>
         </div>
     </div>
-    <!-- 歌单介绍 -->
-    <div class="playListIntro">
-        <p id="playIntro">{{item.name}}</p>
-    </div>
-    </el-col>
-</el-row>
+    <!-- </el-col>
+</el-row> -->
   </div>
 </template>
 
@@ -52,9 +56,24 @@
 </script>
 
 <style scoped>
-    .el-col {
-        width: 20%;
+    /* 布局 */
+    
+    #recomSongDiv {
+        display: grid;
+        width: 100%;
+        grid-template-columns: repeat(5, 1fr);
+        column-gap: 40px;
     }
+    /* .el-row {
+        margin-bottom: 20px;
+    }
+    
+    .el-col:last-child {
+        margin-bottom: 0;
+    } */
+    /* .el-col {
+        width: 20%;
+    } */
     /* 歌单介绍 */
     
     .playListIntro {

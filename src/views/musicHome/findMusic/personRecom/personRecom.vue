@@ -120,7 +120,6 @@
                 this.$http.get('/personalized/mv').then(res => {
                     this.mvRecomList = res.data.result
                     this.mvRecomList.pop();
-                    console.log(this.mvRecomList);
                 })
             }
         },

@@ -28,11 +28,6 @@
 </script>
 
 <style scoped>
-    .findMusic {
-        /* display: grid; */
-        /* justify-content: center; */
-    }
-    
     #headTab {
         /* width: 100%; */
         margin-left: 30%;
