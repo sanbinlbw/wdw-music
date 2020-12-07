@@ -4,14 +4,14 @@
     <el-menu
       :router="true"
       active-text-color = '#000000'
-      default-active="/musicHome/findMusic/personRecom"
+      :default-active="'/' + this.$route.path.split('/')[1] + '/' + this.$route.path.split('/')[2]"
       class="el-menu-vertical-demo"
       text-color="#5c5c5c"
       @open="handleOpen"
       @close="handleClose">
       <p class="leftNavFont">推荐</p>
       <div>
-      <el-menu-item index="/musicHome/findMusic/personRecom">
+      <el-menu-item index="/musicHome/findMusic">
         <i class="iconfont icon-music"></i>
         <span slot="title">发现音乐</span>
       </el-menu-item>
@@ -55,6 +55,9 @@
             handleClose(key, keyPath) {
                 console.log(key, keyPath);
             }
+        },
+        created() {
+
         },
     }
 </script>

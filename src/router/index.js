@@ -6,7 +6,7 @@ const router = new VueRouter({
     mode: 'history',
     routes: [{
             path: '',
-            redirect: '/musicHome/findMusic/personRecom',
+            redirect: '/musicHome/findMusic',
         },
         {
             path: '/musicHome',
@@ -16,6 +16,7 @@ const router = new VueRouter({
             children: [{
                     path: '/musicHome/findMusic',
                     name: 'findMusic',
+                    redirect: '/musicHome/findMusic/personRecom',
                     component: () =>
                         import ('@/views/musicHome/findMusic/findMusic'),
                     children: [{
