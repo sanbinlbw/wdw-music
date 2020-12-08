@@ -15,49 +15,53 @@
         <loginBar style="position: absolute;right: 5%;"/>
       </el-header>
       <el-container>
-          <!-- 左部导航栏 -->
+        <!-- 左部导航栏 -->
         <el-aside width="250px"><leftNav/></el-aside>
         <!-- 展示路由 -->
-        <el-main><router-view/></el-main>
+        <el-main><router-view @setMusicUrl="setMusicUrl" /></el-main>
       </el-container>
     </el-container>
-    <!-- <div class="musicPlay">
-        播放器
-    </div> -->
+    <!-- 播放器 -->
+    <musicPlay :musicUrl="musicUrl" ref="musicPlay"/>
   </div>
 </template>
 
 <script>
     import leftNav from '@/views/musicHome/leftNav'
     import loginBar from '@/views/musicHome/loginBar'
+    import musicPlay from '@/views/musicHome/musicPlay'
     export default {
         name: 'musicHome',
         components: {
             leftNav,
-            loginBar
+            loginBar,
+            musicPlay
         },
         data() {
             return {
-                //滑动样式
-                // ops: {
-                //     vuescroll: {},
-                //     scrollPanel: {},
-                //     rail: {
-                //         keepShow: true
-                //     },
-                //     bar: {
-                //         hoverStyle: true,
-                //         onlyShowBarOnScroll: false, //是否只有滚动的时候才显示滚动条
-                //         background: "#F5F5F5", //滚动条颜色
-                //         opacity: 0.5, //滚动条透明度
-                //         "overflow-x": "hidden"
-                //     }
-                // }
+                //歌曲url
+                musicUrl: '',
+                //歌曲详情
+                musicDetail: {},
+                //当前歌曲id
+                songId: '',
+                //当前歌单
+                playList: [],
             }
         },
         methods: {
             search() {
                 console.log('search');
+            },
+            //接受子组件传来的歌曲信息
+            setMusicUrl(url, detail) {
+                //接受子组件传来的数据
+                this.musicUrl = url
+                this.musicDetail = detail
+                this.songId = detail.id
+                this.$refs.musicPlay.isPlaying = true
+                    //将播放的音乐id放入歌单
+                this.playList.push(detail.id)
             },
         },
     }
@@ -111,15 +115,6 @@
         opacity: 0.5;
         color: aliceblue;
     }
-    /* 音乐播放栏 */
-    
-    .musicPlay {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        height: 70px;
-        background: #f6f6f8;
-    }
     /* 回退键 */
     
     #back {
@@ -133,12 +128,4 @@
         background: rgba(77, 71, 71, 0.1);
         border-radius: 50%;
     }
-    /* 滚动条位置 */
-    /* .__bar-is-vertical {
-        right: -1px !important;
-    }
-    /* 隐藏横向滚动条 */
-    /* .__bar-is-horizontal {
-        display: none !important;
-    } */
 </style>

@@ -5,6 +5,7 @@ Vue.use(VueRouter)
 const router = new VueRouter({
     mode: 'history',
     routes: [{
+            //路径为空时跳到发现音乐
             path: '',
             redirect: '/musicHome/findMusic',
         },

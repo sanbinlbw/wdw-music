@@ -25,7 +25,26 @@
             return {
 
             }
-        }
+        },
+        methods: {
+            //防抖
+            // debounce(func, ms) {
+            //     let timer;
+            //     return function(...args) {
+            //         if (timer) {
+            //             clearTimeout(timer)
+            //         }
+            //         timer = setTimeout(() => {
+            //             func.apply(this, args)
+            //         }, ms)
+            //     }
+            // },
+
+            // 调用父组件方法并传值
+            changeUrl(musicId) {
+                this.$emit('changeUrl', musicId)
+            },
+        },
     }
 </script>
 

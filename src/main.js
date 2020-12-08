@@ -9,7 +9,7 @@ import '@/plugins/element.js'
 //导入全局样式
 import '@/assets/css/global.css'
 //引入自定义图标
-import '@/assets/font_musicHome/iconfont.css'
+import '@/assets/font_cloudMusic/iconfont.css'
 Vue.prototype.$http = axios
 axios.defaults.baseURL = '/api'
     // axios.defaults.withCredentials = true;

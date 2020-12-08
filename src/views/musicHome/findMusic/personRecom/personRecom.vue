@@ -2,7 +2,7 @@
   <div class="personRecom">
       <!-- 轮播图 -->
       <div id="banner">
-        <banner :bannerInfo="bannerInfo"></banner>
+        <banner :bannerInfo="bannerInfo" @changeUrl="changeUrl"></banner>
       </div>
       <!-- 推荐歌单 -->
       <el-divider content-position="left"><p style="font-size: 20px;">推荐歌单</p></el-divider>
@@ -54,6 +54,10 @@
                 newSongList: [],
                 //mv推荐列表
                 mvRecomList: [],
+                //播放的音乐url
+                misicUrl: '',
+                // 音乐详情
+                musicDetail: {}
             }
         },
         created() {
@@ -76,8 +80,52 @@
                     this.bannerInfo = res.data.banners
                 })
             },
-            changeUrl() {
-
+            // 点击轮播图传入音乐id
+            async changeUrl(musicId) {
+                if (musicId === null) return
+                    // 获得音乐url
+                await this.getMusicUrl(musicId)
+                    // 获得音乐详情
+                await this.getMusicDetail(musicId)
+                    //url为空时提醒没有版权
+                if (this.musicUrl === null) {
+                    const h = this.$createElement;
+                    this.$message.error({
+                        message: h('p', null, [
+                            h('span', null, '您暂无收听该歌曲权限'),
+                            h('i', {
+                                style: 'color: red'
+                            }, '')
+                        ]),
+                        offset: 280,
+                        center: true,
+                        showClose: true
+                    });
+                }
+                // url为空时不提交到父组件
+                if (this.musicUrl !== '') {
+                    this.$emit('setMusicUrl', this.musicUrl, this.musicDetail)
+                }
+            },
+            //根据id获取音乐url
+            async getMusicUrl(musicId) {
+                await this.$http.get('song/url', {
+                    params: {
+                        id: musicId
+                    }
+                }).then(res => {
+                    this.musicUrl = res.data.data[0].url
+                })
+            },
+            //根据id获取音乐详情
+            async getMusicDetail(musicId) {
+                await this.$http.get('song/detail', {
+                    params: {
+                        ids: musicId
+                    }
+                }).then(res => {
+                    this.musicDetail = res.data.songs[0]
+                })
             },
             //获取推荐歌单
             getRecomSongList() {
