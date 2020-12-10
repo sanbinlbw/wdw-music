@@ -56,9 +56,7 @@
                 console.log(key, keyPath);
             }
         },
-        created() {
-
-        },
+        created() {},
     }
 </script>
 

@@ -64,6 +64,10 @@
         cursor: pointer;
         color: #373737;
         opacity: 0.9;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-all;
     }
     
     #mvName:hover,
