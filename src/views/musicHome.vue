@@ -72,7 +72,6 @@
                 this.$refs.musicPlay.isPlaying = true
                     //将播放的音乐id放入歌单
                 this.playList.push(detail.id)
-                console.log(this.musicDetail);
             },
         },
         created() {},
@@ -154,5 +153,16 @@
     
     .el-slider__bar {
         background-color: #ff4e4e;
+    }
+    
+    .volume .el-slider__button {
+        width: 5px !important;
+        height: 5px !important;
+        border: 1px solid #ec4141 !important;
+        background: #ec4141;
+    }
+    
+    .volume .el-slider__runway {
+        background: #e6e6e8;
     }
 </style>

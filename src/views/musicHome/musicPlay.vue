@@ -48,6 +48,24 @@
             <el-slider v-model="musicDuration" :max="musicAllDuration" :show-tooltip="false" @change="changeMusicDuration" @mousedown.native="isChange = true" @mouseup.native="isChange = false"></el-slider>
         </div>
         <span style="position: absolute;left: 72%;bottom: 12px;opacity: 0.7;">{{this.musicAllDuration | timeFormat}}</span>
+        <div class="volume">
+            <i class="iconfont icon-icon-test" v-show="volumeVal !== 0" @click="muteVolume" style="font-size: 25px;cursor: pointer;left: 66px;position: absolute;"></i>
+            <i class="iconfont icon-jingyin" v-show="volumeVal === 0" @click="cancelMute" style="font-size: 29px;cursor: pointer;left: 65px;margin-top: -2px;position: absolute;"></i>
+            <el-slider v-model="volumeVal" :max="100" :step="1" @change="changeVolume" style="position: absolute;top: -5px;right: 0px;width: 100px;"></el-slider>
+        </div>
+        <!-- 打开播放列表 -->
+        <el-tooltip class="item" effect="light" content="打开播放列表" placement="top" :open-delay="500">
+            <i class="iconfont icon-bofangliebiao" @click="isShowSongList" style="position: absolute;right: 45px;top: 30px;font-size: 24px;cursor: pointer;"></i>
+        </el-tooltip>
+        <!-- 播放列表弹出层 -->
+        <el-dialog :modal="false" :show-close="false" :lock-scroll="false"
+                   title="播放列表"
+                   :visible.sync="showSongListDialog"
+                   width="30%"
+                   center>
+
+
+        </el-dialog>
     </div>
 </template>
 
@@ -70,7 +88,13 @@
                 // 歌曲当前时长
                 musicDuration: 0,
                 //判断是否被拖动
-                isChange: false
+                isChange: false,
+                //音量值
+                volumeVal: 50,
+                //当前音量
+                nowVolume: 50,
+                //是否显示歌单
+                showSongListDialog: false
             }
         },
         methods: {
@@ -132,6 +156,25 @@
                 }
                 this.$refs.audio.currentTime = this.musicDuration
                 this.isChange = false
+            },
+            //音量改变时
+            changeVolume() {
+                this.nowVolume = this.volumeVal
+                this.$refs.audio.volume = this.volumeVal / 100
+            },
+            //静音
+            muteVolume() {
+                this.volumeVal = 0
+                this.$refs.audio.volume = this.volumeVal / 100
+            },
+            // 恢复静音
+            cancelMute() {
+                this.volumeVal = this.nowVolume
+                this.$refs.audio.volume = this.volumeVal / 100
+            },
+            //是否展示歌单
+            isShowSongList() {
+                this.showSongListDialog = !this.showSongListDialog
             },
         },
     }
@@ -213,7 +256,7 @@
     #songDetail {
         position: absolute;
         top: 13px;
-        left: 24px;
+        left: 30px;
     }
     
     #songName {
@@ -240,5 +283,14 @@
     #songName:hover,
     #authorName:hover {
         opacity: 1;
+    }
+    /* 音量 */
+    
+    .volume {
+        position: absolute;
+        width: 200px;
+        height: 20px;
+        right: 105px;
+        top: 30px;
     }
 </style>

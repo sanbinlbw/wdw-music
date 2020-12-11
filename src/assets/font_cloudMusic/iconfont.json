@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "8843115",
+      "name": "静音",
+      "font_class": "jingyin",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
       "icon_id": "8341781",
       "name": "播放",
       "font_class": "bofang",
