@@ -1,6 +1,19 @@
 <template>
     <div class="musicPlay">
         <audio :src="musicUrl" autoplay class="playMusicAudio" ref="audio" @canplay="getDuration" @timeupdate="durationUpdate"></audio>
+        <div id="songDetail" v-show="musicDetail.al.picUrl !== ''">
+            <!-- 歌曲封面 -->
+            <el-image :src="musicDetail.al.picUrl" fit="fill" style="border-radius: 10%;height: 57px;width: 57px;"></el-image>
+            <!-- 歌曲名 -->
+            <div id="songName">
+                <span style="color: #000000;cursor: pointer;margin-left: 10px;margin-right: 4px;">{{musicDetail.name}}</span>
+                <span style="cursor: pointer;">{{!musicDetail.alia[0] ? '' : '(' + musicDetail.alia[0] + ')'}}</span>
+            </div>
+            <!-- 作者名 -->
+            <div id="authorName">
+                <span style="cursor: pointer;margin-left: 10px;font-size: 5px;">{{musicDetail.ar[0].name}}</span>
+            </div>
+        </div>
         <div id="audioFunc">
             <!-- 播放顺序 -->
             <div @click="changeOrd">
@@ -30,11 +43,11 @@
             <div id="album"><span style="font-size: 15px;">词</span></div>
         </div>
         <!-- 播放进度条 -->
-        <span style="position: absolute;right: 72%;bottom: 12px;">{{this.musicDuration | timeFormat}}</span>
+        <span style="position: absolute;right: 72%;bottom: 12px;opacity: 0.7;">{{this.musicDuration | timeFormat}}</span>
         <div id="playSlider">
             <el-slider v-model="musicDuration" :max="musicAllDuration" :show-tooltip="false" @change="changeMusicDuration" @mousedown.native="isChange = true" @mouseup.native="isChange = false"></el-slider>
         </div>
-        <span style="position: absolute;left: 72%;bottom: 12px;">{{this.musicAllDuration | timeFormat}}</span>
+        <span style="position: absolute;left: 72%;bottom: 12px;opacity: 0.7;">{{this.musicAllDuration | timeFormat}}</span>
     </div>
 </template>
 
@@ -42,7 +55,8 @@
     export default {
         name: 'musicPlay',
         props: {
-            musicUrl: String
+            musicUrl: String,
+            musicDetail: Object
         },
         components: {},
         data() {
@@ -101,7 +115,21 @@
             },
             //鼠标拖拽松开时
             changeMusicDuration() {
-                if (this.musicAllDuration === 0) return
+                if (this.musicAllDuration === 0) {
+                    const h = this.$createElement;
+                    this.$message.error({
+                        message: h('p', null, [
+                            h('span', null, '列表中没有要播放的歌曲'),
+                            h('i', {
+                                style: 'color: red'
+                            }, '')
+                        ]),
+                        offset: 280,
+                        center: true,
+                        showClose: true
+                    });
+                    return
+                }
                 this.$refs.audio.currentTime = this.musicDuration
                 this.isChange = false
             },
@@ -176,8 +204,41 @@
     
     #playSlider {
         width: 43%;
-        margin-top: -15px;
+        margin-top: -14px;
         margin-left: 50%;
         transform: translateX(-50%);
+    }
+    /* 歌曲详情样式 */
+    
+    #songDetail {
+        position: absolute;
+        top: 13px;
+        left: 24px;
+    }
+    
+    #songName {
+        position: absolute;
+        width: 160px;
+        top: 4px;
+        left: 60px;
+        opacity: 0.9;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-all;
+        color: #949495;
+    }
+    
+    #authorName {
+        position: absolute;
+        width: 160px;
+        bottom: 7px;
+        left: 60px;
+        opacity: 0.8;
+    }
+    
+    #songName:hover,
+    #authorName:hover {
+        opacity: 1;
     }
 </style>

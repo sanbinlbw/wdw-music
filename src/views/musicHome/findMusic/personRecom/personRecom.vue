@@ -17,7 +17,7 @@
       <!-- 最新音乐 -->
       <el-divider content-position="left"><p style="font-size: 20px;">最新音乐</p></el-divider>
       <div id="newSong">
-        <newSong :newSongList="newSongList"></newSong>
+        <newSong :newSongList="newSongList" @changeUrl="changeUrl"></newSong>
       </div>
       <!-- 推荐mv -->
       <el-divider content-position="left"><p style="font-size: 20px;">推荐MV</p></el-divider>

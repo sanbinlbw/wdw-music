@@ -3,7 +3,7 @@
     <!-- 最新音乐 -->
     <el-row :gutter="10">
         <el-col :span="8" v-for="(item,index) in newSongList" :key="index" style="margin-bottom: 30px;">
-            <div id="newSongDetail">
+            <div id="newSongDetail" @click="changeUrl(item.id)">
                 <!-- 音乐封面 -->
                 <el-image :src="item.picUrl" fit="fill" style="width: 25%;height: 25%;cursor: pointer;"></el-image>
                 <!-- 音乐名字 -->
@@ -36,7 +36,12 @@
             return {
 
             }
-        }
+        },
+        methods: {
+            changeUrl(musicId) {
+                this.$emit('changeUrl', musicId)
+            },
+        },
     }
 </script>
 

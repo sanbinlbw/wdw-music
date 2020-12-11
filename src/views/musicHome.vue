@@ -22,7 +22,7 @@
       </el-container>
     </el-container>
     <!-- 播放器 -->
-    <musicPlay :musicUrl="musicUrl" ref="musicPlay"/>
+    <musicPlay :musicUrl="musicUrl" :musicDetail="musicDetail" ref="musicPlay"/>
   </div>
 </template>
 
@@ -42,7 +42,17 @@
                 //歌曲url
                 musicUrl: '',
                 //歌曲详情
-                musicDetail: {},
+                musicDetail: {
+                    al: {
+                        name: '',
+                        picUrl: '',
+                    },
+                    ar: [''],
+                    alia: {
+                        name: '',
+                    },
+                    name: ''
+                },
                 //当前歌曲id
                 songId: '',
                 //当前歌单
@@ -62,8 +72,10 @@
                 this.$refs.musicPlay.isPlaying = true
                     //将播放的音乐id放入歌单
                 this.playList.push(detail.id)
+                console.log(this.musicDetail);
             },
         },
+        created() {},
     }
 </script>
 
@@ -127,5 +139,20 @@
         color: #ffffff;
         background: rgba(77, 71, 71, 0.1);
         border-radius: 50%;
+    }
+    /* 滑块 */
+    
+    .el-slider__button {
+        width: 10px !important;
+        height: 10px !important;
+        border: 2px solid rgb(198, 47, 47) !important;
+    }
+    
+    .el-slider__runway {
+        background: #c2c2c4;
+    }
+    
+    .el-slider__bar {
+        background-color: #ff4e4e;
     }
 </style>
