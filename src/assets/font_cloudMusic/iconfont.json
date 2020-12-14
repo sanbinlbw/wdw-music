@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "6419913",
+      "name": "Add a document",
+      "font_class": "Adddocument",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "11344617",
+      "name": "16act_清空",
+      "font_class": "act_qingkong",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
       "icon_id": "8843115",
       "name": "静音",
       "font_class": "jingyin",

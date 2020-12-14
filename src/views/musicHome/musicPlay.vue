@@ -57,15 +57,6 @@
         <el-tooltip class="item" effect="light" content="打开播放列表" placement="top" :open-delay="500">
             <i class="iconfont icon-bofangliebiao" @click="isShowSongList" style="position: absolute;right: 45px;top: 30px;font-size: 24px;cursor: pointer;"></i>
         </el-tooltip>
-        <!-- 播放列表弹出层 -->
-        <el-dialog :modal="false" :show-close="false" :lock-scroll="false"
-                   title="播放列表"
-                   :visible.sync="showSongListDialog"
-                   width="30%"
-                   center>
-
-
-        </el-dialog>
     </div>
 </template>
 
@@ -93,8 +84,6 @@
                 volumeVal: 50,
                 //当前音量
                 nowVolume: 50,
-                //是否显示歌单
-                showSongListDialog: false
             }
         },
         methods: {
@@ -116,11 +105,13 @@
                     return
                 }
                 this.isPlaying = true
+                this.$emit('startPlaying')
                 this.$refs.audio.play()
             },
             // 暂停音乐
             pauseSong() {
                 this.isPlaying = false
+                this.$emit('pausePlaying')
                 this.$refs.audio.pause()
             },
             //变化播放模式
@@ -172,10 +163,10 @@
                 this.volumeVal = this.nowVolume
                 this.$refs.audio.volume = this.volumeVal / 100
             },
-            //是否展示歌单
+            //展示当前播放歌单
             isShowSongList() {
-                this.showSongListDialog = !this.showSongListDialog
-            },
+                this.$emit('isShowSongList')
+            }
         },
     }
 </script>

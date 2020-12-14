@@ -33,6 +33,6 @@
     /* 整体的下划线进行隐藏 */
     
     .el-menu.el-menu--horizontal {
-        /* border-bottom: none; */
+        border-bottom: none;
     }
 </style>
