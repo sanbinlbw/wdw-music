@@ -16,7 +16,7 @@
       </el-header>
       <el-container>
         <!-- 左部导航栏 -->
-        <el-aside width="250px"><leftNav/></el-aside>
+        <el-aside width="18%"><leftNav/></el-aside>
         <!-- 展示路由 -->
         <el-main><router-view @setMusicUrl="setMusicUrl" /></el-main>
       </el-container>

@@ -175,7 +175,5 @@
 </script>
 
 <style scoped>
-    #banner {
-        margin-top: 40px;
-    }
+
 </style>

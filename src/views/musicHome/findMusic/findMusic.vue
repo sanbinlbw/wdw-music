@@ -35,7 +35,10 @@
 <style scoped>
     #headTab {
         /* width: 100%; */
-        margin-left: 30%;
+        width: 450px;
+        height: 70px;
+        margin-left: 50%;
+        transform: translateX(-50%);
     }
     
     #secondRoute:hover {
@@ -45,6 +48,7 @@
     #secondRoute {
         padding-right: 17px;
         padding-left: 3px;
+        margin-top: -10px;
         height: 70vh;
         width: 100%;
         overflow-y: hidden;
