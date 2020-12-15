@@ -48,8 +48,7 @@
     #secondRoute {
         padding-right: 17px;
         padding-left: 3px;
-        margin-top: -10px;
-        height: 70vh;
+        height: 100vh;
         width: 100%;
         overflow-y: hidden;
         overflow-x: hidden;

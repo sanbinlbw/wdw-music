@@ -31,14 +31,14 @@
                 </el-tooltip>
             </div>
             <!-- 上一首歌曲 -->
-            <div id="backSong"><i class="iconfont icon-shangyishou" style="font-size: 18px;"></i></div>
+            <div id="backSong" @click="getBackSong"><i class="iconfont icon-shangyishou" style="font-size: 18px;"></i></div>
             <!-- 播放与暂停 -->
             <div>
                 <div id="pause" v-show="isPlaying" @click="pauseSong"><i class="iconfont icon-zanting" style="font-size: 18px;"></i></div>
                 <div id="play" v-show="!isPlaying" @click="playSong"><i class="iconfont icon-bofang" style="font-size: 30px;"></i></div>
             </div>
             <!-- 下一首歌曲 -->
-            <div id="nextSong"><i class="iconfont icon-xiayishou" style="font-size: 18px;"></i></div>
+            <div id="nextSong" @click="getNextSong"><i class="iconfont icon-xiayishou" style="font-size: 18px;"></i></div>
             <!-- 歌词 -->
             <div id="album"><span style="font-size: 15px;">词</span></div>
         </div>
@@ -166,6 +166,14 @@
             //展示当前播放歌单
             isShowSongList() {
                 this.$emit('isShowSongList')
+            },
+            //获取下一首歌曲
+            getNextSong() {
+                this.$emit('getNextSong', this.playOrd)
+            },
+            //获取上一首歌曲
+            getBackSong() {
+                this.$emit('getBackSong')
             }
         },
     }

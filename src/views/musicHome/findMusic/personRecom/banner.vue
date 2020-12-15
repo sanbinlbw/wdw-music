@@ -3,8 +3,8 @@
 <!-- 轮播图 -->
     <el-carousel :interval="4000" type="card" height="280px">
             <el-carousel-item v-for="(item,index) in bannerInfo" :key="index">
-                <el-image @click="changeUrl(item.targetId)" :src="item.imageUrl" fit="contain"
-                style="height: 100%;"></el-image> 
+                <el-image @click="changeUrl(item.targetId)" :src="item.imageUrl" fit="fill"
+                style="height: 90%;border-radius: 10px;"></el-image> 
                 <el-tag :type="item.typeTitle === '独家' ? 'danger' : 'primary'" effect="dark"
                             style="position: absolute; bottom: 10%;right: 0;border-radius: 5px">
                         {{item.typeTitle}}

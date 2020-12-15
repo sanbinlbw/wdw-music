@@ -16,15 +16,15 @@
       </el-header>
       <el-container>
         <!-- 左部导航栏 -->
-        <el-aside width="18%"><leftNav/></el-aside>
+        <el-aside width="16%"><leftNav/></el-aside>
         <!-- 展示路由 -->
         <el-main><router-view @setMusicUrl="setMusicUrl" /></el-main>
       </el-container>
     </el-container>
     <!-- 播放器 -->
-    <musicPlay :musicUrl="musicUrl" :musicDetail="musicDetail" ref="musicPlay" @isShowSongList="isShowSongList" @startPlaying="startPlaying" @pausePlaying="pausePlaying" />
+    <musicPlay :musicUrl="musicUrl" :musicDetail="musicDetail" ref="musicPlay" @getBackSong="getBackSong" @getNextSong="getNextSong" @isShowSongList="isShowSongList" @startPlaying="startPlaying" @pausePlaying="pausePlaying" />
     <!-- 播放列表弹出层 -->
-    <songTable ref="songTable" v-show="showSongList" :currentMusicList="currentMusicList" :playList="playList" :songId="songId" @playListSong="playListSong" @cleanPlayList="cleanPlayList" />
+    <songTable ref="songTable" v-show="showSongList" :hisMusicList="hisMusicList" :playList="playList" :songId="songId" @playListSong="playListSong" @cleanPlayList="cleanPlayList" />
   </div>
 </template>
 
@@ -58,9 +58,11 @@
                     name: ''
                 },
                 //最近歌曲播放列表
-                currentMusicList: [],
+                hisMusicList: [],
                 //当前歌曲id
                 songId: '',
+                //上一首歌曲id
+                backSongId: '',
                 //当前歌单
                 playList: [],
                 //是否显示歌单
@@ -156,6 +158,44 @@
             },
             pausePlaying() {
                 this.$refs.songTable.isPlaying = false
+            },
+            //获取下一首歌曲
+            getNextSong(playOrd) {
+                switch (playOrd) {
+                    case 0:
+                        this.ordPlay();
+                        break;
+                }
+            },
+            //获取上一首歌曲
+            getBackSong() {
+
+            },
+            //顺序播放
+            ordPlay() {
+                let index = 0;
+                for (let i = 0; i < this.playList.length; i++) {
+                    if (this.songId === this.playList[i].id) {
+                        index = i
+                        break
+                    }
+                }
+                if (index === this.playList.length - 1) {
+                    const h = this.$createElement;
+                    this.$message.error({
+                        message: h('p', null, [
+                            h('span', null, '已经是列表最后一首歌曲'),
+                            h('i', {
+                                style: 'color: red'
+                            }, '')
+                        ]),
+                        offset: 280,
+                        center: true,
+                        showClose: true
+                    });
+                    return
+                }
+                this.playListSong(this.playList[index + 1].id)
             }
         },
         created() {

@@ -1,26 +1,44 @@
 <template>
   <div class="songTable">
-    <div id="tableTitle">
-      播放列表
+    <div :class="{selTableTitle:isPlayList,noTableTitle:!isPlayList}" @click="changeNowPlay">
+        播放列表
+    </div>
+    <div :class="{selTableTitled:isHisPlayList,noTableTitled:!isHisPlayList}" @click="changeHisPlay">
+        历史记录
     </div>
     <div style="width: 100%;height: 5%;position: relative;">
-      <span style="font-size: 6px;opacity: 0.5;margin-left: 9%;">总{{playList.length}}首</span>
-      <div id="tableOpe" @click="cleanPlayList">
-        <i class="iconfont icon-act_qingkong"></i>
-        清空
+        <span style="font-size: 6px;opacity: 0.5;margin-left: 9%;">总{{playList.length}}首</span>
+        <div id="tableOpe" @click="cleanPlayList">
+          <i class="iconfont icon-act_qingkong"></i>
+          清空
+        </div>
       </div>
+    <div v-show="isPlayList">
+          <div v-show="!playList[0]" style="margin-top: 50%;margin-left: 50%;transform: translate(-30%,-50%);">你还没有添加任何歌曲！</div>
+            <div :class="{songMesSin:index % 2 === 0,songMesDou:index % 2 !== 0}" v-for="(item,index) in playList" :key="index" background="#f9f9f9" @dblclick="startSong(item.id)">
+              <i class="iconfont icon-bofang" style="font-size: 10px;position: absolute;top: 2px;left: 8px;color: #ec4141;" v-show="item.id === songId && isPlaying"></i>
+              <i class="iconfont icon-zanting" style="font-size: 10px;position: absolute;top: 2px;left: 8px;color: #ec4141;" v-show="item.id === songId && !isPlaying"></i>
+              <div :class="{pauseSongName:item.id !== songId,startSongName:item.id === songId}">
+                <span>{{item.name}}</span>
+                <span style="color: #949495;">{{!item.alia[0] ? '' : '(' + item.alia[0] + ')'}}</span>
+              </div>   
+              <span :class="{startSongAurtor:item.id === songId}" style="cursor: pointer;position: absolute;left: 40%;">{{item.ar[0].name}}</span>
+              <span style="position: absolute;left: 80%;">{{Math.floor(item.dt / 1000) | timeFormat}}</span>
+            </div>
     </div>
-    <div v-show="!playList[0]" style="margin-top: 50%;margin-left: 50%;transform: translate(-30%,-50%);">你还没有添加任何歌曲！</div>
-      <div :class="{songMesSin:index % 2 === 0,songMesDou:index % 2 !== 0}" v-for="(item,index) in playList" :key="index" background="#f9f9f9" @dblclick="startSong(item.id)">
-        <i class="iconfont icon-bofang" style="font-size: 10px;position: absolute;top: 2px;left: 8px;color: #ec4141;" v-show="item.id === songId && isPlaying"></i>
-        <i class="iconfont icon-zanting" style="font-size: 10px;position: absolute;top: 2px;left: 8px;color: #ec4141;" v-show="item.id === songId && !isPlaying"></i>
-        <div :class="{pauseSongName:item.id !== songId,startSongName:item.id === songId}">
-          <span>{{item.name}}</span>
-          <span style="color: #949495;">{{!item.alia[0] ? '' : '(' + item.alia[0] + ')'}}</span>
-        </div>   
-        <span :class="{startSongAurtor:item.id === songId}" style="cursor: pointer;position: absolute;left: 40%;">{{item.ar[0].name}}</span>
-        <span style="position: absolute;left: 80%;">{{Math.floor(item.dt / 1000) | timeFormat}}</span>
-      </div>
+    <div v-show="isHisPlayList">
+        <div v-show="!hisMusicList[0]" style="margin-top: 50%;margin-left: 50%;transform: translate(-30%,-50%);">你还没有播放任何歌曲！</div>
+            <div :class="{songMesSin:index % 2 === 0,songMesDou:index % 2 !== 0}" v-for="(item,index) in hisMusicList" :key="index" background="#f9f9f9" @dblclick="startSong(item.id)">
+              <i class="iconfont icon-bofang" style="font-size: 10px;position: absolute;top: 2px;left: 8px;color: #ec4141;" v-show="item.id === songId && isPlaying"></i>
+              <i class="iconfont icon-zanting" style="font-size: 10px;position: absolute;top: 2px;left: 8px;color: #ec4141;" v-show="item.id === songId && !isPlaying"></i>
+              <div :class="{pauseSongName:item.id !== songId,startSongName:item.id === songId}">
+                <span>{{item.name}}</span>
+                <span style="color: #949495;">{{!item.alia[0] ? '' : '(' + item.alia[0] + ')'}}</span>
+              </div>   
+              <span :class="{startSongAurtor:item.id === songId}" style="cursor: pointer;position: absolute;left: 40%;">{{item.ar[0].name}}</span>
+              <span style="position: absolute;left: 80%;">{{Math.floor(item.dt / 1000) | timeFormat}}</span>
+            </div>
+    </div>
   </div>
 </template>
 
@@ -28,9 +46,12 @@
     export default {
         name: 'songTable',
         props: {
-            currentMusicList: Array,
+            // 当前播放列表
             playList: Array,
+            // 当前歌曲id
             songId: Number,
+            // 历史播放列表
+            hisMusicList: Array,
             // isPlaying: Boolean,
         },
         components: {},
@@ -38,6 +59,10 @@
             return {
                 // 判断当前是否在播放
                 isPlaying: true,
+                //当前播放是否显示
+                isPlayList: true,
+                //历史播放是否显示
+                isHisPlayList: false
             }
         },
         methods: {
@@ -50,6 +75,16 @@
             cleanPlayList() {
                 this.$emit('cleanPlayList')
             },
+            //切换到当前播放
+            changeNowPlay() {
+                this.isPlayList = true
+                this.isHisPlayList = false
+            },
+            //切换到历史播放
+            changeHisPlay() {
+                this.isPlayList = false
+                this.isHisPlayList = true
+            }
         },
         created() {},
     }
@@ -74,8 +109,22 @@
         user-select: none;
     }
     
-    #tableTitle {
-        width: 150px;
+    .noTableTitle {
+        width: 120px;
+        height: 30px;
+        line-height: 30px;
+        border: 1px solid #bbbbbb;
+        border-radius: 35px;
+        color: #000000;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        margin-left: 27%;
+        text-align: center;
+        font-size: 13px;
+    }
+    
+    .selTableTitle {
+        width: 120px;
         height: 30px;
         line-height: 30px;
         border: 1px solid #bbbbbb;
@@ -84,8 +133,36 @@
         color: #ffffff;
         margin-top: 15px;
         margin-bottom: 15px;
-        margin-left: 50%;
-        transform: translateX(-50%);
+        margin-left: 27%;
+        text-align: center;
+        font-size: 13px;
+    }
+    
+    .noTableTitled {
+        position: absolute;
+        top: 15px;
+        left: 47%;
+        width: 120px;
+        height: 30px;
+        line-height: 30px;
+        border: 1px solid #bbbbbb;
+        border-radius: 35px;
+        color: #000000;
+        text-align: center;
+        font-size: 13px;
+    }
+    
+    .selTableTitled {
+        position: absolute;
+        top: 15px;
+        left: 47%;
+        width: 120px;
+        height: 30px;
+        line-height: 30px;
+        border: 1px solid #bbbbbb;
+        border-radius: 35px;
+        background: #bbbbbb;
+        color: #ffffff;
         text-align: center;
         font-size: 13px;
     }

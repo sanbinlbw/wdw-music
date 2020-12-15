@@ -9,7 +9,7 @@
                 <!-- 歌单封面 -->
                 <el-image :src="item.picUrl" fit="fill" style="border-radius: 10px;box-shadow: grey 0px 0px 2px 2px;"></el-image>
                 <!-- 播放量 -->
-                <div style="color: white;position:absolute;top: 2%;right: 3%;">
+                <div style="color: white;position:absolute;top: 2%;right: 3%;text-shadow: 1px 1px 1px #000000;">
                     <i class="el-icon-headset"></i>
                     {{item.playCount >= 10000 ? (item.playCount/10000).toFixed(0)+'万' : item.playCount}}
                 </div>

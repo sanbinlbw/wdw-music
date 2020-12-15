@@ -24,6 +24,7 @@
       <div id="mvRecom">
         <mvRecom :mvRecomList="mvRecomList"></mvRecom>
       </div>
+      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
   </div>
 </template>
 
