@@ -73,7 +73,7 @@
             },
             // 清空当前歌单
             cleanPlayList() {
-                this.$emit('cleanPlayList')
+                this.$emit('cleanList')
             },
             //切换到当前播放
             changeNowPlay() {

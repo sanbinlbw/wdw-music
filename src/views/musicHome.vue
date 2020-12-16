@@ -24,7 +24,7 @@
     <!-- 播放器 -->
     <musicPlay :musicUrl="musicUrl" :musicDetail="musicDetail" ref="musicPlay" @getBackSong="getBackSong" @getNextSong="getNextSong" @isShowSongList="isShowSongList" @startPlaying="startPlaying" @pausePlaying="pausePlaying" />
     <!-- 播放列表弹出层 -->
-    <songTable ref="songTable" v-show="showSongList" :hisMusicList="hisMusicList" :playList="playList" :songId="songId" @playListSong="playListSong" @cleanPlayList="cleanPlayList" />
+    <songTable ref="songTable" v-show="showSongList" :hisMusicList="hisMusicList" :playList="playList" :songId="songId" @playListSong="playListSong" @cleanList="cleanList" />
   </div>
 </template>
 
@@ -148,9 +148,11 @@
                 this.showSongList = !this.showSongList
             },
             //清空当前歌单
-            cleanPlayList() {
+            cleanList() {
                 //当前播放列表
                 this.playList = []
+                    //历史播放列表
+                this.hisMusicList = []
                     //当前播放音乐url
                 this.musicUrl = ''
                     //当前播放歌曲详情
