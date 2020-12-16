@@ -1,6 +1,6 @@
 <template>
     <div class="musicPlay">
-        <audio :src="musicUrl" autoplay class="playMusicAudio" ref="audio" @canplay="getDuration" @timeupdate="durationUpdate"></audio>
+        <audio :src="musicUrl" autoplay class="playMusicAudio" ref="audio" @canplay="getDuration" @timeupdate="durationUpdate" @ended="getNextSong"></audio>
         <div id="songDetail" v-show="musicDetail.al.picUrl !== ''">
             <!-- 歌曲封面 -->
             <el-image :src="musicDetail.al.picUrl" fit="fill" style="border-radius: 10%;height: 57px;width: 57px;"></el-image>
@@ -114,6 +114,11 @@
                 this.$emit('pausePlaying')
                 this.$refs.audio.pause()
             },
+            //重复播放音乐
+            rePlaySong() {
+                this.isPlaying = true
+                this.$refs.audio.load()
+            },
             //变化播放模式
             changeOrd() {
                 if (this.playOrd === 3) return this.playOrd = 0
@@ -173,7 +178,7 @@
             },
             //获取上一首歌曲
             getBackSong() {
-                this.$emit('getBackSong')
+                this.$emit('getBackSong', this.playOrd)
             }
         },
     }

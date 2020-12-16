@@ -5,9 +5,9 @@
             <!-- mv封面 -->
             <div id="mvDetail" @mouseover="addDetail(index)" @mouseleave="reduceDetail">
                 <el-image :src="item.picUrl" fit="fill" style="width: 100%;height: 220px;border-radius: 8px;"></el-image>
-                <div style="position: absolute;top: 5%;right: 3%;color: #ffffff;">
+                <div style="position: absolute;top: 5%;right: 3%;color: #ffffff;text-shadow: 1px 1px 1px #000000;;">
                   <!-- 播放量 -->
-                  <img src="@/assets/image/play_2.svg" alt="" style="width: 15px;height: 15px; border-radius: 100%;margin-bottom: -1.5px;">
+                  <i class="iconfont icon-bofang" style="width: 15px;height: 15px; border-radius: 100%;margin-bottom: -1.5px;"></i>
                   {{item.playCount >= 10000 ? (item.playCount/10000).toFixed(0)+'万' : item.playCount}}
                 </div>
                 <!-- 鼠标停靠出现介绍 -->

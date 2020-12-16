@@ -57,14 +57,16 @@
                     },
                     name: ''
                 },
-                //最近歌曲播放列表
-                hisMusicList: [],
                 //当前歌曲id
                 songId: '',
                 //上一首歌曲id
                 backSongId: '',
                 //当前歌单
                 playList: [],
+                //历史歌曲播放列表
+                hisMusicList: [],
+                //播放过的歌曲歌单(避免上一首或者随机播放播放到重复的歌曲)
+                hasPlayList: [],
                 //是否显示歌单
                 showSongList: false
             }
@@ -80,6 +82,12 @@
                 this.musicDetail = detail
                 this.songId = detail.id
                 this.$refs.musicPlay.isPlaying = true
+                    //放入历史播放
+                this.deleteSong(this.hisMusicList, detail.id)
+                this.hisMusicList.unshift(detail)
+                    //加入播放过的歌单
+                this.deleteSong(this.hasPlayList, detail.id)
+                this.hasPlayList.push(detail)
                     //将播放的音乐id放入歌单
                 for (let song of this.playList) {
                     if (song.id === detail.id) {
@@ -106,7 +114,13 @@
                 this.$refs.musicPlay.isPlaying = true
                 this.$refs.songTable.isPlaying = true
                 this.getMusicUrl(musicId)
-                this.getMusicDetail(musicId)
+                this.getMusicDetail(musicId).then(() => {
+                    //放入历史播放
+                    this.deleteSong(this.hisMusicList, musicId)
+                    this.hisMusicList.unshift(this.musicDetail)
+                        //重置播放过的歌单
+                    this.hasPlayList = [...this.playList]
+                })
                 this.songId = musicId
             },
             //根据id获取音乐url
@@ -165,11 +179,45 @@
                     case 0:
                         this.ordPlay();
                         break;
+                    case 1:
+                        this.cirPlay();
+                        break;
+                    case 2:
+                        this.$refs.musicPlay.rePlaySong();
+                        break;
+                    case 3:
+                        this.randomPlay();
+                        break;
                 }
             },
             //获取上一首歌曲
-            getBackSong() {
-
+            getBackSong(playOrd) {
+                switch (playOrd) {
+                    case 0:
+                        this.reOrdPlay();
+                        break;
+                    case 1:
+                        this.reCirPlay();
+                        break
+                    case 2:
+                        this.reCirPlay();
+                        break
+                    case 3:
+                        this.randomPlay();
+                        break
+                }
+            },
+            //删除歌曲(需要在哪个列表中删除和删除歌曲的id)
+            deleteSong(list, songId) {
+                for (let song of list) {
+                    if (song.id === songId) {
+                        let index = list.indexOf(song)
+                        if (index !== -1) {
+                            list.splice(index, 1)
+                            break
+                        }
+                    }
+                }
             },
             //顺序播放
             ordPlay() {
@@ -196,7 +244,87 @@
                     return
                 }
                 this.playListSong(this.playList[index + 1].id)
-            }
+            },
+            //顺序播放的上一首歌曲
+            reOrdPlay() {
+                let index = 0;
+                for (let i = 0; i < this.playList.length; i++) {
+                    if (this.songId === this.playList[i].id) {
+                        index = i
+                        break
+                    }
+                }
+                if (index === 0) {
+                    const h = this.$createElement;
+                    this.$message.error({
+                        message: h('p', null, [
+                            h('span', null, '已经是列表第一首歌曲'),
+                            h('i', {
+                                style: 'color: red'
+                            }, '')
+                        ]),
+                        offset: 280,
+                        center: true,
+                        showClose: true
+                    });
+                    return
+                }
+                this.playListSong(this.playList[index - 1].id)
+            },
+            // 列表循环
+            cirPlay() {
+                let index = 0;
+                for (let i = 0; i < this.playList.length; i++) {
+                    if (this.songId === this.playList[i].id) {
+                        index = i
+                        break
+                    }
+                }
+                if (index === this.playList.length - 1) {
+                    this.playListSong(this.playList[0].id)
+                    return
+                }
+                this.playListSong(this.playList[index + 1].id)
+            },
+            //列表循环的上一首歌曲
+            reCirPlay() {
+                let index = 0;
+                for (let i = 0; i < this.playList.length; i++) {
+                    if (this.songId === this.playList[i].id) {
+                        index = i
+                        break
+                    }
+                }
+                if (index === 0) {
+                    this.playListSong(this.playList[this.playList.length - 1].id)
+                    return
+                }
+                this.playListSong(this.playList[index - 1].id)
+            },
+            //随机播放
+            randomPlay() {
+                //接受子组件传来的数据
+                if (this.hasPlayList.length === 0) {
+                    this.hasPlayList = [...this.playList]
+                }
+                this.deleteSong(this.hasPlayList, this.songId)
+                const index = this.getRandom(0, this.hasPlayList.length - 1)
+                this.$refs.musicPlay.isPlaying = true
+                this.$refs.songTable.isPlaying = true
+                this.getMusicUrl(this.hasPlayList[index].id)
+                this.getMusicDetail(this.hasPlayList[index].id).then(() => {
+                    //放入历史播放
+                    this.deleteSong(this.hisMusicList, this.hasPlayList[index].id)
+                    this.hisMusicList.unshift(this.musicDetail)
+                        //删除避免重复播放
+                    this.deleteSong(this.hasPlayList, this.hasPlayList[index].id)
+                })
+                this.songId = this.hasPlayList[index].id
+            },
+            //随机数
+            getRandom(min, max) {
+                return Math.floor(Math.random() * (max - min + 1) + min);
+            },
         },
         created() {
 

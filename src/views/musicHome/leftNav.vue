@@ -16,7 +16,7 @@
         <span slot="title">发现音乐</span>
       </el-menu-item>
       <el-menu-item index="/musicHome/recomVideo">
-        <i class="iconfont icon-video"></i>
+        <i class="iconfont icon-video" style="color: #000000 !important;"></i>
         <span slot="title">推荐视频</span>
       </el-menu-item>
       </div>
