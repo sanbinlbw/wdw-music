@@ -1,19 +1,15 @@
 <template>
-  <div class="playList">
-    排行榜
-  </div>
+  <div class="playList">排行榜</div>
 </template>
 
 <script>
 export default {
-  name: 'playList',
+  name: "playList",
   components: {},
   data() {
-    return {
-
-    }
-  }
-}
+    return {};
+  },
+};
 </script>
 
 <style scoped>
