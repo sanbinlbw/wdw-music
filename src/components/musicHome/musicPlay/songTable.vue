@@ -24,11 +24,7 @@
     <div v-show="isPlayList">
       <div
         v-show="!playList[0]"
-        style="
-          margin-top: 50%;
-          margin-left: 50%;
-          transform: translate(-30%, -50%);
-        "
+        style="margin-top: 50%; margin-left: 50%; transform: translate(-30%, -50%)"
       >
         你还没有添加任何歌曲！
       </div>
@@ -41,24 +37,12 @@
       >
         <i
           class="iconfont icon-bofang"
-          style="
-            font-size: 10px;
-            position: absolute;
-            top: 2px;
-            left: 8px;
-            color: #ec4141;
-          "
+          style="font-size: 10px; position: absolute; top: 2px; left: 8px; color: #ec4141"
           v-show="item.id === songId && isPlaying"
         ></i>
         <i
           class="iconfont icon-zanting"
-          style="
-            font-size: 10px;
-            position: absolute;
-            top: 2px;
-            left: 8px;
-            color: #ec4141;
-          "
+          style="font-size: 10px; position: absolute; top: 2px; left: 8px; color: #ec4141"
           v-show="item.id === songId && !isPlaying"
         ></i>
         <div
@@ -85,11 +69,7 @@
     <div v-show="isHisPlayList">
       <div
         v-show="!hisMusicList[0]"
-        style="
-          margin-top: 50%;
-          margin-left: 50%;
-          transform: translate(-30%, -50%);
-        "
+        style="margin-top: 50%; margin-left: 50%; transform: translate(-30%, -50%)"
       >
         你还没有播放任何歌曲！
       </div>
@@ -102,24 +82,12 @@
       >
         <i
           class="iconfont icon-bofang"
-          style="
-            font-size: 10px;
-            position: absolute;
-            top: 2px;
-            left: 8px;
-            color: #ec4141;
-          "
+          style="font-size: 10px; position: absolute; top: 2px; left: 8px; color: #ec4141"
           v-show="item.id === songId && isPlaying"
         ></i>
         <i
           class="iconfont icon-zanting"
-          style="
-            font-size: 10px;
-            position: absolute;
-            top: 2px;
-            left: 8px;
-            color: #ec4141;
-          "
+          style="font-size: 10px; position: absolute; top: 2px; left: 8px; color: #ec4141"
           v-show="item.id === songId && !isPlaying"
         ></i>
         <div
@@ -147,27 +115,30 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "songTable",
-  props: {
-    // 当前播放列表
-    playList: Array,
-    // 当前歌曲id
-    songId: Number,
-    // 历史播放列表
-    hisMusicList: Array,
-    // isPlaying: Boolean,
-  },
+  props: {},
   components: {},
   data() {
     return {
-      // 判断当前是否在播放
-      isPlaying: true,
       //当前播放是否显示
       isPlayList: true,
       //历史播放是否显示
       isHisPlayList: false,
     };
+  },
+  computed: {
+    ...mapGetters([
+      //当前播放列表
+      "playList",
+      //当前歌曲id
+      "songId",
+      //历史播放列表
+      "hisMusicList",
+      //判断当前是否在播放
+      "isPlaying",
+    ]),
   },
   methods: {
     // 双击切换到当前播放

@@ -19,12 +19,7 @@
       <!-- 歌曲名 -->
       <div id="songName">
         <span
-          style="
-            color: #000000;
-            cursor: pointer;
-            margin-left: 10px;
-            margin-right: 4px;
-          "
+          style="color: #000000; cursor: pointer; margin-left: 10px; margin-right: 4px"
           >{{ musicDetail.name }}</span
         >
         <span style="cursor: pointer">{{
@@ -174,19 +169,13 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "musicPlay",
-  props: {
-    musicUrl: String,
-    musicDetail: Object,
-  },
+  props: {},
   components: {},
   data() {
     return {
-      // 判断当前是否在播放
-      isPlaying: false,
-      //判断播放顺序模式
-      playOrd: 0,
       //歌曲总时长
       musicAllDuration: 0,
       // 歌曲当前时长
@@ -198,6 +187,18 @@ export default {
       //当前音量
       nowVolume: 50,
     };
+  },
+  computed: {
+    ...mapGetters([
+      //当前播放歌曲url
+      "musicUrl",
+      //当前播放歌曲详情
+      "musicDetail",
+      //判断当前是否在播放
+      "isPlaying",
+      //判断播放顺序模式
+      "playOrd",
+    ]),
   },
   methods: {
     // 播放音乐
@@ -301,6 +302,8 @@ export default {
     getBackSong() {
       this.$emit("getBackSong", this.playOrd);
     },
+  },
+  mounted() {
   },
 };
 </script>

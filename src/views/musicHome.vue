@@ -13,11 +13,7 @@
           ></i>
         </div>
         <div id="searchDiv">
-          <el-input
-            style="opacity: 0.5"
-            placeholder="请输入歌曲名或歌手名"
-            size="mini"
-          />
+          <el-input style="opacity: 0.5" placeholder="请输入歌曲名或歌手名" size="mini" />
           <i class="elsearch el-icon-search" @click="search"></i>
         </div>
         <loginBar style="position: absolute; right: 5%" />
@@ -58,6 +54,7 @@ import leftNav from "@/components/musicHome/leftNav/leftNav";
 import loginBar from "@/components/musicHome/leftNav/loginBar";
 import musicPlay from "@/components/musicHome/musicPlay/musicPlay";
 import songTable from "@/components/musicHome/musicPlay/songTable";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "musicHome",
   components: {
@@ -68,33 +65,28 @@ export default {
   },
   data() {
     return {
-      //当前播放歌曲url
-      musicUrl: "",
-      //当前播放歌曲详情
-      musicDetail: {
-        al: {
-          name: "",
-          picUrl: "",
-        },
-        ar: [""],
-        alia: {
-          name: "",
-        },
-        name: "",
-      },
-      //当前歌曲id
-      songId: "",
       //上一首歌曲id
       backSongId: "",
-      //当前歌单
-      playList: [],
-      //历史歌曲播放列表
-      hisMusicList: [],
-      //播放过的歌曲歌单(避免上一首或者随机播放播放到重复的歌曲)
-      hasPlayList: [],
+
       //是否显示歌单
       showSongList: false,
     };
+  },
+  computed: {
+    ...mapGetters([
+      //当前播放歌曲url
+      "musicUrl",
+      //当前播放歌曲详情
+      "musicDetail",
+      //当前歌曲id
+      "songId",
+      //当前歌单
+      "playList",
+      //历史歌曲播放列表
+      "hisMusicList",
+      //播放过的歌曲歌单(避免上一首或者随机播放播放到重复的歌曲)
+      "hasPlayList",
+    ]),
   },
   methods: {
     search() {
@@ -370,6 +362,8 @@ export default {
     },
   },
   created() {},
+  mounted() {
+  },
 };
 </script>
 
