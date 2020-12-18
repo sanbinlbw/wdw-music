@@ -33,7 +33,7 @@
         v-for="(item, index) in playList"
         :key="index"
         background="#f9f9f9"
-        @dblclick="startSong(item.id)"
+        @dblclick="startSong(item)"
       >
         <i
           class="iconfont icon-bofang"
@@ -78,7 +78,7 @@
         v-for="(item, index) in hisMusicList"
         :key="index"
         background="#f9f9f9"
-        @dblclick="startSong(item.id)"
+        @dblclick="startSong(item)"
       >
         <i
           class="iconfont icon-bofang"
@@ -138,17 +138,42 @@ export default {
       "hisMusicList",
       //判断当前是否在播放
       "isPlaying",
+      //当前播放歌曲url
+      "musicUrl",
     ]),
   },
   methods: {
     // 双击切换到当前播放
-    startSong(musicId) {
-      if (musicId === this.songId) return;
-      this.$emit("playListSong", musicId);
+    startSong(musicDetail) {
+      if (musicDetail.id === this.songId) return;
+      // 获得音乐url并保存到当前播放url
+      this.getMusicUrl(musicDetail.id);
+      // 保存到当前播放歌曲详情
+      this.$store.dispatch("saveMusicDetail", musicDetail);
+      // 保存到当前播放歌曲id
+      this.$store.dispatch("saveSongId", musicDetail.id);
+      // 放入历史歌单
+      this.$store.dispatch("deleteHisListSong", musicDetail.id);
+      this.$store.dispatch("unshiftHisMusicList", musicDetail);
+      // 放入已经播放过的歌单
+      this.$store.dispatch("deleteHasListSong", musicDetail.id);
+      this.$store.dispatch("pushHasPlayList", musicDetail);
+    },
+    //根据id获取音乐url
+    async getMusicUrl(musicId) {
+      await this.$http
+        .get("song/url", {
+          params: {
+            id: musicId,
+          },
+        })
+        .then((res) => {
+          this.$store.dispatch("saveMusicUrl", res.data.data[0].url);
+        });
     },
     // 清空当前歌单
     cleanPlayList() {
-      this.$emit("cleanList");
+      this.$store.dispatch("deleteAllList");
     },
     //切换到当前播放
     changeNowPlay() {

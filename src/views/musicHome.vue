@@ -22,30 +22,13 @@
         <!-- 左部导航栏 -->
         <el-aside width="16%"><leftNav /></el-aside>
         <!-- 展示路由 -->
-        <el-main><router-view @setMusicUrl="setMusicUrl" /></el-main>
+        <el-main><router-view /></el-main>
       </el-container>
     </el-container>
     <!-- 播放器 -->
-    <musicPlay
-      :musicUrl="musicUrl"
-      :musicDetail="musicDetail"
-      ref="musicPlay"
-      @getBackSong="getBackSong"
-      @getNextSong="getNextSong"
-      @isShowSongList="isShowSongList"
-      @startPlaying="startPlaying"
-      @pausePlaying="pausePlaying"
-    />
+    <musicPlay ref="musicPlay" @isShowSongList="isShowSongList" />
     <!-- 播放列表弹出层 -->
-    <songTable
-      ref="songTable"
-      v-show="showSongList"
-      :hisMusicList="hisMusicList"
-      :playList="playList"
-      :songId="songId"
-      @playListSong="playListSong"
-      @cleanList="cleanList"
-    />
+    <songTable ref="songTable" v-show="showSongList" @playListSong="playListSong" />
   </div>
 </template>
 
@@ -65,9 +48,6 @@ export default {
   },
   data() {
     return {
-      //上一首歌曲id
-      backSongId: "",
-
       //是否显示歌单
       showSongList: false,
     };
@@ -92,48 +72,9 @@ export default {
     search() {
       console.log("search");
     },
-    //接受子组件传来的歌曲信息
-    setMusicUrl(url, detail) {
-      //接受子组件传来的数据
-      this.musicUrl = url;
-      this.musicDetail = detail;
-      this.songId = detail.id;
-      this.$refs.musicPlay.isPlaying = true;
-      //放入历史播放
-      this.deleteSong(this.hisMusicList, detail.id);
-      this.hisMusicList.unshift(detail);
-      //加入播放过的歌单
-      this.deleteSong(this.hasPlayList, detail.id);
-      this.hasPlayList.push(detail);
-      //将播放的音乐id放入歌单
-      for (let song of this.playList) {
-        if (song.id === detail.id) {
-          const h = this.$createElement;
-          this.$message.error({
-            message: h("p", null, [
-              h("span", null, "列表中已存在该歌曲"),
-              h(
-                "i",
-                {
-                  style: "color: red",
-                },
-                ""
-              ),
-            ]),
-            offset: 280,
-            center: true,
-            showClose: true,
-          });
-          return;
-        }
-      }
-      this.playList.unshift(detail);
-    },
     // 播放歌单里面的歌曲
     playListSong(musicId) {
       //接受子组件传来的数据
-      this.$refs.musicPlay.isPlaying = true;
-      this.$refs.songTable.isPlaying = true;
       this.getMusicDetail(musicId).then(() => {
         //放入历史播放
         this.deleteSong(this.hisMusicList, musicId);
@@ -172,198 +113,9 @@ export default {
     isShowSongList() {
       this.showSongList = !this.showSongList;
     },
-    //清空当前歌单
-    cleanList() {
-      //当前播放列表
-      this.playList = [];
-      //历史播放列表
-      this.hisMusicList = [];
-      //当前播放音乐url
-      this.musicUrl = "";
-      //当前播放歌曲详情
-      this.musicDetail = {
-        al: {
-          name: "",
-          picUrl: "",
-        },
-        ar: [""],
-        alia: {
-          name: "",
-        },
-        name: "",
-      };
-    },
-    //调用子组件方法改变当前的播放状态
-    startPlaying() {
-      this.$refs.songTable.isPlaying = true;
-    },
-    pausePlaying() {
-      this.$refs.songTable.isPlaying = false;
-    },
-    //获取下一首歌曲
-    getNextSong(playOrd) {
-      switch (playOrd) {
-        case 0:
-          this.ordPlay();
-          break;
-        case 1:
-          this.cirPlay();
-          break;
-        case 2:
-          this.$refs.musicPlay.rePlaySong();
-          break;
-        case 3:
-          this.randomPlay();
-          break;
-      }
-    },
-    //获取上一首歌曲
-    getBackSong(playOrd) {
-      switch (playOrd) {
-        case 0:
-          this.reOrdPlay();
-          break;
-        case 1:
-          this.reCirPlay();
-          break;
-        case 2:
-          this.reCirPlay();
-          break;
-        case 3:
-          this.randomPlay();
-          break;
-      }
-    },
-    //删除歌曲(需要在哪个列表中删除和删除歌曲的id)
-    deleteSong(list, songId) {
-      for (let song of list) {
-        if (song.id === songId) {
-          let index = list.indexOf(song);
-          if (index !== -1) {
-            list.splice(index, 1);
-            break;
-          }
-        }
-      }
-    },
-    //顺序播放
-    ordPlay() {
-      let index = 0;
-      for (let i = 0; i < this.playList.length; i++) {
-        if (this.songId === this.playList[i].id) {
-          index = i;
-          break;
-        }
-      }
-      if (index === this.playList.length - 1) {
-        const h = this.$createElement;
-        this.$message.error({
-          message: h("p", null, [
-            h("span", null, "已经是列表最后一首歌曲"),
-            h(
-              "i",
-              {
-                style: "color: red",
-              },
-              ""
-            ),
-          ]),
-          offset: 280,
-          center: true,
-          showClose: true,
-        });
-        return;
-      }
-      this.playListSong(this.playList[index + 1].id);
-    },
-    //顺序播放的上一首歌曲
-    reOrdPlay() {
-      let index = 0;
-      for (let i = 0; i < this.playList.length; i++) {
-        if (this.songId === this.playList[i].id) {
-          index = i;
-          break;
-        }
-      }
-      if (index === 0) {
-        const h = this.$createElement;
-        this.$message.error({
-          message: h("p", null, [
-            h("span", null, "已经是列表第一首歌曲"),
-            h(
-              "i",
-              {
-                style: "color: red",
-              },
-              ""
-            ),
-          ]),
-          offset: 280,
-          center: true,
-          showClose: true,
-        });
-        return;
-      }
-      this.playListSong(this.playList[index - 1].id);
-    },
-    // 列表循环
-    cirPlay() {
-      let index = 0;
-      for (let i = 0; i < this.playList.length; i++) {
-        if (this.songId === this.playList[i].id) {
-          index = i;
-          break;
-        }
-      }
-      if (index === this.playList.length - 1) {
-        this.playListSong(this.playList[0].id);
-        return;
-      }
-      this.playListSong(this.playList[index + 1].id);
-    },
-    //列表循环的上一首歌曲
-    reCirPlay() {
-      let index = 0;
-      for (let i = 0; i < this.playList.length; i++) {
-        if (this.songId === this.playList[i].id) {
-          index = i;
-          break;
-        }
-      }
-      if (index === 0) {
-        this.playListSong(this.playList[this.playList.length - 1].id);
-        return;
-      }
-      this.playListSong(this.playList[index - 1].id);
-    },
-    //随机播放
-    randomPlay() {
-      //接受子组件传来的数据
-      if (this.hasPlayList.length === 0) {
-        this.hasPlayList = [...this.playList];
-      }
-      this.deleteSong(this.hasPlayList, this.songId);
-      const index = this.getRandom(0, this.hasPlayList.length - 1);
-      this.$refs.musicPlay.isPlaying = true;
-      this.$refs.songTable.isPlaying = true;
-      this.getMusicDetail(this.hasPlayList[index].id).then(() => {
-        //放入历史播放
-        this.deleteSong(this.hisMusicList, this.hasPlayList[index].id);
-        this.hisMusicList.unshift(this.musicDetail);
-        //删除避免重复播放
-        this.deleteSong(this.hasPlayList, this.hasPlayList[index].id);
-      });
-      this.getMusicUrl(this.hasPlayList[index].id);
-      this.songId = this.hasPlayList[index].id;
-    },
-    //随机数
-    getRandom(min, max) {
-      return Math.floor(Math.random() * (max - min + 1) + min);
-    },
   },
   created() {},
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 

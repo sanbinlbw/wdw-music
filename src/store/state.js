@@ -8,17 +8,17 @@ const state = {
     // 播放状态
     isPlaying: false,
     // 播放列表
-    playList: [],
+    playList: sessionStorage.getItem('playList') ? JSON.parse(sessionStorage.getItem('playList')) : [],
     //历史歌曲播放列表
-    hisMusicList: [],
+    hisMusicList: sessionStorage.getItem('hisMusicList') ? JSON.parse(sessionStorage.getItem('hisMusicList')) : [],
     //播放过的歌曲歌单(避免上一首或者随机播放播放到重复的歌曲)
-    hasPlayList: [],
+    hasPlayList: sessionStorage.getItem('hasPlayList') ? JSON.parse(sessionStorage.getItem('hasPlayList')) : [],
     //判断播放顺序模式
-    playOrd: 0,
+    playOrd: sessionStorage.getItem('playOrd') ? JSON.parse(sessionStorage.getItem('playOrd')) : 0,
     //当前播放歌曲url
-    musicUrl: "",
+    musicUrl: sessionStorage.getItem('musicUrl') ? JSON.parse(sessionStorage.getItem('musicUrl')) : "",
     //当前播放歌曲详情
-    musicDetail: {
+    musicDetail: sessionStorage.getItem('musicDetail') ? JSON.parse(sessionStorage.getItem('musicDetail')) : {
         al: {
             name: "",
             picUrl: "",
@@ -30,7 +30,7 @@ const state = {
         name: "",
     },
     //当前歌曲id
-    songId: "",
+    songId: sessionStorage.getItem('songId') ? JSON.parse(sessionStorage.getItem('songId')) : "",
     // 搜索历史
     // searchHistory: getSearch(),
 }

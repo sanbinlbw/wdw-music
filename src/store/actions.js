@@ -5,14 +5,38 @@ const actions = {
         commit('saveIsPlaying', payload);
     },
 
-    // 保存历史记录播放列表
-    saveHisMusicList({ commit }, payload) {
-        commit('saveHisMusicList', payload)
+    //添加到当前播放列表
+    unshiftPlayList({ commit }, payload) {
+        commit('unshiftPlayList', payload)
+    },
+    // 添加到历史记录播放列表
+    unshiftHisMusicList({ commit }, payload) {
+        commit('unshiftHisMusicList', payload)
     },
 
-    // 保存播放过的歌曲歌单(避免上一首或者随机播放播放到重复的歌曲)
-    saveHasPlayList({ commit }, payload) {
-        commit('saveHasPlayList', payload)
+    // 添加到播放过的歌曲歌单(避免上一首或者随机播放播放到重复的歌曲)
+    pushHasPlayList({ commit }, payload) {
+        commit('pushHasPlayList', payload)
+    },
+
+    // 删除当前列表歌曲
+    deletePlayListSong({ commit }, payload) {
+        commit('deletePlayListSong', payload)
+    },
+
+    // 删除历史列表歌曲
+    deleteHisListSong({ commit }, payload) {
+        commit('deleteHisListSong', payload)
+    },
+
+    // 删除已经播放列表歌曲
+    deleteHasListSong({ commit }, payload) {
+        commit('deleteHasListSong', payload)
+    },
+
+    // 清空歌单
+    deleteAllList({ commit }) {
+        commit('deleteAllList')
     },
 
     // 保存当前播放模式
@@ -31,5 +55,9 @@ const actions = {
     saveSongId({ commit }, payload) {
         commit('saveSongId', payload)
     },
+    // 让播放过的歌曲等于当前歌单
+    sameHasAndPlay({ commit }) {
+        commit('sameHasAndPlay')
+    }
 }
 export default actions

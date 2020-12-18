@@ -194,11 +194,25 @@ export default {
       "musicUrl",
       //当前播放歌曲详情
       "musicDetail",
+      //当前播放歌曲id
+      "songId",
       //判断当前是否在播放
       "isPlaying",
       //判断播放顺序模式
       "playOrd",
+      //当前播放列表
+      "playList",
+      //已经播放过的列表
+      "hasPlayList",
     ]),
+  },
+  watch: {
+    // 监听歌曲变化
+    musicUrl(newUrl, oldUrl) {
+      if (newUrl === oldUrl) return;
+      // this.musicUrl = newUrl;
+      this.$store.dispatch("saveIsPlaying", true);
+    },
   },
   methods: {
     // 播放音乐
@@ -222,25 +236,23 @@ export default {
         });
         return;
       }
-      this.isPlaying = true;
-      this.$emit("startPlaying");
+      this.$store.dispatch("saveIsPlaying", true);
       this.$refs.audio.play();
     },
     // 暂停音乐
     pauseSong() {
-      this.isPlaying = false;
-      this.$emit("pausePlaying");
+      this.$store.dispatch("saveIsPlaying", false);
       this.$refs.audio.pause();
     },
     //重复播放音乐
     rePlaySong() {
-      this.isPlaying = true;
+      this.$store.dispatch("saveIsPlaying", true);
       this.$refs.audio.load();
     },
     //变化播放模式
     changeOrd() {
-      if (this.playOrd === 3) return (this.playOrd = 0);
-      this.playOrd++;
+      if (this.playOrd === 3) return this.$store.dispatch("savePlayOrd", 0);
+      this.$store.dispatch("savePlayOrd", this.playOrd + 1);
     },
     //获得播放歌曲总时长
     getDuration() {
@@ -296,15 +308,183 @@ export default {
     },
     //获取下一首歌曲
     getNextSong() {
-      this.$emit("getNextSong", this.playOrd);
+      switch (this.playOrd) {
+        case 0:
+          this.ordPlay();
+          break;
+        case 1:
+          this.cirPlay();
+          break;
+        case 2:
+          this.rePlaySong();
+          break;
+        case 3:
+          this.randomPlay();
+          break;
+      }
     },
     //获取上一首歌曲
     getBackSong() {
-      this.$emit("getBackSong", this.playOrd);
+      switch (this.playOrd) {
+        case 0:
+          this.reOrdPlay();
+          break;
+        case 1:
+          this.reCirPlay();
+          break;
+        case 2:
+          this.reCirPlay();
+          break;
+        case 3:
+          this.randomPlay();
+          break;
+      }
+    },
+    //顺序播放
+    ordPlay() {
+      let index = 0;
+      for (let i = 0; i < this.playList.length; i++) {
+        if (this.songId === this.playList[i].id) {
+          index = i;
+          break;
+        }
+      }
+      if (index === this.playList.length - 1) {
+        const h = this.$createElement;
+        this.$message.error({
+          message: h("p", null, [
+            h("span", null, "已经是列表最后一首歌曲"),
+            h(
+              "i",
+              {
+                style: "color: red",
+              },
+              ""
+            ),
+          ]),
+          offset: 280,
+          center: true,
+          showClose: true,
+        });
+        return;
+      }
+      this.startSong(this.playList[index + 1]);
+    },
+    //顺序播放的上一首歌曲
+    reOrdPlay() {
+      let index = 0;
+      for (let i = 0; i < this.playList.length; i++) {
+        if (this.songId === this.playList[i].id) {
+          index = i;
+          break;
+        }
+      }
+      if (index === 0) {
+        const h = this.$createElement;
+        this.$message.error({
+          message: h("p", null, [
+            h("span", null, "已经是列表第一首歌曲"),
+            h(
+              "i",
+              {
+                style: "color: red",
+              },
+              ""
+            ),
+          ]),
+          offset: 280,
+          center: true,
+          showClose: true,
+        });
+        return;
+      }
+      this.startSong(this.playList[index - 1]);
+    },
+    // 列表循环
+    cirPlay() {
+      let index = 0;
+      for (let i = 0; i < this.playList.length; i++) {
+        if (this.songId === this.playList[i].id) {
+          index = i;
+          break;
+        }
+      }
+      if (index === this.playList.length - 1) {
+        this.startSong(this.playList[0]);
+        return;
+      }
+      this.startSong(this.playList[index + 1]);
+    },
+    //列表循环的上一首歌曲
+    reCirPlay() {
+      let index = 0;
+      for (let i = 0; i < this.playList.length; i++) {
+        if (this.songId === this.playList[i].id) {
+          index = i;
+          break;
+        }
+      }
+      if (index === 0) {
+        this.startSong(this.playList[this.playList.length - 1]);
+        return;
+      }
+      this.startSong(this.playList[index - 1]);
+    },
+    //随机播放
+    randomPlay() {
+      console.log(this.hasPlayList);
+      //接受子组件传来的数据
+      if (this.hasPlayList.length === 1) {
+        this.$store.dispatch("sameHasAndPlay");
+      }
+      // 在已经播放过的列表中删除歌曲防止重复播放
+      this.$store.dispatch("deleteHasListSong", this.songId);
+      // 获取随机
+      const index = this.getRandom(0, this.hasPlayList.length - 1);
+      //放入历史播放
+      this.$store.dispatch("deleteHisListSong", this.hasPlayList[index].id);
+      this.$store.dispatch("unshiftHisMusicList", this.hasPlayList[index]);
+      //获取随机歌曲url并保存
+      this.getMusicUrl(this.hasPlayList[index].id);
+      //保存到当前播放歌曲详情
+      this.$store.dispatch("saveMusicDetail", this.hasPlayList[index]);
+      //保存当前歌曲id
+      this.$store.dispatch("saveSongId", this.hasPlayList[index].id);
+    },
+    //随机数
+    getRandom(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    },
+    // 开始播放
+    startSong(musicDetail) {
+      if (musicDetail.id === this.songId) return;
+      // 获得音乐url
+      this.getMusicUrl(musicDetail.id);
+      // 保存到当前播放歌曲详情
+      this.$store.dispatch("saveMusicDetail", musicDetail);
+      // 保存到当前播放歌曲id
+      this.$store.dispatch("saveSongId", musicDetail.id);
+      // 放入历史歌单
+      this.$store.dispatch("deleteHisListSong", musicDetail.id);
+      this.$store.dispatch("unshiftHisMusicList", musicDetail);
+      // 放入已经播放过的歌单
+      this.$store.dispatch("deleteHasListSong", musicDetail.id);
+      this.$store.dispatch("pushHasPlayList", musicDetail);
+    },
+    //根据id获取音乐url
+    async getMusicUrl(musicId) {
+      await this.$http
+        .get("song/url", {
+          params: {
+            id: musicId,
+          },
+        })
+        .then((res) => {
+          this.$store.dispatch("saveMusicUrl", res.data.data[0].url);
+        });
     },
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 

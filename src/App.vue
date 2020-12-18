@@ -5,11 +5,45 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "App",
   components: {},
   data() {
     return {};
+  },
+  computed: {
+    ...mapGetters([
+      //当前播放歌曲url
+      "musicUrl",
+      //当前播放歌曲详情
+      "musicDetail",
+      //当前歌曲id
+      "songId",
+      //当前歌单
+      "playList",
+      //历史歌曲播放列表
+      "hisMusicList",
+      //播放过的歌曲歌单(避免上一首或者随机播放播放到重复的歌曲)
+      "hasPlayList",
+      //顺序模式
+      "playOrd",
+    ]),
+  },
+  methods: {
+    // 存入数据防止刷新清空
+    saveState() {
+      sessionStorage.setItem("musicUrl", JSON.stringify(this.musicUrl));
+      sessionStorage.setItem("musicDetail", JSON.stringify(this.musicDetail));
+      sessionStorage.setItem("songId", JSON.stringify(this.songId));
+      sessionStorage.setItem("playList", JSON.stringify(this.playList));
+      sessionStorage.setItem("hisMusicList", JSON.stringify(this.hisMusicList));
+      sessionStorage.setItem("hasPlayList", JSON.stringify(this.hasPlayList));
+      sessionStorage.setItem("playOrd", JSON.stringify(this.playOrd));
+    },
+  },
+  mounted() {
+    window.addEventListener("unload", this.saveState);
   },
 };
 </script>

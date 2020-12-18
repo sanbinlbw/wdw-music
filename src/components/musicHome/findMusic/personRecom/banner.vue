@@ -45,7 +45,7 @@ export default {
     //     }
     // },
 
-    // 调用父组件方法并传值
+    // 将歌曲id传入
     changeUrl(musicId) {
       this.$emit("changeUrl", musicId);
     },

@@ -6,7 +6,7 @@
     </div>
     <div>
       <!-- 二级路由 -->
-      <router-view id="secondRoute" @setMusicUrl="setMusicUrl" />
+      <router-view id="secondRoute"/>
     </div>
   </div>
 </template>
@@ -22,9 +22,7 @@ export default {
     return {};
   },
   methods: {
-    setMusicUrl(url, detail) {
-      this.$emit("setMusicUrl", url, detail);
-    },
+    
   },
 };
 </script>

@@ -26,9 +26,7 @@
       <newSong :newSongList="newSongList" @changeUrl="changeUrl"></newSong>
     </div>
     <!-- 推荐mv -->
-    <el-divider content-position="left"
-      ><p style="font-size: 20px">推荐MV</p></el-divider
-    >
+    <el-divider content-position="left"><p style="font-size: 20px">推荐MV</p></el-divider>
     <div id="mvRecom">
       <mvRecom :mvRecomList="mvRecomList"></mvRecom>
     </div>
@@ -42,6 +40,7 @@ import recomSong from "@/components/musicHome/findMusic/personRecom/recomSong";
 import privateRec from "@/components/musicHome/findMusic/personRecom/privateRec";
 import newSong from "@/components/musicHome/findMusic/personRecom/newSong";
 import mvRecom from "@/components/musicHome/findMusic/personRecom/mvRecom";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "personRecom",
   components: {
@@ -69,6 +68,12 @@ export default {
       musicDetail: {},
     };
   },
+  computed: {
+    ...mapGetters([
+      // 当前播放列表
+      "playList",
+    ]),
+  },
   created() {},
   mounted() {
     // 获取轮播图
@@ -90,7 +95,7 @@ export default {
         this.bannerInfo = res.data.banners;
       });
     },
-    // 点击轮播图传入音乐id
+    // 点击播放音乐传入音乐id
     async changeUrl(musicId) {
       if (musicId === null) return;
       // 获得音乐url
@@ -116,9 +121,43 @@ export default {
           showClose: true,
         });
       }
-      // url为空时不提交到父组件
+      // url为空时不提交到vuex
       if (this.musicUrl !== "") {
-        this.$emit("setMusicUrl", this.musicUrl, this.musicDetail);
+        // 保存到当前播放路径
+        this.$store.dispatch("saveMusicUrl", this.musicUrl);
+        // 保存到当前播放歌曲详情
+        this.$store.dispatch("saveMusicDetail", this.musicDetail);
+        // 保存到当前播放歌曲id
+        this.$store.dispatch("saveSongId", this.musicDetail.id);
+        // 放入历史歌单
+        this.$store.dispatch("deleteHisListSong", this.musicDetail.id);
+        this.$store.dispatch("unshiftHisMusicList", this.musicDetail);
+        // 放入已经播放过的歌单
+        this.$store.dispatch("deleteHasListSong", this.musicDetail.id);
+        this.$store.dispatch("pushHasPlayList", this.musicDetail);
+        // 放入当前播放歌单
+        for (let song of this.playList) {
+          if (song.id === this.musicDetail.id) {
+            const h = this.$createElement;
+            this.$message.error({
+              message: h("p", null, [
+                h("span", null, "列表中已存在该歌曲"),
+                h(
+                  "i",
+                  {
+                    style: "color: red",
+                  },
+                  ""
+                ),
+              ]),
+              offset: 280,
+              center: true,
+              showClose: true,
+            });
+            return;
+          }
+        }
+        this.$store.dispatch("unshiftPlayList", this.musicDetail);
       }
     },
     //根据id获取音乐url
@@ -196,5 +235,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
