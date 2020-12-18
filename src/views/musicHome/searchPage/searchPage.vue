@@ -1,27 +1,26 @@
 <template>
-  <div class="findMusic">
+  <div class="searchPage">
     <div id="headTab">
       <!-- 头部导航栏 -->
-      <headTab />
+      <searchHeadTab />
     </div>
     <div>
-      <!-- 二级路由 -->
+      <!-- 子路由 -->
       <router-view id="secondRoute" />
     </div>
   </div>
 </template>
 
 <script>
-import headTab from "@/components/musicHome/findMusic/headTab/headTab";
+import searchHeadTab from "@/components/musicHome/searchPage/searchHeadTab";
 export default {
-  name: "findMusic",
+  name: "searchPage",
   components: {
-    headTab,
+    searchHeadTab,
   },
   data() {
     return {};
   },
-  methods: {},
 };
 </script>
 
@@ -33,7 +32,7 @@ export default {
   margin-left: 55%;
   transform: translateX(-50%);
 }
-
+/* 子路由样式 */
 #secondRoute:hover {
   overflow-y: overlay;
 }

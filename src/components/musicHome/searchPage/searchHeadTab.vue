@@ -1,23 +1,22 @@
 <template>
-  <div class="headTab">
+  <div class="searchHeadTab">
     <el-menu
       :default-active="this.$route.path"
       class="el-menu-demo"
       mode="horizontal"
       :router="true"
     >
-      <el-menu-item index="/musicHome/findMusic/personRecom">个性推荐</el-menu-item>
-      <el-menu-item index="/musicHome/findMusic/songList">歌单</el-menu-item>
-      <el-menu-item index="/musicHome/findMusic/playList">排行榜</el-menu-item>
-      <el-menu-item index="/musicHome/findMusic/singerList">歌手</el-menu-item>
-      <el-menu-item index="/musicHome/findMusic/newSong">最新音乐</el-menu-item>
+      <el-menu-item index="/musicHome/searchPage/searchBySong">单曲</el-menu-item>
+      <el-menu-item index="/musicHome/searchPage/searchBySinger">歌手</el-menu-item>
+      <el-menu-item index="/musicHome/searchPage/searchByPlayList">专辑</el-menu-item>
+      <el-menu-item index="/musicHome/searchPage/searchByVideo">视频</el-menu-item>
     </el-menu>
   </div>
 </template>
 
 <script>
 export default {
-  name: "headTab",
+  name: "searchHeadTab",
   components: {},
   data() {
     return {};

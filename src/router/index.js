@@ -69,6 +69,38 @@ const router = new VueRouter({
                     name: 'myFavoriteMusic',
                     component: () =>
                         import ('@/views/musicHome/myFavoriteMusic/myFavoriteMusic')
+                },
+                {
+                    path: '/musicHome/searchPage',
+                    name: 'searchPage',
+                    redirect: '/musicHome/searchPage/searchBySong',
+                    component: () =>
+                        import ('@/views/musicHome/searchPage/searchPage'),
+                    children: [{
+                            path: '/musicHome/searchPage/searchBySong',
+                            name: 'searchBySong',
+                            component: () =>
+                                import ('@/components/musicHome/searchPage/searchBySong')
+                        },
+                        {
+                            path: '/musicHome/searchPage/searchBySinger',
+                            name: 'searchBySinger',
+                            component: () =>
+                                import ('@/components/musicHome/searchPage/searchBySinger')
+                        },
+                        {
+                            path: '/musicHome/searchPage/searchByVideo',
+                            name: 'searchByVideo',
+                            component: () =>
+                                import ('@/components/musicHome/searchPage/searchByVideo')
+                        },
+                        {
+                            path: '/musicHome/searchPage/searchByPlayList',
+                            name: 'searchByPlayList',
+                            component: () =>
+                                import ('@/components/musicHome/searchPage/searchByPlayList')
+                        },
+                    ]
                 }
             ]
         }

@@ -13,7 +13,12 @@
           ></i>
         </div>
         <div id="searchDiv">
-          <el-input style="opacity: 0.5" placeholder="请输入歌曲名或歌手名" size="mini" />
+          <el-input
+            style="opacity: 0.5"
+            placeholder="请输入歌曲名或歌手名"
+            size="mini"
+            v-model="searchData"
+          />
           <i class="elsearch el-icon-search" @click="search"></i>
         </div>
         <loginBar style="position: absolute; right: 5%" />
@@ -28,7 +33,7 @@
     <!-- 播放器 -->
     <musicPlay ref="musicPlay" @isShowSongList="isShowSongList" />
     <!-- 播放列表弹出层 -->
-    <songTable ref="songTable" v-show="showSongList" @playListSong="playListSong" />
+    <songTable ref="songTable" v-show="showSongList" />
   </div>
 </template>
 
@@ -50,6 +55,8 @@ export default {
     return {
       //是否显示歌单
       showSongList: false,
+      //搜索框
+      searchData: "",
     };
   },
   computed: {
@@ -69,44 +76,29 @@ export default {
     ]),
   },
   methods: {
+    //搜索并跳转到搜索界面
     search() {
-      console.log("search");
+      //判断为空不进行搜索
+      if (this.searchData.trim() === "") return;
+      //获取搜索到的数据
+      this.getSearchPage(1);
+      // this.$router.push({
+      //   name: "searchPage",
+      // });
     },
-    // 播放歌单里面的歌曲
-    playListSong(musicId) {
-      //接受子组件传来的数据
-      this.getMusicDetail(musicId).then(() => {
-        //放入历史播放
-        this.deleteSong(this.hisMusicList, musicId);
-        this.hisMusicList.unshift(this.musicDetail);
-        //重置播放过的歌单
-        this.hasPlayList = [...this.playList];
-      });
-      this.getMusicUrl(musicId);
-      this.songId = musicId;
-    },
-    //根据id获取音乐url
-    async getMusicUrl(musicId) {
-      await this.$http
-        .get("song/url", {
+    //请求搜索数据
+    getSearchPage(searchType) {
+      this.$http
+        .get("/cloudsearch", {
           params: {
-            id: musicId,
+            keywords: this.searchData.trim(),
+            type: searchType,
+            limit: 30,
+            offset: 1 * 30,
           },
         })
         .then((res) => {
-          this.musicUrl = res.data.data[0].url;
-        });
-    },
-    //根据id获取音乐详情
-    async getMusicDetail(musicId) {
-      await this.$http
-        .get("song/detail", {
-          params: {
-            ids: musicId,
-          },
-        })
-        .then((res) => {
-          this.musicDetail = res.data.songs[0];
+          console.log(res.data);
         });
     },
     //是否展示歌单
