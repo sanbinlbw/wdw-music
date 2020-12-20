@@ -10,11 +10,7 @@
         :key="index"
         style="margin-bottom: 30px"
       >
-        <div
-          id="playDetail"
-          @mouseover="addPlay(index)"
-          @mouseleave="reducePlay"
-        >
+        <div id="playDetail" @mouseover="addPlay(index)" @mouseleave="reducePlay">
           <!-- 歌单封面 -->
           <el-image
             :src="item.picUrl"
@@ -28,7 +24,7 @@
               position: absolute;
               top: 2%;
               right: 3%;
-              text-shadow: 1px 1px 1px #000000;
+              text-shadow: 0px 0px 2px #000000;
             "
           >
             <i class="el-icon-headset"></i>

@@ -8,11 +8,7 @@
         style="margin-bottom: 30px"
       >
         <!-- mv封面 -->
-        <div
-          id="mvDetail"
-          @mouseover="addDetail(index)"
-          @mouseleave="reduceDetail"
-        >
+        <div id="mvDetail" @mouseover="addDetail(index)" @mouseleave="reduceDetail">
           <el-image
             :src="item.picUrl"
             fit="fill"
@@ -24,7 +20,7 @@
               top: 5%;
               right: 3%;
               color: #ffffff;
-              text-shadow: 1px 1px 1px #000000; ;
+              text-shadow: 0px 0px 2px #000000; ;
             "
           >
             <!-- 播放量 -->

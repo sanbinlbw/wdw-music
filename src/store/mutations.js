@@ -117,5 +117,9 @@ const mutations = {
     saveSongId(state, songId) {
         state.songId = songId
     },
+    // 保存当前搜索信息
+    saveSearchInfo(state, searchInfo) {
+        state.searchInfo = searchInfo
+    }
 }
 export default mutations

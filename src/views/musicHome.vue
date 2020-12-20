@@ -27,7 +27,7 @@
         <!-- 左部导航栏 -->
         <el-aside width="16%"><leftNav /></el-aside>
         <!-- 展示路由 -->
-        <el-main><router-view /></el-main>
+        <el-main><router-view ref="child" :searchData="searchData" /></el-main>
       </el-container>
     </el-container>
     <!-- 播放器 -->
@@ -80,27 +80,18 @@ export default {
     search() {
       //判断为空不进行搜索
       if (this.searchData.trim() === "") return;
-      //获取搜索到的数据
-      this.getSearchPage(1);
-      // this.$router.push({
-      //   name: "searchPage",
-      // });
-    },
-    //请求搜索数据
-    getSearchPage(searchType) {
-      this.$http
-        .get("/cloudsearch", {
-          params: {
-            keywords: this.searchData.trim(),
-            type: searchType,
-            limit: 30,
-            offset: 1 * 30,
-          },
-        })
-        .then((res) => {
-          console.log(res.data);
+      //保存当前搜索数据到vuex
+      this.$store.dispatch("saveSearchInfo", this.searchData);
+      //跳转到搜索界面
+      if (this.$route.path !== "/musicHome/searchPage/searchBySong") {
+        this.$router.push({
+          name: "searchPage",
         });
+      }
+      //调用搜索页获取数据
+      this.$refs.child.getSongPage(0);
     },
+
     //是否展示歌单
     isShowSongList() {
       this.showSongList = !this.showSongList;

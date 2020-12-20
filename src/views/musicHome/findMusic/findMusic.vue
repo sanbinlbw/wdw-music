@@ -28,9 +28,9 @@ export default {
 <style scoped>
 #headTab {
   /* width: 100%; */
-  widows: 450px;
+  width: 450px;
   height: 70px;
-  margin-left: 55%;
+  margin-left: 50%;
   transform: translateX(-50%);
 }
 

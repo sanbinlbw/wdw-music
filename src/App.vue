@@ -28,6 +28,8 @@ export default {
       "hasPlayList",
       //顺序模式
       "playOrd",
+      //当前搜索信息
+      "searchInfo",
     ]),
   },
   methods: {
@@ -40,6 +42,7 @@ export default {
       sessionStorage.setItem("hisMusicList", JSON.stringify(this.hisMusicList));
       sessionStorage.setItem("hasPlayList", JSON.stringify(this.hasPlayList));
       sessionStorage.setItem("playOrd", JSON.stringify(this.playOrd));
+      sessionStorage.setItem("searchInfo", JSON.stringify(this.searchInfo));
     },
   },
   mounted() {

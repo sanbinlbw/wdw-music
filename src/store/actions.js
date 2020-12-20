@@ -58,6 +58,10 @@ const actions = {
     // 让播放过的歌曲等于当前歌单
     sameHasAndPlay({ commit }) {
         commit('sameHasAndPlay')
+    },
+    // 保存当前搜索信息
+    saveSearchInfo({ commit }, payload) {
+        commit('saveSearchInfo', payload)
     }
 }
 export default actions
