@@ -33,10 +33,10 @@
           position: absolute;
           top: 2px;
           left: 25px;
-          color: #cacaca;
+          color: #373737;
         "
         v-else
-        >{{ index >= 10 ? index : "0" + index }}</span
+        >{{ index >= 9 ? index + 1 : "0" + (index + 1) }}</span
       >
       <div
         :class="{
@@ -49,23 +49,20 @@
           !item.alia[0] ? "" : "(" + item.alia[0] + ")"
         }}</span>
       </div>
-      <span
+      <div
         :class="{ startSongAurtor: item.id === songId }"
-        style="cursor: pointer; position: absolute; left: 40%"
-        >{{ item.ar[0].name }}</span
+        style="position: absolute; left: 40%"
       >
+        <span style="cursor: pointer" v-for="(item, index) in item.ar" :key="index">{{
+          index === 0 ? item.name : "/" + item.name
+        }}</span>
+      </div>
       <span style="position: absolute; left: 80%">{{
         Math.floor(item.dt / 1000) | timeFormat
       }}</span>
     </div>
     <div class="page">
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        :total="Math.ceil(songAll.songCount / 50) * 10"
-        :pager-count="9"
-      >
-      </el-pagination>
+      <pagination :songAll="songAll" />
     </div>
     <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
   </div>
@@ -73,6 +70,7 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
+import pagination from "./pagination";
 export default {
   name: "searchBySong",
   props: {
@@ -89,7 +87,10 @@ export default {
       "isPlaying",
     ]),
   },
-  components: {},
+  components: {
+    //分页
+    pagination,
+  },
   data() {
     return {};
   },
@@ -151,7 +152,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* 标题 */
 #songSearchHead {
   position: relative;
@@ -166,25 +167,6 @@ export default {
   transform: translateX(-50%);
 }
 
-/*带背景的分页按钮背景色begin*/
-.el-pagination.is-background .el-pager li:not(.disabled).active {
-  background-color: #ec4141;
-  color: #fff;
-}
-.el-pagination.is-background .el-pager li.active {
-  color: #fff;
-  cursor: default;
-}
-.el-pagination.is-background .el-pager li:hover {
-  color: #ec4141;
-}
-.el-pagination.is-background .el-pager li:not(.disabled):hover {
-  color: #ec4141;
-}
-.el-pagination.is-background .el-pager li:not(.disabled).active:hover {
-  background-color: #ec4141;
-  color: #fff;
-}
 /* 每行歌曲样式 */
 
 .songMesSin {

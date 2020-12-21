@@ -56,11 +56,22 @@
             !item.alia[0] ? "" : "(" + item.alia[0] + ")"
           }}</span>
         </div>
-        <span
+        <div
           :class="{ startSongAurtor: item.id === songId }"
-          style="cursor: pointer; position: absolute; left: 40%"
-          >{{ item.ar[0].name }}</span
+          style="
+            position: absolute;
+            width: 120px;
+            left: 40%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            word-break: break-all;
+          "
         >
+          <span style="cursor: pointer" v-for="(item, index) in item.ar" :key="index">{{
+            index === 0 ? item.name : "/" + item.name
+          }}</span>
+        </div>
         <span style="position: absolute; left: 80%">{{
           Math.floor(item.dt / 1000) | timeFormat
         }}</span>
@@ -101,11 +112,22 @@
             !item.alia[0] ? "" : "(" + item.alia[0] + ")"
           }}</span>
         </div>
-        <span
+        <div
           :class="{ startSongAurtor: item.id === songId }"
-          style="cursor: pointer; position: absolute; left: 40%"
-          >{{ item.ar[0].name }}</span
+          style="
+            position: absolute;
+            left: 40%;
+            width: 120px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            word-break: break-all;
+          "
         >
+          <span style="cursor: pointer" v-for="(item, index) in item.ar" :key="index">{{
+            index === 0 ? item.name : "/" + item.name
+          }}</span>
+        </div>
         <span style="position: absolute; left: 80%">{{
           Math.floor(item.dt / 1000) | timeFormat
         }}</span>

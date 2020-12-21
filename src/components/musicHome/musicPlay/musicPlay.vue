@@ -28,9 +28,12 @@
       </div>
       <!-- 作者名 -->
       <div id="authorName">
-        <span style="cursor: pointer; margin-left: 10px; font-size: 5px">{{
-          musicDetail.ar[0].name
-        }}</span>
+        <span
+          v-for="(item, index) in musicDetail.ar"
+          :key="index"
+          style="cursor: pointer; font-size: 5px"
+          >{{ index === 0 ? item.name : "/" + item.name }}</span
+        >
       </div>
     </div>
     <div id="audioFunc">
@@ -432,7 +435,6 @@ export default {
     },
     //随机播放
     randomPlay() {
-      console.log(this.hasPlayList);
       //接受子组件传来的数据
       if (this.hasPlayList.length === 1) {
         this.$store.dispatch("sameHasAndPlay");
@@ -584,8 +586,12 @@ export default {
   position: absolute;
   width: 160px;
   bottom: 7px;
-  left: 60px;
+  left: 68px;
   opacity: 0.8;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
 }
 
 #songName:hover,
