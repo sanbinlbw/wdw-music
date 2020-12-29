@@ -18,6 +18,7 @@
             placeholder="请输入歌曲名或歌手名"
             size="mini"
             v-model="searchData"
+            @keyup.enter.native="search"
           />
           <i class="elsearch el-icon-search" @click="search"></i>
         </div>
@@ -31,7 +32,7 @@
       </el-container>
     </el-container>
     <!-- 播放器 -->
-    <musicPlay ref="musicPlay" @isShowSongList="isShowSongList" />
+    <musicPlay ref="musicPlay" @isShowSongList="isShowSongList"/>
     <!-- 播放列表弹出层 -->
     <songTable ref="songTable" v-show="showSongList" />
   </div>

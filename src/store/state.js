@@ -33,8 +33,10 @@ const state = {
     songId: sessionStorage.getItem('songId') ? JSON.parse(sessionStorage.getItem('songId')) : "",
     //当前搜索信息
     searchInfo: sessionStorage.getItem('searchInfo') ? JSON.parse(sessionStorage.getItem('searchInfo')) : "",
-    // 搜索历史
-    // searchHistory: getSearch(),
+    //当前是否在加载数据
+    isLoading: false
+        // 搜索历史
+        // searchHistory: getSearch(),
 }
 
 export default state

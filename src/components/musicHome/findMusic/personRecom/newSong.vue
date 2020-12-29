@@ -41,62 +41,62 @@
 </template>
 
 <script>
-export default {
-  name: "newSong",
-  props: {
-    newSongList: Array,
-  },
-  components: {},
-  data() {
-    return {};
-  },
-  methods: {
-    changeUrl(musicId) {
-      this.$emit("changeUrl", musicId);
-    },
-  },
-};
+    export default {
+        name: "newSong",
+        props: {
+            newSongList: Array,
+        },
+        components: {},
+        data() {
+            return {};
+        },
+        methods: {
+            changeUrl(musicId) {
+                this.$emit("changeUrl", musicId);
+            },
+        },
+    };
 </script>
 
 <style scoped>
-#newSongDetail {
-  position: relative;
-  width: 100%;
-}
-
-#newSongIntro {
-  position: absolute;
-  opacity: 0.9;
-  top: 12%;
-  left: 28%;
-}
-
-#newSongIntro:hover,
-#author:hover {
-  opacity: 1;
-}
-
-#newSongDetail:hover {
-  cursor: pointer;
-  background-color: #eaeaea;
-}
-
-#author {
-  position: absolute;
-  opacity: 0.9;
-  bottom: 16%;
-  left: 28%;
-}
-
-#playImg {
-  width: 30px;
-  height: 30px;
-  border-radius: 100%;
-  background: #f2f3f4;
-}
-
-#playImg:hover {
-  cursor: pointer;
-  opacity: 0.8;
-}
+    #newSongDetail {
+        position: relative;
+        width: 100%;
+    }
+    
+    #newSongIntro {
+        position: absolute;
+        opacity: 0.9;
+        top: 12%;
+        left: 28%;
+    }
+    
+    #newSongIntro:hover,
+    #author:hover {
+        opacity: 1;
+    }
+    
+    #newSongDetail:hover {
+        cursor: pointer;
+        background-color: #eaeaea;
+    }
+    
+    #author {
+        position: absolute;
+        opacity: 0.9;
+        bottom: 16%;
+        left: 28%;
+    }
+    
+    #playImg {
+        width: 30px;
+        height: 30px;
+        border-radius: 100%;
+        background: #f2f3f4;
+    }
+    
+    #playImg:hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
 </style>

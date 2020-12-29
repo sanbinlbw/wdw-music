@@ -105,7 +105,7 @@
       <div id="album"><span style="font-size: 15px">词</span></div>
     </div>
     <!-- 播放进度条 -->
-    <span style="position: absolute; right: 72%; bottom: 12px; opacity: 0.7">{{
+    <span style="position: absolute; right: 72%; bottom: 12%; opacity: 0.7">{{
       this.musicDuration | timeFormat
     }}</span>
     <div id="playSlider">
@@ -118,7 +118,7 @@
         @mouseup.native="isChange = false"
       ></el-slider>
     </div>
-    <span style="position: absolute; left: 72%; bottom: 12px; opacity: 0.7">{{
+    <span style="position: absolute; left: 72%; bottom: 12%; opacity: 0.7">{{
       this.musicAllDuration | timeFormat
     }}</span>
     <div class="volume">
@@ -500,6 +500,7 @@ export default {
   width: 100%;
   height: 80px;
   background: #f6f6f8;
+  z-index: 3000;
 }
 /* 音乐操作 */
 
@@ -556,9 +557,10 @@ export default {
 /* 播放条样式 */
 
 #playSlider {
+  position: absolute;
   width: 43%;
-  margin-top: -14px;
-  margin-left: 50%;
+  bottom: 1%;
+  left: 50%;
   transform: translateX(-50%);
 }
 /* 歌曲详情样式 */

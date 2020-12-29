@@ -5,6 +5,7 @@
       layout="prev, pager, next"
       :total="Math.ceil(songAll.songCount / 50) * 10"
       :pager-count="9"
+      @current-change="getSongPage"
     >
     </el-pagination>
   </div>
@@ -20,6 +21,13 @@ export default {
   components: {},
   data() {
     return {};
+  },
+  methods: {
+    //获取指定页歌曲
+    getSongPage(Page) {
+      console.log(Page - 1);
+      this.$emit("getSongPage", Page - 1);
+    },
   },
 };
 </script>

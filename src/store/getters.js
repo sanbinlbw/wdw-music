@@ -28,6 +28,9 @@ export const songId = state => state.songId
 // 当前搜索信息
 export const searchInfo = state => state.searchInfo
 
+// 当前加载状态
+export const isLoading = state => state.isLoading
+
 // 搜索历史
 // export const searchHistory = state => {
 //   return state.searchHistory

@@ -62,6 +62,10 @@ const actions = {
     // 保存当前搜索信息
     saveSearchInfo({ commit }, payload) {
         commit('saveSearchInfo', payload)
+    },
+    // 改变当前加载状态
+    changeIsLoading({ commit }, payload) {
+        commit('changeIsLoading', payload)
     }
 }
 export default actions

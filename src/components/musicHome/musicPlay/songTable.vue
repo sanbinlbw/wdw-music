@@ -332,7 +332,7 @@ export default {
 
 .pauseSongName {
   position: absolute;
-  width: 160px;
+  width: 140px;
   margin-left: 30px;
   opacity: 0.9;
   white-space: nowrap;
@@ -344,7 +344,7 @@ export default {
 
 .startSongName {
   position: absolute;
-  width: 160px;
+  width: 140px;
   margin-left: 30px;
   opacity: 0.9;
   white-space: nowrap;

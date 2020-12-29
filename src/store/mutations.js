@@ -120,6 +120,10 @@ const mutations = {
     // 保存当前搜索信息
     saveSearchInfo(state, searchInfo) {
         state.searchInfo = searchInfo
+    },
+    // 修改当前加载状态
+    changeIsLoading(state, isLoading) {
+        state.isLoading = isLoading
     }
 }
 export default mutations

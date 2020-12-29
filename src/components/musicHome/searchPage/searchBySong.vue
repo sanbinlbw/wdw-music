@@ -5,6 +5,9 @@
       <span style="position: absolute; left: 40%; color: #888888; font-size: 15px"
         >歌手</span
       >
+      <span style="position: absolute; left: 60%; color: #888888; font-size: 15px">
+        专辑
+      </span>
       <span style="position: absolute; left: 80%; color: #888888; font-size: 15px"
         >时长</span
       >
@@ -27,6 +30,7 @@
         style="font-size: 10px; position: absolute; top: 2px; left: 28px; color: #ec4141"
         v-else-if="item.id === songId && !isPlaying"
       ></i>
+      <!-- 歌曲序号 -->
       <span
         style="
           font-size: 15px !important;
@@ -38,6 +42,7 @@
         v-else
         >{{ index >= 9 ? index + 1 : "0" + (index + 1) }}</span
       >
+      <!-- 歌曲名 -->
       <div
         :class="{
           pauseSongName: item.id !== songId,
@@ -49,22 +54,61 @@
           !item.alia[0] ? "" : "(" + item.alia[0] + ")"
         }}</span>
       </div>
-      <div
-        :class="{ startSongAurtor: item.id === songId }"
-        style="position: absolute; left: 40%"
+      <!-- 歌曲功能 -->
+      
+      <!-- <div
+        style="
+          border: 1px solid #ec4141;
+          width: 30px;
+          height: 15px;
+          line-height: 15px;
+          font-size: 5px;
+          color: #eb4d4d;
+        "
       >
-        <span style="cursor: pointer" v-for="(item, index) in item.ar" :key="index">{{
-          index === 0 ? item.name : "/" + item.name
-        }}</span>
+        MV
+      </div> -->
+      <!-- 作者名 -->
+      <div class="startSongAurtor" style="position: absolute; left: 40%">
+        <div
+          style="
+            width: 160px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            word-break: break-all;
+          "
+        >
+          <span style="cursor: pointer" v-for="(item, index) in item.ar" :key="index">{{
+            index === 0 ? item.name : "/" + item.name
+          }}</span>
+        </div>
+      </div>
+      <div
+        style="
+          width: 160px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          word-break: break-all;
+          position: absolute;
+          left: 60%;
+          cursor: pointer;
+          font-weight: 300;
+        "
+      >
+        {{ item.al.name }}
       </div>
       <span style="position: absolute; left: 80%">{{
         Math.floor(item.dt / 1000) | timeFormat
       }}</span>
     </div>
+    <br />
+    <!-- 分页栏 -->
     <div class="page">
-      <pagination :songAll="songAll" />
+      <pagination :songAll="songAll" @getSongPage="getSongPage" />
     </div>
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br /><br /><br />
   </div>
 </template>
 
@@ -85,6 +129,8 @@ export default {
       "songId",
       //是否在播放
       "isPlaying",
+      //加载状态
+      "isLoading",
     ]),
   },
   components: {
@@ -146,6 +192,10 @@ export default {
         .then((res) => {
           this.$store.dispatch("saveMusicUrl", res.data.data[0].url);
         });
+    },
+    //获取指定页数歌曲
+    getSongPage(offset) {
+      this.$emit("getSongPage", offset);
     },
   },
   created() {},
@@ -219,6 +269,6 @@ export default {
 }
 
 .startSongAurtor {
-  color: #ec4141 !important;
+  color: #507daf;
 }
 </style>
