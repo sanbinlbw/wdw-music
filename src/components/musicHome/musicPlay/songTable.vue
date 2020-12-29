@@ -35,11 +35,18 @@
         background="#f9f9f9"
         @dblclick="startSong(item)"
       >
-        <i
-          class="iconfont icon-bofang"
-          style="font-size: 10px; position: absolute; top: 2px; left: 8px; color: #ec4141"
+        <div
+          style="
+            font-size: 10px;
+            position: absolute;
+            top: 20px;
+            left: 8px;
+            color: #ec4141;
+          "
           v-show="item.id === songId && isPlaying"
-        ></i>
+        >
+          <playAni />
+        </div>
         <i
           class="iconfont icon-zanting"
           style="font-size: 10px; position: absolute; top: 2px; left: 8px; color: #ec4141"
@@ -91,11 +98,18 @@
         background="#f9f9f9"
         @dblclick="startSong(item)"
       >
-        <i
-          class="iconfont icon-bofang"
-          style="font-size: 10px; position: absolute; top: 2px; left: 8px; color: #ec4141"
+        <div
+          style="
+            font-size: 10px;
+            position: absolute;
+            top: 20px;
+            left: 8px;
+            color: #ec4141;
+          "
           v-show="item.id === songId && isPlaying"
-        ></i>
+        >
+          <playAni />
+        </div>
         <i
           class="iconfont icon-zanting"
           style="font-size: 10px; position: absolute; top: 2px; left: 8px; color: #ec4141"
@@ -138,10 +152,11 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
+import playAni from "@/components/musicHome/playAnimation/playAni";
 export default {
   name: "songTable",
   props: {},
-  components: {},
+  components: { playAni },
   data() {
     return {
       //当前播放是否显示

@@ -1,13 +1,9 @@
 <template>
   <div class="newSong">
     <!-- 最新音乐 -->
-    <el-row :gutter="10">
-      <el-col
-        :span="8"
-        v-for="(item, index) in newSongList"
-        :key="index"
-        style="margin-bottom: 30px"
-      >
+      <div v-for="(item, index) in newSongList"
+      :key="index"
+      style="margin-bottom: 30px">
         <div id="newSongDetail" @click="changeUrl(item.id)">
           <!-- 音乐封面 -->
           <el-image
@@ -35,8 +31,7 @@
             <img src="@/assets/image/play_1.svg" alt="" id="playImg" />
           </div>
         </div>
-      </el-col>
-    </el-row>
+      </div>
   </div>
 </template>
 
@@ -59,6 +54,13 @@
 </script>
 
 <style scoped>
+    .newSong {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 10px;
+    }
+    
     #newSongDetail {
         position: relative;
         width: 100%;

@@ -20,11 +20,12 @@
       @dblclick="startSong(item)"
     >
       <!-- <span>{{ index }}</span> -->
-      <i
-        class="iconfont icon-bofang"
-        style="font-size: 10px; position: absolute; top: 2px; left: 28px; color: #ec4141"
+      <div
+        style="font-size: 10px; position: absolute; top: 20px; left: 28px; color: #ec4141"
         v-if="item.id === songId && isPlaying"
-      ></i>
+      >
+        <playAni />
+      </div>
       <i
         class="iconfont icon-zanting"
         style="font-size: 10px; position: absolute; top: 2px; left: 28px; color: #ec4141"
@@ -55,7 +56,7 @@
         }}</span>
       </div>
       <!-- 歌曲功能 -->
-      
+
       <!-- <div
         style="
           border: 1px solid #ec4141;
@@ -114,6 +115,7 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
+import playAni from "@/components/musicHome/playAnimation/playAni";
 import pagination from "./pagination";
 export default {
   name: "searchBySong",
@@ -134,6 +136,8 @@ export default {
     ]),
   },
   components: {
+    //播放动画
+    playAni,
     //分页
     pagination,
   },
