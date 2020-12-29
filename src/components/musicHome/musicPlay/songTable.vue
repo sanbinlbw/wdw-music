@@ -82,6 +82,17 @@
         <span style="position: absolute; left: 80%">{{
           Math.floor(item.dt / 1000) | timeFormat
         }}</span>
+        <i
+          class="el-icon-close"
+          style="
+            position: absolute;
+            top: 35%;
+            right: 3%;
+            font-size: 15px;
+            cursor: pointer;
+          "
+          @click="delPlayListSong(item.id)"
+        ></i>
       </div>
     </div>
     <div v-show="isHisPlayList">
@@ -145,6 +156,17 @@
         <span style="position: absolute; left: 80%">{{
           Math.floor(item.dt / 1000) | timeFormat
         }}</span>
+        <i
+          class="el-icon-close"
+          style="
+            position: absolute;
+            top: 35%;
+            right: 3%;
+            font-size: 15px;
+            cursor: pointer;
+          "
+          @click="delHisListSong(item.id)"
+        ></i>
       </div>
     </div>
   </div>
@@ -221,6 +243,16 @@ export default {
     changeHisPlay() {
       this.isPlayList = false;
       this.isHisPlayList = true;
+    },
+    //删除当前歌单歌曲
+    delPlayListSong(musicId) {
+      if (musicId === this.songId) this.$emit("getNextSong");
+      this.$store.dispatch("deletePlayListSong", musicId);
+      this.$store.dispatch("deleteHasListSong", musicId);
+    },
+    //删除历史歌单歌曲
+    delHisListSong(musicId) {
+      this.$store.dispatch("deleteHisListSong", musicId);
     },
   },
   created() {},

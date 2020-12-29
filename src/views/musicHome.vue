@@ -32,9 +32,9 @@
       </el-container>
     </el-container>
     <!-- 播放器 -->
-    <musicPlay ref="musicPlay" @isShowSongList="isShowSongList"/>
+    <musicPlay ref="musicPlay" @isShowSongList="isShowSongList" />
     <!-- 播放列表弹出层 -->
-    <songTable ref="songTable" v-show="showSongList" />
+    <songTable ref="songTable" v-show="showSongList" @getNextSong="getNextSong"/>
   </div>
 </template>
 
@@ -97,6 +97,10 @@ export default {
     isShowSongList() {
       this.showSongList = !this.showSongList;
     },
+    //播放下一首歌曲
+    getNextSong() {
+      this.$refs.musicPlay.getNextSong();
+    }
   },
   created() {},
   mounted() {},
