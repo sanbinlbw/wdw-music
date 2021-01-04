@@ -71,13 +71,19 @@ const mutations = {
 
     // 清空歌单
     deleteAllList(state) {
-        //当前播放列表
+        // 当前播放状态变成暂停
+        state.isPlaying = false;
+        // 当前播放歌曲id
+        state.songId = "";
+        // 当前播放列表
         state.playList = [];
-        //历史播放列表
+        // 历史播放列表
         state.hisMusicList = [];
-        //当前播放音乐url
+        // 已经播放列表
+        state.hasPlayList = [];
+        // 当前播放音乐url
         state.musicUrl = "";
-        //当前播放歌曲详情
+        // 当前播放歌曲详情
         state.musicDetail = {
             al: {
                 name: "",

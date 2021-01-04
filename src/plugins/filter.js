@@ -12,7 +12,7 @@ Vue.filter('timeFormat', function(time) {
 
     //秒
     var second = time % 60;
-    var seconds = Math.round(second);
+    var seconds = Math.floor(second);
     if (seconds < 10) {
         seconds = "0" + seconds;
     }

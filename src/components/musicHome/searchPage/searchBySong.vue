@@ -49,11 +49,16 @@
           pauseSongName: item.id !== songId,
           startSongName: item.id === songId,
         }"
+        style="cursor: default"
       >
-        <span>{{ item.name }}</span>
-        <span style="color: #949495">{{
-          !item.alia[0] ? "" : "(" + item.alia[0] + ")"
+        <span :title="item.name + (!item.alia[0] ? '' : '(' + item.alia[0] + ')')">{{
+          item.name
         }}</span>
+        <span
+          style="color: #949495"
+          :title="item.name + (!item.alia[0] ? '' : '(' + item.alia[0] + ')')"
+          >{{ !item.alia[0] ? "" : "(" + item.alia[0] + ")" }}</span
+        >
       </div>
       <!-- 歌曲功能 -->
 

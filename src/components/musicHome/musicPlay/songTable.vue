@@ -233,6 +233,7 @@ export default {
     // 清空当前歌单
     cleanPlayList() {
       this.$store.dispatch("deleteAllList");
+      // this.$emit("cleanDur");
     },
     //切换到当前播放
     changeNowPlay() {

@@ -34,7 +34,12 @@
     <!-- 播放器 -->
     <musicPlay ref="musicPlay" @isShowSongList="isShowSongList" />
     <!-- 播放列表弹出层 -->
-    <songTable ref="songTable" v-show="showSongList" @getNextSong="getNextSong"/>
+    <songTable
+      ref="songTable"
+      v-show="showSongList"
+      @getNextSong="getNextSong"
+      @cleanDur="cleanDur"
+    />
   </div>
 </template>
 
@@ -100,7 +105,11 @@ export default {
     //播放下一首歌曲
     getNextSong() {
       this.$refs.musicPlay.getNextSong();
-    }
+    },
+    //清空播放栏的歌曲时长
+    cleanDur() {
+      this.$refs.musicPlay.cleanDur();
+    },
   },
   created() {},
   mounted() {},

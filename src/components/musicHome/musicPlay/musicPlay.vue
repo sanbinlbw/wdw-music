@@ -5,7 +5,6 @@
       autoplay
       class="playMusicAudio"
       ref="audio"
-      @canplay="getDuration"
       @timeupdate="durationUpdate"
       @ended="getNextSong"
     ></audio>
@@ -90,10 +89,10 @@
       </div>
       <!-- 播放与暂停 -->
       <div>
-        <div id="pause" v-show="isPlaying" @click="pauseSong">
+        <div id="pause" v-if="isPlaying && songId !== ''" @click="pauseSong">
           <i class="iconfont icon-zanting" style="font-size: 18px"></i>
         </div>
-        <div id="play" v-show="!isPlaying" @click="playSong">
+        <div id="play" v-else @click="playSong">
           <i class="iconfont icon-bofang" style="font-size: 30px"></i>
         </div>
       </div>
@@ -106,20 +105,23 @@
     </div>
     <!-- 播放进度条 -->
     <span style="position: absolute; right: 72%; bottom: 12%; opacity: 0.7">{{
-      this.musicDuration | timeFormat
+      this.musicDetail.name === "" ? 0 : this.musicDuration | timeFormat
     }}</span>
     <div id="playSlider">
       <el-slider
         v-model="musicDuration"
-        :max="musicAllDuration"
+        :max="Math.floor(this.musicDetail.dt / 1000)"
         :show-tooltip="false"
         @change="changeMusicDuration"
         @mousedown.native="isChange = true"
+        @mouseleave.native="isChange = false"
         @mouseup.native="isChange = false"
       ></el-slider>
     </div>
     <span style="position: absolute; left: 72%; bottom: 12%; opacity: 0.7">{{
-      this.musicAllDuration | timeFormat
+      this.musicDetail.name === ""
+        ? 0
+        : Math.floor(this.musicDetail.dt / 1000) | timeFormat
     }}</span>
     <div class="volume">
       <i
@@ -179,8 +181,6 @@ export default {
   components: {},
   data() {
     return {
-      //歌曲总时长
-      musicAllDuration: 0,
       // 歌曲当前时长
       musicDuration: 0,
       //判断是否被拖动
@@ -257,15 +257,15 @@ export default {
       if (this.playOrd === 3) return this.$store.dispatch("savePlayOrd", 0);
       this.$store.dispatch("savePlayOrd", this.playOrd + 1);
     },
-    //获得播放歌曲总时长
-    getDuration() {
-      this.musicAllDuration = this.$refs.audio.duration;
-    },
     //更新当前时长
     durationUpdate() {
       if (this.isChange === true) return;
       this.musicDuration = this.$refs.audio.currentTime;
     },
+    //清除时长
+    // cleanDur() {
+    //   this.musicAllDuration = 0;
+    // },
     //鼠标拖拽松开时
     changeMusicDuration() {
       if (this.musicAllDuration === 0) {
@@ -288,6 +288,7 @@ export default {
         return;
       }
       this.$refs.audio.currentTime = this.musicDuration;
+      this.$store.dispatch("saveIsPlaying", true);
       this.isChange = false;
     },
     //音量改变时
