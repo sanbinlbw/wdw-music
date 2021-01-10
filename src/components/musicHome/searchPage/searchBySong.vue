@@ -65,6 +65,7 @@
         :class="{
           pauseSongName: item.id !== songId,
           startSongName: item.id === songId,
+          noSongName: item.privilege.st == -200,
         }"
         style="cursor: default"
       >
@@ -190,7 +191,25 @@ export default {
     // 双击切换到当前播放
     startSong(musicDetail) {
       if (musicDetail.id === this.songId) return;
-
+      if (musicDetail.privilege.st == -200) {
+        const h = this.$createElement;
+        this.$message.error({
+          message: h("p", null, [
+            h("span", null, "因版权问题，该歌曲已下架"),
+            h(
+              "i",
+              {
+                style: "color: red",
+              },
+              ""
+            ),
+          ]),
+          offset: 280,
+          center: true,
+          showClose: true,
+        });
+        return;
+      }
       // 获得音乐url并保存到当前播放url
       this.getMusicUrl(musicDetail.id);
       // 保存到当前播放歌曲详情
@@ -328,7 +347,18 @@ export default {
   word-break: break-all;
   color: #ec4141 !important;
 }
-
+.noSongName {
+  position: absolute;
+  width: 20%;
+  left: 15%;
+  opacity: 0.9;
+  /* 超出省略号 */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
+  color: #bababa !important;
+}
 .startSongAurtor {
   color: #507daf;
 }

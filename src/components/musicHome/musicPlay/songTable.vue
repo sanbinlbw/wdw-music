@@ -140,8 +140,6 @@
         <div
           :class="{ startSongAurtor: item.id === songId }"
           style="
-            position: absolute;
-            left: 40%;
             width: 120px;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -240,8 +238,7 @@ export default {
     },
     // 清空当前歌单
     cleanPlayList() {
-      this.$store.dispatch("deleteAllList");
-      // this.$emit("cleanDur");
+      this.$emit("cleanDur");
     },
     //切换到当前播放
     changeNowPlay() {

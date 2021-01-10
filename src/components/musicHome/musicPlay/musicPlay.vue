@@ -269,9 +269,12 @@ export default {
       // this.musicDuration++;
     },
     //清除时长
-    // cleanDur() {
-    //   this.musicAllDuration = 0;
-    // },
+    cleanDur() {
+      this.musicDuration = 0;
+      setTimeout(() => {
+        this.$store.dispatch("deleteAllList");
+      }, 20);
+    },
     //鼠标拖拽松开时
     changeMusicDuration() {
       if (this.musicAllDuration === 0) {

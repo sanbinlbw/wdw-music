@@ -85,6 +85,8 @@ const mutations = {
         state.hasPlayList = [];
         // 当前播放音乐url
         state.musicUrl = "";
+        // 可播放音乐范围
+        state.playDur = [];
         // 当前播放歌曲详情
         state.musicDetail = {
             al: {
