@@ -24,7 +24,9 @@ const mutations = {
     unshiftPlayList(state, playList) {
         state.playList.unshift(playList);
     },
-
+    pushPlayList(state, playList) {
+        state.playList.push(playList);
+    },
     // 添加历史记录播放列表
     unshiftHisMusicList(state, hisMusicList) {
         state.hisMusicList.unshift(hisMusicList);
@@ -130,6 +132,14 @@ const mutations = {
     // 修改当前加载状态
     changeIsLoading(state, isLoading) {
         state.isLoading = isLoading
+    },
+    // 保存开始时间和结束时间
+    saveAur(state, slider) {
+        state.slider = {}
+        state.slider[slider[0]] = ''
+        state.slider[slider[1]] = ''
+        state.playDur = []
+        state.playDur = slider
     }
 }
 export default mutations

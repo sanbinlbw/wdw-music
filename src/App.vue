@@ -30,6 +30,9 @@ export default {
       "playOrd",
       //当前搜索信息
       "searchInfo",
+      //当前可播放范围
+      "slider",
+      "playDur"
     ]),
   },
   methods: {
@@ -43,6 +46,8 @@ export default {
       sessionStorage.setItem("hasPlayList", JSON.stringify(this.hasPlayList));
       sessionStorage.setItem("playOrd", JSON.stringify(this.playOrd));
       sessionStorage.setItem("searchInfo", JSON.stringify(this.searchInfo));
+      sessionStorage.setItem("slider", JSON.stringify(this.slider));
+      sessionStorage.setItem("playDur", JSON.stringify(this.playDur));
     },
   },
   mounted() {

@@ -9,6 +9,9 @@ const actions = {
     unshiftPlayList({ commit }, payload) {
         commit('unshiftPlayList', payload)
     },
+    pushPlayList({ commit }, payload) {
+        commit('pushPlayList', payload)
+    },
     // 添加到历史记录播放列表
     unshiftHisMusicList({ commit }, payload) {
         commit('unshiftHisMusicList', payload)
@@ -66,6 +69,10 @@ const actions = {
     // 改变当前加载状态
     changeIsLoading({ commit }, payload) {
         commit('changeIsLoading', payload)
+    },
+    // 保存开始和结束时间
+    saveAur({ commit }, payload) {
+        commit('saveAur', payload)
     }
 }
 export default actions

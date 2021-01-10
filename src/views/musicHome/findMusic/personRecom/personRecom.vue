@@ -157,7 +157,7 @@ export default {
             return;
           }
         }
-        this.$store.dispatch("unshiftPlayList", this.musicDetail);
+        this.$store.dispatch("pushPlayList", this.musicDetail);
       }
     },
     //根据id获取音乐url

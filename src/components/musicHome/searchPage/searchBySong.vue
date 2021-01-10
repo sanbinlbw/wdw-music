@@ -1,14 +1,16 @@
 <template>
   <div class="searchBySong">
     <div id="songSearchHead">
-      <span style="margin-left: 150px; color: #888888; font-size: 15px">音乐标题</span>
-      <span style="position: absolute; left: 40%; color: #888888; font-size: 15px"
+      <span style="position: absolute; left: 15%; color: #888888; font-size: 15px"
+        >音乐标题</span
+      >
+      <span style="position: absolute; left: 45%; color: #888888; font-size: 15px"
         >歌手</span
       >
-      <span style="position: absolute; left: 60%; color: #888888; font-size: 15px">
+      <span style="position: absolute; left: 65%; color: #888888; font-size: 15px">
         专辑
       </span>
-      <span style="position: absolute; left: 80%; color: #888888; font-size: 15px"
+      <span style="position: absolute; left: 85%; color: #888888; font-size: 15px"
         >时长</span
       >
     </div>
@@ -18,8 +20,23 @@
       :key="index"
       background="#f9f9f9"
       @dblclick="startSong(item)"
+      @mouseenter="currentIndex = index"
+      @mouseleave="currentIndex = -1"
     >
-      <!-- <span>{{ index }}</span> -->
+      <!-- 是否可mv或试听等 -->
+      <div class="songRoot">
+        <i
+          class="iconfont icon-MV"
+          style="color: #ec4141; cursor: pointer"
+          v-show="item.mv != 0"
+        ></i>
+        <i
+          class="iconfont icon-vip-l"
+          style="color: #ec4141; margin-left: 10px"
+          v-show="item.privilege.chargeInfoList[0].chargeType !== 0"
+        ></i>
+      </div>
+      <!-- 播放或暂停音乐动画表情 -->
       <div
         style="font-size: 10px; position: absolute; top: 20px; left: 28px; color: #ec4141"
         v-if="item.id === songId && isPlaying"
@@ -61,7 +78,20 @@
         >
       </div>
       <!-- 歌曲功能 -->
-
+      <div class="songFunc" v-show="index === currentIndex">
+        <i class="iconfont icon-xin" style="opacity: 0.9; cursor: pointer"></i>
+        <i
+          class="iconfont icon-tianjia"
+          style="opacity: 0.9; cursor: pointer; margin-left: 10px"
+          title="添加到播放列表"
+          @click="addList(item)"
+        ></i>
+        <i
+          class="iconfont icon-fenxiang"
+          style="opacity: 0.9; cursor: pointer; margin-left: 10px"
+          title="分享"
+        ></i>
+      </div>
       <!-- <div
         style="
           border: 1px solid #ec4141;
@@ -75,7 +105,7 @@
         MV
       </div> -->
       <!-- 作者名 -->
-      <div class="startSongAurtor" style="position: absolute; left: 40%">
+      <div class="startSongAurtor" style="position: absolute; left: 45%">
         <div
           style="
             width: 160px;
@@ -90,22 +120,24 @@
           }}</span>
         </div>
       </div>
+      <!-- 专辑 -->
       <div
         style="
-          width: 160px;
+          width: 15%;
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
           word-break: break-all;
           position: absolute;
-          left: 60%;
+          left: 65%;
           cursor: pointer;
           font-weight: 300;
         "
       >
         {{ item.al.name }}
       </div>
-      <span style="position: absolute; left: 80%">{{
+      <!-- 时长 -->
+      <span style="position: absolute; left: 85%">{{
         Math.floor(item.dt / 1000) | timeFormat
       }}</span>
     </div>
@@ -138,6 +170,8 @@ export default {
       "isPlaying",
       //加载状态
       "isLoading",
+      //可播放区域
+      "slider",
     ]),
   },
   components: {
@@ -147,7 +181,10 @@ export default {
     pagination,
   },
   data() {
-    return {};
+    return {
+      // 鼠标移入的index
+      currentIndex: -1,
+    };
   },
   methods: {
     // 双击切换到当前播放
@@ -163,6 +200,10 @@ export default {
       // 放入历史歌单
       this.$store.dispatch("deleteHisListSong", musicDetail.id);
       this.$store.dispatch("unshiftHisMusicList", musicDetail);
+      this.addList(musicDetail);
+    },
+    //加入歌单
+    addList(musicDetail) {
       // 放入已经播放过的歌单
       this.$store.dispatch("deleteHasListSong", musicDetail.id);
       this.$store.dispatch("pushHasPlayList", musicDetail);
@@ -188,7 +229,7 @@ export default {
           return;
         }
       }
-      this.$store.dispatch("unshiftPlayList", musicDetail);
+      this.$store.dispatch("pushPlayList", musicDetail);
     },
     //根据id获取音乐url
     async getMusicUrl(musicId) {
@@ -199,6 +240,14 @@ export default {
           },
         })
         .then((res) => {
+          if (res.data.data[0].freeTrialInfo) {
+            this.$store.dispatch("saveAur", [
+              res.data.data[0].freeTrialInfo.start,
+              res.data.data[0].freeTrialInfo.end,
+            ]);
+          } else {
+            this.$store.dispatch("saveAur", [0, 0]);
+          }
           this.$store.dispatch("saveMusicUrl", res.data.data[0].url);
         });
     },
@@ -213,6 +262,7 @@ export default {
 
 <style scoped>
 /* 标题 */
+
 #songSearchHead {
   position: relative;
   width: 100%;
@@ -221,11 +271,11 @@ export default {
   color: #363636;
   opacity: 0.8;
 }
+
 .page {
   margin-left: 50%;
   transform: translateX(-50%);
 }
-
 /* 每行歌曲样式 */
 
 .songMesSin {
@@ -255,9 +305,10 @@ export default {
 
 .pauseSongName {
   position: absolute;
-  width: 160px;
-  margin-left: 150px;
+  width: 20%;
+  left: 15%;
   opacity: 0.9;
+  /* 超出省略号 */
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -267,9 +318,10 @@ export default {
 
 .startSongName {
   position: absolute;
-  width: 160px;
-  margin-left: 150px;
+  width: 20%;
+  left: 15%;
   opacity: 0.9;
+  /* 超出省略号 */
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -279,5 +331,16 @@ export default {
 
 .startSongAurtor {
   color: #507daf;
+}
+/* 歌曲操作 */
+
+.songFunc {
+  position: absolute;
+  left: 37%;
+}
+/* 歌曲权限 */
+.songRoot {
+  position: absolute;
+  right: 86%;
 }
 </style>

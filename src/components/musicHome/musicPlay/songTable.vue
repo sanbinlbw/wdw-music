@@ -227,6 +227,14 @@ export default {
           },
         })
         .then((res) => {
+          if (res.data.data[0].freeTrialInfo) {
+            this.$store.dispatch("saveAur", [
+              res.data.data[0].freeTrialInfo.start,
+              res.data.data[0].freeTrialInfo.end,
+            ]);
+          } else {
+            this.$store.dispatch("saveAur", [0, 0]);
+          }
           this.$store.dispatch("saveMusicUrl", res.data.data[0].url);
         });
     },

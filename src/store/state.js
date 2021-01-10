@@ -34,7 +34,10 @@ const state = {
     //当前搜索信息
     searchInfo: sessionStorage.getItem('searchInfo') ? JSON.parse(sessionStorage.getItem('searchInfo')) : "",
     //当前是否在加载数据
-    isLoading: false
+    isLoading: false,
+    // 试听片段开始和结束时间
+    slider: sessionStorage.getItem('slider') ? JSON.parse(sessionStorage.getItem('slider')) : {},
+    playDur: sessionStorage.getItem('playDur') ? JSON.parse(sessionStorage.getItem('playDur')) : {}
         // 搜索历史
         // searchHistory: getSearch(),
 }
