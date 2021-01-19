@@ -297,7 +297,7 @@ export default {
         return;
       }
       this.$refs.audio.currentTime = this.musicDuration - this.playDur[0];
-      this.$store.dispatch("saveIsPlaying", true);
+      // this.$store.dispatch("saveIsPlaying", true);
       this.isChange = false;
     },
     //音量改变时

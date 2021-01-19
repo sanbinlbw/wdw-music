@@ -1,46 +1,52 @@
 <template>
   <div class="searchByVideo">
-    <div class="page">
-      <el-pagination background layout="prev, pager, next" :total="1000" :pager-count="9">
-      </el-pagination>
+    <div class="noSearch" v-if="!songAll.videoCount">
+      很抱歉，没有找到您搜索信息的任何相关视频。
     </div>
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <div v-else>
+      <div class="page">
+        <pagination :songAll="songAll" @getSongPage="getSongPage" />
+      </div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    </div>
   </div>
 </template>
 
 <script>
+import pagination from "./pagination";
 export default {
   name: "searchByVideo",
-  components: {},
+  components: { pagination },
+  props: {
+    // 歌曲搜索信息
+    songAll: Object,
+  },
   data() {
     return {};
+  },
+  methods: {
+    //获取指定页数歌曲
+    getSongPage(offset, type) {
+      this.$emit("getSongPage", offset, type);
+    },
+  },
+  created() {
+    this.getSongPage(0, "Video");
   },
 };
 </script>
 
-<style>
+<style scoped>
+/* 当搜索不到时页面展示 */
+.noSearch {
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  width: 70vw;
+  height: 60vh;
+}
 .page {
   margin-left: 50%;
   transform: translateX(-50%);
-}
-
-/*带背景的分页按钮背景色begin*/
-.el-pagination.is-background .el-pager li:not(.disabled).active {
-  background-color: #ec4141;
-  color: #fff;
-}
-.el-pagination.is-background .el-pager li.active {
-  color: #fff;
-  cursor: default;
-}
-.el-pagination.is-background .el-pager li:hover {
-  color: #ec4141;
-}
-.el-pagination.is-background .el-pager li:not(.disabled):hover {
-  color: #ec4141;
-}
-.el-pagination.is-background .el-pager li:not(.disabled).active:hover {
-  background-color: #ec4141;
-  color: #fff;
 }
 </style>

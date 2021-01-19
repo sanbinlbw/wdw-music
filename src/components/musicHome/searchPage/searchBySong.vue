@@ -1,99 +1,115 @@
 <template>
   <div class="searchBySong">
-    <div id="songSearchHead">
-      <span style="position: absolute; left: 15%; color: #888888; font-size: 15px"
-        >音乐标题</span
-      >
-      <span style="position: absolute; left: 45%; color: #888888; font-size: 15px"
-        >歌手</span
-      >
-      <span style="position: absolute; left: 65%; color: #888888; font-size: 15px">
-        专辑
-      </span>
-      <span style="position: absolute; left: 85%; color: #888888; font-size: 15px"
-        >时长</span
-      >
+    <div class="noSearch" v-if="songAll.songCount === 0">
+      很抱歉，没有找到您搜索信息的任何相关歌曲。
     </div>
-    <div
-      :class="{ songMesSin: index % 2 !== 0, songMesDou: index % 2 === 0 }"
-      v-for="(item, index) in songAll.songList"
-      :key="index"
-      background="#f9f9f9"
-      @dblclick="startSong(item)"
-      @mouseenter="currentIndex = index"
-      @mouseleave="currentIndex = -1"
-    >
-      <!-- 是否可mv或试听等 -->
-      <div class="songRoot">
-        <i
-          class="iconfont icon-MV"
-          style="color: #ec4141; cursor: pointer"
-          v-show="item.mv != 0"
-        ></i>
-        <i
-          class="iconfont icon-vip-l"
-          style="color: #ec4141; margin-left: 10px"
-          v-show="item.privilege.chargeInfoList[0].chargeType !== 0"
-        ></i>
-      </div>
-      <!-- 播放或暂停音乐动画表情 -->
-      <div
-        style="font-size: 10px; position: absolute; top: 20px; left: 28px; color: #ec4141"
-        v-if="item.id === songId && isPlaying"
-      >
-        <playAni />
-      </div>
-      <i
-        class="iconfont icon-zanting"
-        style="font-size: 10px; position: absolute; top: 2px; left: 28px; color: #ec4141"
-        v-else-if="item.id === songId && !isPlaying"
-      ></i>
-      <!-- 歌曲序号 -->
-      <span
-        style="
-          font-size: 15px !important;
-          position: absolute;
-          top: 2px;
-          left: 25px;
-          color: #373737;
-        "
-        v-else
-        >{{ index >= 9 ? index + 1 : "0" + (index + 1) }}</span
-      >
-      <!-- 歌曲名 -->
-      <div
-        :class="{
-          pauseSongName: item.id !== songId,
-          startSongName: item.id === songId,
-          noSongName: item.privilege.st == -200,
-        }"
-        style="cursor: default"
-      >
-        <span :title="item.name + (!item.alia[0] ? '' : '(' + item.alia[0] + ')')">{{
-          item.name
-        }}</span>
-        <span
-          style="color: #949495"
-          :title="item.name + (!item.alia[0] ? '' : '(' + item.alia[0] + ')')"
-          >{{ !item.alia[0] ? "" : "(" + item.alia[0] + ")" }}</span
+    <div v-else>
+      <div id="songSearchHead">
+        <span style="position: absolute; left: 15%; color: #888888; font-size: 15px"
+          >音乐标题</span
+        >
+        <span style="position: absolute; left: 45%; color: #888888; font-size: 15px"
+          >歌手</span
+        >
+        <span style="position: absolute; left: 65%; color: #888888; font-size: 15px">
+          专辑
+        </span>
+        <span style="position: absolute; left: 85%; color: #888888; font-size: 15px"
+          >时长</span
         >
       </div>
-      <!-- 歌曲功能 -->
-      <div class="songFunc" v-show="index === currentIndex">
-        <i class="iconfont icon-xin" style="opacity: 0.9; cursor: pointer"></i>
+      <div
+        :class="{ songMesSin: index % 2 !== 0, songMesDou: index % 2 === 0 }"
+        v-for="(item, index) in songAll.songList"
+        :key="index"
+        background="#f9f9f9"
+        @dblclick="startSong(item)"
+        @mouseenter="currentIndex = index"
+        @mouseleave="currentIndex = -1"
+      >
+        <!-- 是否可mv或试听等 -->
+        <div class="songRoot">
+          <i
+            class="iconfont icon-MV"
+            style="color: #ec4141; cursor: pointer"
+            v-show="item.mv != 0"
+          ></i>
+          <i
+            class="iconfont icon-vip-l"
+            style="color: #ec4141; margin-left: 10px"
+            v-show="item.privilege.chargeInfoList[0].chargeType !== 0"
+          ></i>
+        </div>
+        <!-- 播放或暂停音乐动画表情 -->
+        <div
+          style="
+            font-size: 10px;
+            position: absolute;
+            top: 20px;
+            left: 28px;
+            color: #ec4141;
+          "
+          v-if="item.id === songId && isPlaying"
+        >
+          <playAni />
+        </div>
         <i
-          class="iconfont icon-tianjia"
-          style="opacity: 0.9; cursor: pointer; margin-left: 10px"
-          title="添加到播放列表"
-          @click="addList(item)"
+          class="iconfont icon-zanting"
+          style="
+            font-size: 10px;
+            position: absolute;
+            top: 2px;
+            left: 28px;
+            color: #ec4141;
+          "
+          v-else-if="item.id === songId && !isPlaying"
         ></i>
-        <i
-          class="iconfont icon-fenxiang"
-          style="opacity: 0.9; cursor: pointer; margin-left: 10px"
-          title="分享"
-        ></i>
-      </div>
-      <!-- <div
+        <!-- 歌曲序号 -->
+        <span
+          style="
+            font-size: 15px !important;
+            position: absolute;
+            top: 2px;
+            left: 25px;
+            color: #373737;
+          "
+          v-else
+          >{{ index >= 9 ? index + 1 : "0" + (index + 1) }}</span
+        >
+        <!-- 歌曲名 -->
+        <div
+          :class="{
+            pauseSongName: item.id !== songId,
+            startSongName: item.id === songId,
+            noSongName: item.privilege.st == -200,
+          }"
+          style="cursor: default"
+        >
+          <span :title="item.name + (!item.alia[0] ? '' : '(' + item.alia[0] + ')')">{{
+            item.name
+          }}</span>
+          <span
+            style="color: #949495"
+            :title="item.name + (!item.alia[0] ? '' : '(' + item.alia[0] + ')')"
+            >{{ !item.alia[0] ? "" : "(" + item.alia[0] + ")" }}</span
+          >
+        </div>
+        <!-- 歌曲功能 -->
+        <div class="songFunc" v-show="index === currentIndex">
+          <i class="iconfont icon-xin" style="opacity: 0.9; cursor: pointer"></i>
+          <i
+            class="iconfont icon-tianjia"
+            style="opacity: 0.9; cursor: pointer; margin-left: 10px"
+            title="添加到播放列表"
+            @click="addList(item)"
+          ></i>
+          <i
+            class="iconfont icon-fenxiang"
+            style="opacity: 0.9; cursor: pointer; margin-left: 10px"
+            title="分享"
+          ></i>
+        </div>
+        <!-- <div
         style="
           border: 1px solid #ec4141;
           width: 30px;
@@ -105,49 +121,50 @@
       >
         MV
       </div> -->
-      <!-- 作者名 -->
-      <div class="startSongAurtor" style="position: absolute; left: 45%">
+        <!-- 作者名 -->
+        <div class="startSongAurtor" style="position: absolute; left: 45%">
+          <div
+            style="
+              width: 160px;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              word-break: break-all;
+            "
+          >
+            <span style="cursor: pointer" v-for="(item, index) in item.ar" :key="index">{{
+              index === 0 ? item.name : "/" + item.name
+            }}</span>
+          </div>
+        </div>
+        <!-- 专辑 -->
         <div
           style="
-            width: 160px;
+            width: 15%;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
             word-break: break-all;
+            position: absolute;
+            left: 65%;
+            cursor: pointer;
+            font-weight: 300;
           "
         >
-          <span style="cursor: pointer" v-for="(item, index) in item.ar" :key="index">{{
-            index === 0 ? item.name : "/" + item.name
-          }}</span>
+          {{ item.al.name }}
         </div>
+        <!-- 时长 -->
+        <span style="position: absolute; left: 85%">{{
+          Math.floor(item.dt / 1000) | timeFormat
+        }}</span>
       </div>
-      <!-- 专辑 -->
-      <div
-        style="
-          width: 15%;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          overflow: hidden;
-          word-break: break-all;
-          position: absolute;
-          left: 65%;
-          cursor: pointer;
-          font-weight: 300;
-        "
-      >
-        {{ item.al.name }}
+      <br />
+      <!-- 分页栏 -->
+      <div class="page">
+        <pagination :songAll="songAll" @getSongPage="getSongPage" />
       </div>
-      <!-- 时长 -->
-      <span style="position: absolute; left: 85%">{{
-        Math.floor(item.dt / 1000) | timeFormat
-      }}</span>
+      <br /><br /><br />
     </div>
-    <br />
-    <!-- 分页栏 -->
-    <div class="page">
-      <pagination :songAll="songAll" @getSongPage="getSongPage" />
-    </div>
-    <br /><br /><br />
   </div>
 </template>
 
@@ -271,15 +288,25 @@ export default {
         });
     },
     //获取指定页数歌曲
-    getSongPage(offset) {
-      this.$emit("getSongPage", offset);
+    getSongPage(offset, type) {
+      this.$emit("getSongPage", offset, type);
     },
   },
-  created() {},
+  created() {
+    this.getSongPage(0, "Song");
+  },
 };
 </script>
 
 <style scoped>
+/* 当搜索不到时页面展示 */
+.noSearch {
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  width: 70vw;
+  height: 60vh;
+}
 /* 标题 */
 
 #songSearchHead {

@@ -8,7 +8,7 @@
     >
       <el-menu-item index="/musicHome/searchPage/searchBySong">单曲</el-menu-item>
       <el-menu-item index="/musicHome/searchPage/searchBySinger">歌手</el-menu-item>
-      <el-menu-item index="/musicHome/searchPage/searchByPlayList">专辑</el-menu-item>
+      <el-menu-item index="/musicHome/searchPage/searchByAlbum">专辑</el-menu-item>
       <el-menu-item index="/musicHome/searchPage/searchByVideo">视频</el-menu-item>
     </el-menu>
   </div>

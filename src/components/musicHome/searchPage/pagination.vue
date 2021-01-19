@@ -25,7 +25,7 @@ export default {
   methods: {
     //获取指定页歌曲
     getSongPage(Page) {
-      this.$emit("getSongPage", Page - 1);
+      this.$emit("getSongPage", Page - 1, this.$route.path.slice(30));
     },
   },
 };

@@ -1,10 +1,10 @@
 <template>
-  <div class="searchBySinger">
-    <div class="noSearch" v-if="songAll.singerCount === 0">
-      很抱歉，没有找到您搜索信息的任何相关歌手。
+  <div class="searchByPlayList">
+    <div class="noSearch" v-if="songAll.albumCount === 0">
+        很抱歉，没有找到您搜索信息的任何相关专辑。
     </div>
     <div v-else>
-      <div class="page">
+        <div class="page">
       <pagination :songAll="songAll" @getSongPage="getSongPage" />
     </div>
     <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
@@ -15,10 +15,8 @@
 <script>
 import pagination from "./pagination";
 export default {
-  name: "searchBySinger",
-  components: {
-    pagination,
-  },
+  name: "searchByAlbum",
+  components: { pagination },
   props: {
     // 歌曲搜索信息
     songAll: Object,
@@ -33,7 +31,7 @@ export default {
     },
   },
   created() {
-    this.getSongPage(0, "Singer");
+    this.getSongPage(0, "Album");
   },
 };
 </script>

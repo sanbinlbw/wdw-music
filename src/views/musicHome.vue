@@ -95,7 +95,7 @@ export default {
         });
       }
       //调用搜索页获取数据
-      this.$refs.child.getSongPage(0);
+      this.$refs.child.getSongPage(0,'Song');
     },
 
     //是否展示歌单

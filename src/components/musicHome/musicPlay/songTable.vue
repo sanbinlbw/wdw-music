@@ -68,7 +68,7 @@
           style="
             position: absolute;
             width: 120px;
-            left: 40%;
+            left: 45%;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
@@ -140,6 +140,8 @@
         <div
           :class="{ startSongAurtor: item.id === songId }"
           style="
+            position: absolute;
+            left:45%
             width: 120px;
             white-space: nowrap;
             text-overflow: ellipsis;

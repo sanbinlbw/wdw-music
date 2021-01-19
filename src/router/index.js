@@ -95,10 +95,10 @@ const router = new VueRouter({
                                 import ('@/components/musicHome/searchPage/searchByVideo')
                         },
                         {
-                            path: '/musicHome/searchPage/searchByPlayList',
-                            name: 'searchByPlayList',
+                            path: '/musicHome/searchPage/searchByAlbum',
+                            name: 'searchByAlbum',
                             component: () =>
-                                import ('@/components/musicHome/searchPage/searchByPlayList')
+                                import ('@/components/musicHome/searchPage/searchByAlbum')
                         },
                     ]
                 }
