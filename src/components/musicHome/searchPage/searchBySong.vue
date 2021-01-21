@@ -161,7 +161,7 @@
       <br />
       <!-- 分页栏 -->
       <div class="page">
-        <pagination :songAll="songAll" @getSongPage="getSongPage" />
+        <pagination :count="songAll.songCount" :pageNum="50" @getSongPage="getSongPage" />
       </div>
       <br /><br /><br />
     </div>
@@ -319,7 +319,7 @@ export default {
 }
 
 .page {
-  margin-left: 50%;
+  margin-left: 53%;
   transform: translateX(-50%);
 }
 /* 每行歌曲样式 */

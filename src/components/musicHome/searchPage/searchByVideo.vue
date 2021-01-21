@@ -5,7 +5,11 @@
     </div>
     <div v-else>
       <div class="page">
-        <pagination :songAll="songAll" @getSongPage="getSongPage" />
+        <pagination
+          :count="songAll.videoCount"
+          :pageNum="24"
+          @getSongPage="getSongPage"
+        />
       </div>
       <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
     </div>
@@ -46,7 +50,7 @@ export default {
   height: 60vh;
 }
 .page {
-  margin-left: 50%;
+  margin-left: 53%;
   transform: translateX(-50%);
 }
 </style>

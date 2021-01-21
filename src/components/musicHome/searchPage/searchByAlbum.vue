@@ -1,13 +1,17 @@
 <template>
   <div class="searchByPlayList">
     <div class="noSearch" v-if="songAll.albumCount === 0">
-        很抱歉，没有找到您搜索信息的任何相关专辑。
+      很抱歉，没有找到您搜索信息的任何相关专辑。
     </div>
     <div v-else>
-        <div class="page">
-      <pagination :songAll="songAll" @getSongPage="getSongPage" />
-    </div>
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <div class="page">
+        <pagination
+          :count="songAll.albumCount"
+          :pageNum="20"
+          @getSongPage="getSongPage"
+        />
+      </div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
     </div>
   </div>
 </template>
@@ -46,7 +50,7 @@ export default {
   height: 60vh;
 }
 .page {
-  margin-left: 50%;
+  margin-left: 53%;
   transform: translateX(-50%);
 }
 </style>

@@ -3,7 +3,7 @@
     <el-pagination
       background
       layout="prev, pager, next"
-      :total="Math.ceil(songAll.songCount / 50) * 10"
+      :total="Math.ceil(count / pageNum) * 10"
       :pager-count="9"
       @current-change="getSongPage"
     >
@@ -16,7 +16,9 @@ export default {
   name: "pagination",
   props: {
     //分页总数
-    songAll: Object,
+    count: Number,
+    //每页总数
+    pageNum:Number
   },
   components: {},
   data() {

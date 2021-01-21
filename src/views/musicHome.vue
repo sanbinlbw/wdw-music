@@ -95,7 +95,7 @@ export default {
         });
       }
       //调用搜索页获取数据
-      this.$refs.child.getSongPage(0,'Song');
+      this.$refs.child.getSongPage(0, "Song");
     },
 
     //是否展示歌单
@@ -123,7 +123,6 @@ export default {
   background: #c62f2f;
   padding-top: 5px;
 }
-
 #musicDemo {
   width: 40px;
   height: 40px;
