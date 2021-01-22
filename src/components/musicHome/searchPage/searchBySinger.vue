@@ -88,7 +88,7 @@ export default {
   height: 150px;
   line-height: 150px;
   padding: 15px;
-  opacity: 0.8;
+  /* opacity: 0.8; */
   cursor: pointer;
 }
 
@@ -98,7 +98,7 @@ export default {
   height: 150px;
   line-height: 150px;
   padding: 15px;
-  opacity: 0.8;
+  /* opacity: 0.8; */
   background: #f9f9f9;
   cursor: pointer;
 }
