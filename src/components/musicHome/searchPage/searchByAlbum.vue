@@ -105,11 +105,6 @@ export default {
 .songMesDou:hover {
   background: #f4f4f4;
 }
-/* 分页样式 */
-.page {
-  margin-left: 53%;
-  transform: translateX(-50%);
-}
 /* 专辑名 */
 .albumName {
   position: absolute;

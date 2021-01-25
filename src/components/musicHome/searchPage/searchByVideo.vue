@@ -131,8 +131,4 @@ export default {
   color: #373737;
   opacity: 0.6;
 }
-.page {
-  margin-left: 53%;
-  transform: translateX(-50%);
-}
 </style>

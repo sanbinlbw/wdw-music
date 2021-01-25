@@ -161,7 +161,12 @@
       <br />
       <!-- 分页栏 -->
       <div class="page">
-        <pagination :count="songAll.songCount" :pageNum="50" @getSongPage="getSongPage" />
+        <pagination
+          :count="songAll.songCount"
+          :pageNum="50"
+          @getSongPage="getSongPage"
+          ref="pagination"
+        />
       </div>
       <br /><br /><br />
     </div>
@@ -291,6 +296,10 @@ export default {
     getSongPage(offset, type) {
       this.$emit("getSongPage", offset, type);
     },
+    //返回第一页
+    backNumOne() {
+      this.$refs.pagination.backNumOne();
+    },
   },
   created() {
     this.getSongPage(0, "Song");
@@ -318,10 +327,6 @@ export default {
   opacity: 0.8;
 }
 
-.page {
-  margin-left: 53%;
-  transform: translateX(-50%);
-}
 /* 每行歌曲样式 */
 
 .songMesSin {

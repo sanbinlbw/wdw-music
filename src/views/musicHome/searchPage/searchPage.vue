@@ -26,7 +26,12 @@
     </div>
     <div v-loading="isLoading" element-loading-text="加载中...">
       <!-- 子路由 -->
-      <router-view id="secondRoute" :songAll="songAll" @getSongPage="getSongPage"/>
+      <router-view
+        id="secondRoute"
+        :songAll="songAll"
+        @getSongPage="getSongPage"
+        ref="songPage"
+      />
     </div>
   </div>
 </template>
@@ -157,6 +162,9 @@ export default {
             });
           break;
       }
+    },
+    backNumOne() {
+      this.$refs.songPage.backNumOne();
     },
   },
   created() {

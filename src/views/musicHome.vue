@@ -28,7 +28,9 @@
         <!-- 左部导航栏 -->
         <el-aside width="16%"><leftNav /></el-aside>
         <!-- 展示路由 -->
-        <el-main><router-view ref="child" :searchData="searchData" /></el-main>
+        <el-main
+          ><router-view ref="child" :searchData="searchData" v-show="!isEgg"
+        /></el-main>
       </el-container>
     </el-container>
     <!-- 播放器 -->
@@ -40,6 +42,10 @@
       @getNextSong="getNextSong"
       @cleanDur="cleanDur"
     />
+    <!-- 彩蛋 -->
+    <div class="egg" v-show="isEgg">
+      <loveLetter />
+    </div>
   </div>
 </template>
 
@@ -48,6 +54,7 @@ import leftNav from "@/components/musicHome/leftNav/leftNav";
 import loginBar from "@/components/musicHome/leftNav/loginBar";
 import musicPlay from "@/components/musicHome/musicPlay/musicPlay";
 import songTable from "@/components/musicHome/musicPlay/songTable";
+import loveLetter from "@/components/musicHome/playAnimation/loveLetter";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "musicHome",
@@ -56,6 +63,7 @@ export default {
     loginBar,
     musicPlay,
     songTable,
+    loveLetter,
   },
   data() {
     return {
@@ -63,6 +71,8 @@ export default {
       showSongList: false,
       //搜索框
       searchData: "",
+      //彩蛋触发
+      isEgg: false,
     };
   },
   computed: {
@@ -84,6 +94,14 @@ export default {
   methods: {
     //搜索并跳转到搜索界面
     search() {
+      //女朋友要求彩蛋
+      if (this.searchData === "@陈若兰是个憨批@") {
+        this.isEgg = true;
+        setTimeout(() => {
+          this.isEgg = false;
+        }, 16000);
+        return;
+      }
       //判断为空不进行搜索
       if (this.searchData.trim() === "") return;
       //保存当前搜索数据到vuex
@@ -96,6 +114,7 @@ export default {
       }
       //调用搜索页获取数据
       this.$refs.child.getSongPage(0, "Song");
+      this.$refs.child.backNumOne();
     },
 
     //是否展示歌单
@@ -201,5 +220,15 @@ export default {
 
 .volume .el-slider__runway {
   background: #e6e6e8;
+}
+/* 菜单 */
+.egg {
+  position: absolute;
+  /* width: 580px; */
+  /* height: 580px; */
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5201314;
 }
 </style>

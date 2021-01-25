@@ -6,6 +6,7 @@
       :total="Math.ceil(count / pageNum) * 10"
       :pager-count="9"
       @current-change="getSongPage"
+      :current-page.sync="currentPage"
     >
     </el-pagination>
   </div>
@@ -22,12 +23,19 @@ export default {
   },
   components: {},
   data() {
-    return {};
+    return {
+      //最新页
+      currentPage: 1,
+    };
   },
   methods: {
     //获取指定页歌曲
     getSongPage(Page) {
       this.$emit("getSongPage", Page - 1, this.$route.path.slice(30));
+    },
+    //返回第一页
+    backNumOne() {
+      this.currentPage = 1;
     },
   },
 };
@@ -52,5 +60,10 @@ export default {
 .el-pagination.is-background .el-pager li:not(.disabled).active:hover {
   background-color: #ec4141;
   color: #fff;
+}
+/* 分页样式 */
+.pagination {
+  margin-left: 53%;
+  transform: translateX(-50%);
 }
 </style>

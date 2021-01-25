@@ -82,17 +82,22 @@
         <span style="position: absolute; left: 80%">{{
           Math.floor(item.dt / 1000) | timeFormat
         }}</span>
-        <i
-          class="el-icon-close"
-          style="
-            position: absolute;
-            top: 35%;
-            right: 3%;
-            font-size: 15px;
-            cursor: pointer;
-          "
-          @click="delPlayListSong(item.id)"
-        ></i>
+        <el-popconfirm
+          title="确定要将该歌曲从列表中删除吗？"
+          @confirm="delPlayListSong(item.id)"
+        >
+          <i
+            class="el-icon-close"
+            slot="reference"
+            style="
+              position: absolute;
+              top: 35%;
+              right: 3%;
+              font-size: 15px;
+              cursor: pointer;
+            "
+          ></i>
+        </el-popconfirm>
       </div>
     </div>
     <div v-show="isHisPlayList">
@@ -156,17 +161,22 @@
         <span style="position: absolute; left: 80%">{{
           Math.floor(item.dt / 1000) | timeFormat
         }}</span>
-        <i
-          class="el-icon-close"
-          style="
-            position: absolute;
-            top: 35%;
-            right: 3%;
-            font-size: 15px;
-            cursor: pointer;
-          "
-          @click="delHisListSong(item.id)"
-        ></i>
+        <el-popconfirm
+          title="确定要将该歌曲从列表中删除吗？"
+          @confirm="delHisListSong(item.id)"
+        >
+          <i
+            class="el-icon-close"
+            slot="reference"
+            style="
+              position: absolute;
+              top: 35%;
+              right: 3%;
+              font-size: 15px;
+              cursor: pointer;
+            "
+          ></i>
+        </el-popconfirm>
       </div>
     </div>
   </div>

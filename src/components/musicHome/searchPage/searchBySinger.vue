@@ -107,12 +107,6 @@ export default {
 .songMesDou:hover {
   background: #f4f4f4;
 }
-/* 分页栏 */
-.page {
-  margin-top: 30px;
-  margin-left: 53%;
-  transform: translateX(-50%);
-}
 /* 歌手名 */
 .singerName {
   position: absolute;

@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "705660",
+      "name": "地球",
+      "font_class": "diqiu",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "9526776",
+      "name": "方格排列",
+      "font_class": "fanggepailie",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "11759978",
+      "name": "咖啡",
+      "font_class": "kafei",
+      "unicode": "e7c4",
+      "unicode_decimal": 59332
+    },
+    {
+      "icon_id": "12184892",
+      "name": "笑脸",
+      "font_class": "xiaolian",
+      "unicode": "e688",
+      "unicode_decimal": 59016
+    },
+    {
+      "icon_id": "18674078",
+      "name": "钢琴",
+      "font_class": "gangqin",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
       "icon_id": "6682549",
       "name": "添加",
       "font_class": "tianjia",
