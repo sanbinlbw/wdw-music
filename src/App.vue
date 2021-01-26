@@ -32,7 +32,7 @@ export default {
       "searchInfo",
       //当前可播放范围
       "slider",
-      "playDur"
+      "playDur",
     ]),
   },
   methods: {
@@ -51,6 +51,15 @@ export default {
     },
   },
   mounted() {
+    // 判断是否兼容箭头函数
+    try {
+      eval("()=>{}");
+      // alert("浏览器支持箭头函数");
+    } catch (eo) {
+      alert("本网站不兼容ie8，请下载最新的现代浏览器进行使用");
+      window.location.href = "http://browsehappy.osfipin.com/";
+    }
+    // 将数据保存到vuex
     window.addEventListener("unload", this.saveState);
   },
 };

@@ -120,6 +120,7 @@ export default {
           center: true,
           showClose: true,
         });
+        return;
       }
       // url为空时不提交到vuex
       if (this.musicUrl !== "") {
