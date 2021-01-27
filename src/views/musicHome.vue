@@ -5,6 +5,12 @@
       <el-header>
         <img src="../assets/image/demo.svg" alt="" id="musicDemo" />
         <span>似音流年</span>
+        <!-- <span
+          :style="{
+            'background-image': 'url(' + require('../assets/image/heart.png') + ')',
+          }"
+        >
+        </span> -->
         <div id="back">
           <i
             class="el-icon-arrow-left"
@@ -45,6 +51,7 @@
     <!-- 彩蛋 -->
     <div class="egg" v-show="isEgg">
       <loveLetter />
+      <loveHeart :loveModel="loveModel" />
     </div>
   </div>
 </template>
@@ -55,6 +62,7 @@ import loginBar from "@/components/musicHome/leftNav/loginBar";
 import musicPlay from "@/components/musicHome/musicPlay/musicPlay";
 import songTable from "@/components/musicHome/musicPlay/songTable";
 import loveLetter from "@/components/musicHome/playAnimation/loveLetter";
+import loveHeart from "@/components/musicHome/playAnimation/loveHeart";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "musicHome",
@@ -64,6 +72,7 @@ export default {
     musicPlay,
     songTable,
     loveLetter,
+    loveHeart,
   },
   data() {
     return {
@@ -73,6 +82,8 @@ export default {
       searchData: "",
       //彩蛋触发
       isEgg: false,
+      //心动模式
+      loveModel: false,
     };
   },
   computed: {
@@ -95,11 +106,18 @@ export default {
     //搜索并跳转到搜索界面
     search() {
       //女朋友要求彩蛋
-      if (this.searchData === "@陈若兰是个憨批@") {
+      if (this.searchData === "@crl是个憨批@") {
         this.isEgg = true;
+        // 开启心动模式
+        this.loveModel = true;
         setTimeout(() => {
           this.isEgg = false;
         }, 16000);
+        return;
+      }
+      // 解除心动模式
+      if (this.searchData === "@crl不是憨批@") {
+        this.loveModel = false;
         return;
       }
       //判断为空不进行搜索

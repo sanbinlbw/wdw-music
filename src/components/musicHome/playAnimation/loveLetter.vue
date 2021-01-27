@@ -1,5 +1,5 @@
 <template>
-<!-- 三行情诗彩蛋 -->
+  <!-- 三行情诗彩蛋 -->
   <div class="loveLetter">
     <div class="fri">不说爱你</div>
     <div class="sec">爱意这么盛大</div>
@@ -15,6 +15,7 @@ export default {
   data() {
     return {};
   },
+  methods: {},
 };
 </script>
 

@@ -68,6 +68,7 @@ export default {
 <style>
 body {
   overflow-y: hidden;
+  overflow-x: hidden;
 }
 /*修改滚动条样式*/
 
