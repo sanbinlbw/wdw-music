@@ -5,12 +5,6 @@
       <el-header>
         <img src="../assets/image/demo.svg" alt="" id="musicDemo" />
         <span>似音流年</span>
-        <!-- <span
-          :style="{
-            'background-image': 'url(' + require('../assets/image/heart.png') + ')',
-          }"
-        >
-        </span> -->
         <div id="back">
           <i
             class="el-icon-arrow-left"

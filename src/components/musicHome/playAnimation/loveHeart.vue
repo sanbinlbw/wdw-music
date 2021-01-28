@@ -47,7 +47,7 @@ export default {
   background-image: url("~@/assets/image/heart.png");
   pointer-events: none;
   transform: translate(-50%, -50%);
-  animation: love 2s linear infinite;
+  animation: love 2.5s linear infinite;
   z-index: 100000;
 }
 

@@ -13,7 +13,8 @@ import '@/assets/css/global.css'
 //引入自定义图标
 import '@/assets/font_cloudMusic/iconfont.css'
 Vue.prototype.$http = axios
-axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = 'http://localhost:3000/'
+    // axios.defaults.baseURL = '/api'
     // axios.defaults.withCredentials = true;
     //引入vuescroll
     // import vuescroll from "vuescroll";
