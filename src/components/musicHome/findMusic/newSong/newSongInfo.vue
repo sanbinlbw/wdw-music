@@ -137,6 +137,8 @@ export default {
       "isLoading",
       //可播放区域
       "slider",
+      //当前播放列表
+      "playList",
     ]),
   },
   data() {
