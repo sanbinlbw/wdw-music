@@ -504,7 +504,11 @@ export default {
         });
     },
   },
-  mounted() {},
+  mounted() {
+    // 若有歌曲变为已播放
+    if (this.musicUrl == "") return;
+    this.$store.dispatch("saveIsPlaying", true);
+  },
 };
 </script>
 

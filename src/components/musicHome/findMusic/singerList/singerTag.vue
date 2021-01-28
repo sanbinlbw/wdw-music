@@ -119,9 +119,7 @@ export default {
         this.languageTag = tag;
         this.languageIndex = index;
         this.$emit("getSingerInfo", this.genderTag, this.languageTag, this.firTag, 0);
-      } else {
-        this.$emit("getSingerInfo", this.genderTag, this.languageTag, this.firTag, 0);
-      }
+      } 
     },
     // 选中类型标签
     saveGenTag(tag, index) {
@@ -130,9 +128,7 @@ export default {
         this.genderTag = tag;
         this.genderIndex = index;
         this.$emit("getSingerInfo", this.genderTag, this.languageTag, this.firTag, 0);
-      } else {
-        this.$emit("getSingerInfo", this.genderTag, this.languageTag, this.firTag, 0);
-      }
+      } 
     },
     // 选中首字母标签
     saveFirTag(tag, index) {
@@ -141,9 +137,7 @@ export default {
         this.firTag = tag;
         this.firIndex = index;
         this.$emit("getSingerInfo", this.genderTag, this.languageTag, this.firTag, 0);
-      } else {
-        this.$emit("getSingerInfo", this.genderTag, this.languageTag, this.firTag, 0);
-      }
+      } 
     },
   },
 };
