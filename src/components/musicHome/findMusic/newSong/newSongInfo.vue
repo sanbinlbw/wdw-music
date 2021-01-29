@@ -55,7 +55,13 @@
       ></el-image>
       <!-- 播放键 -->
       <div style="position: absolute; top: 13%; left: 125px; transform: translateX(-50%)">
-        <img src="@/assets/image/play_1.svg" alt="" id="playImg" />
+        <img
+          src="@/assets/image/play_1.svg"
+          alt=""
+          id="playImg"
+          style="cursor: pointer"
+          @click="startSong(item)"
+        />
       </div>
       <!-- 歌曲名 -->
       <div

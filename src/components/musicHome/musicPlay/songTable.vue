@@ -28,6 +28,7 @@
       >
         你还没有添加任何歌曲！
       </div>
+      <!-- 播放列表 -->
       <div
         :class="{ songMesSin: index % 2 === 0, songMesDou: index % 2 !== 0 }"
         v-for="(item, index) in playList"
@@ -107,6 +108,7 @@
       >
         你还没有播放任何歌曲！
       </div>
+      <!-- 历史列表 -->
       <div
         :class="{ songMesSin: index % 2 === 0, songMesDou: index % 2 !== 0 }"
         v-for="(item, index) in hisMusicList"
@@ -146,8 +148,8 @@
           :class="{ startSongAurtor: item.id === songId }"
           style="
             position: absolute;
-            left:45%
             width: 120px;
+            left: 45%;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;

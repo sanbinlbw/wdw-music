@@ -2,13 +2,13 @@
   <div class="headMenu">
     <div
       :class="{ selTableTitle: isNewSongList, noTableTitle: !isNewSongList }"
-      @click="isNewSongList = true"
+      @click="$emit('changeModel', true)"
     >
       新歌速递
     </div>
     <div
       :class="{ selTableTitled: !isNewSongList, noTableTitled: isNewSongList }"
-      @click="isNewSongList = false"
+      @click="$emit('changeModel', false)"
     >
       新碟上架
     </div>
@@ -19,11 +19,12 @@
 export default {
   name: "headMenu",
   components: {},
+  props: {
+    //当前播放是否显示
+    isNewSongList: Boolean,
+  },
   data() {
-    return {
-      //当前播放是否显示
-      isNewSongList: true,
-    };
+    return {};
   },
 };
 </script>

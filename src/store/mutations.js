@@ -100,7 +100,19 @@ const mutations = {
             name: "",
         };
     },
-
+    // 播放全部
+    playAllSong(state, list) {
+        // 当前播放状态变成暂停
+        state.isPlaying = true;
+        // 当前播放歌曲id
+        state.songId = list[0].id;
+        // 当前播放列表
+        state.playList = list;
+        // 可播放音乐范围
+        state.playDur = [];
+        // 当前播放歌曲详情
+        state.musicDetail = list[0]
+    },
     // 保存播放过的歌曲歌单(避免上一首或者随机播放播放到重复的歌曲)
     pushHasPlayList(state, hasPlayList) {
         state.hasPlayList.push(hasPlayList);

@@ -41,7 +41,10 @@ const actions = {
     deleteAllList({ commit }) {
         commit('deleteAllList')
     },
-
+    // 播放所有歌曲
+    playAllSong({ commit }, payload) {
+        commit('playAllSong', payload)
+    },
     // 保存当前播放模式
     savePlayOrd({ commit }, payload) {
         commit('savePlayOrd', payload)
