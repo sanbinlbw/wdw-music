@@ -108,7 +108,9 @@ const mutations = {
         state.songId = list[0].id;
         // 当前播放列表
         state.playList = list;
-        // 可播放音乐范围
+        // 放入一个进入已经播放歌单
+        state.hasPlayList.push(list[0])
+            // 可播放音乐范围
         state.playDur = [];
         // 当前播放歌曲详情
         state.musicDetail = list[0]

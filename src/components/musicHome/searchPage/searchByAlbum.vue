@@ -8,6 +8,7 @@
         :class="{ songMesSin: index % 2 !== 0, songMesDou: index % 2 === 0 }"
         v-for="(item, index) in songAll.albumList"
         :key="index"
+        @click="toSongListPage(item.id)"
         background="#f9f9f9"
       >
         <!-- 专辑封面 -->
@@ -40,7 +41,7 @@
           @getSongPage="getSongPage"
         />
       </div>
-      <br /><br /><br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
     </div>
   </div>
 </template>
@@ -61,6 +62,10 @@ export default {
     //获取指定页数专辑
     getSongPage(offset, type) {
       this.$emit("getSongPage", offset, type);
+    },
+    //点击歌单跳转界面
+    toSongListPage(id) {
+      this.$router.push("/musicHome/songList/" + id);
     },
   },
   created() {

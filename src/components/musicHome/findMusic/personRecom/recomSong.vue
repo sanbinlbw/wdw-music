@@ -10,7 +10,12 @@
         :key="index"
         style="margin-bottom: 30px"
       >
-        <div id="playDetail" @mouseover="addPlay(index)" @mouseleave="reducePlay">
+        <div
+          id="playDetail"
+          @mouseover="addPlay(index)"
+          @mouseleave="reducePlay"
+          @click="toSongListPage(item.id)"
+        >
           <!-- 歌单封面 -->
           <el-image
             :src="item.picUrl"
@@ -46,7 +51,7 @@
         </div>
         <!-- 歌单介绍 -->
         <div class="playListIntro">
-          <p id="playIntro">{{ item.name }}</p>
+          <p id="playIntro" @click="toSongListPage(item.id)">{{ item.name }}</p>
         </div>
       </div>
     </div>
@@ -76,6 +81,10 @@ export default {
     // 鼠标移出
     reducePlay() {
       this.currentIndex = -1;
+    },
+    //点击歌单跳转界面
+    toSongListPage(id) {
+      this.$router.push("/musicHome/songList/" + id);
     },
   },
 };

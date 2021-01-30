@@ -6,7 +6,12 @@
       style="margin-bottom: 80px"
     >
       <div style="width: 180px; display: inline-block; margin-right: 50px">
-        <div id="playDetail" @mouseover="addPlay(index)" @mouseleave="reducePlay">
+        <div
+          id="playDetail"
+          @mouseover="addPlay(index)"
+          @mouseleave="reducePlay"
+          @click="toSongListPage(item.id)"
+        >
           <!-- 歌单封面 -->
           <el-image
             :src="item.coverImgUrl"
@@ -95,6 +100,10 @@ export default {
     // 鼠标移出
     reducePlay() {
       this.currentIndex = -1;
+    },
+    //点击歌单跳转界面
+    toSongListPage(id) {
+      this.$router.push("/musicHome/songList/" + id);
     },
   },
 };

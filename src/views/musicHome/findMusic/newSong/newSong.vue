@@ -10,13 +10,13 @@
       v-show="isNewSongList"
     >
       <songTag @getNewSong="getNewSong" style="width: 30%" />
+      <!-- 播放全部 -->
       <div class="playAllSong">
         <div class="playAll" @click="allAddList">
           <i class="iconfont icon-bofang" style="font-size: 15px"></i> 播放全部
         </div>
       </div>
     </div>
-    <!-- 播放全部 -->
     <!-- 遍历的歌曲 -->
     <div v-loading="isLoading" element-loading-text="加载中...">
       <!-- 新歌速递 -->

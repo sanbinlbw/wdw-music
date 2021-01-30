@@ -15,7 +15,12 @@
         :key="index"
         style="margin-bottom: 30px"
       >
-        <div id="playDetail" @mouseover="addPlay(index)" @mouseleave="reducePlay">
+        <div
+          id="playDetail"
+          @mouseover="addPlay(index)"
+          @mouseleave="reducePlay"
+          @click="toSongListPage(item.id)"
+        >
           <!-- 歌单封面 -->
           <el-image
             :src="item.coverImgUrl"
@@ -75,7 +80,7 @@
         </div>
         <!-- 歌单介绍 -->
         <div class="playListIntro">
-          <p id="playIntro">{{ item.name }}</p>
+          <p id="playIntro" @click="toSongListPage(item.id)">{{ item.name }}</p>
         </div>
       </div>
     </div>
@@ -88,7 +93,7 @@ export default {
   name: "songListInfo",
   components: {
     // 所有标签
-    allTags
+    allTags,
   },
   props: {
     // 遍历的歌单
@@ -117,6 +122,10 @@ export default {
     },
     selectTag(tag) {
       this.$emit("selectTag", tag);
+    },
+    //点击歌单跳转界面
+    toSongListPage(id) {
+      this.$router.push("/musicHome/songList/" + id);
     },
   },
 };
