@@ -30,7 +30,7 @@
         </div>
       </div>
       <!-- 展示歌曲 -->
-      <div style="width: 70%; display: inline-block">
+      <div style="width: 70%; display: inline-block; position: relative">
         <div
           :class="{ songMesSin: index % 2 !== 0, songMesDou: index % 2 === 0 }"
           v-for="(song, index) in item.tracks"
@@ -69,6 +69,7 @@
             </div>
           </div>
         </div>
+        <span class="showAll" @click="toSongListPage(item.id)">查看全部 ></span>
       </div>
     </div>
   </div>
@@ -191,5 +192,15 @@ export default {
   overflow: hidden;
   word-break: break-all;
   color: #000000;
+}
+.showAll {
+  opacity: 0.8;
+  cursor: pointer;
+  position: absolute;
+  bottom: -18%;
+  left: 2%;
+}
+.showAll:hover {
+  opacity: 1;
 }
 </style>

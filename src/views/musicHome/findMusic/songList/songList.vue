@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       // 选择的歌单种类
-      tagKind: "全部歌单",
+      tagKind: this.$route.query.tag ? this.$route.query.tag : "全部歌单",
       // 热门歌单标签
       hotTags: [],
       // 歌单
@@ -134,6 +134,22 @@ export default {
           this.$store.dispatch("changeIsLoading", false);
         });
     },
+    //获取精品歌单
+    // getNiceMusicList(cat, page) {
+    //   this.$store.dispatch("changeIsLoading", true);
+    //   this.$http
+    //     .get("/top/playlist/highquality", {
+    //       params: {
+    //         cat: cat,
+    //       },
+    //     })
+    //     .then((res) => {
+    //       console.log(res.data);
+    //       // this.playLists = res.data.playlists;
+    //       // this.count = res.data.total;
+    //       this.$store.dispatch("changeIsLoading", false);
+    //     });
+    // },
     // 选中标签
     selectTag(tag) {
       if (this.tagKind !== tag) {
@@ -150,6 +166,7 @@ export default {
     this.getHotMusicListTags();
     this.getAllMusicListTags();
     this.getGoodMusicList(this.tagKind, 0);
+    // this.getNiceMusicList(this.tagKind, 0);
   },
 };
 </script>

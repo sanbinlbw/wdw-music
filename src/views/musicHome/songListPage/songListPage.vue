@@ -3,12 +3,16 @@
     <!-- 歌单细节 -->
     <listDetail :playList="playList" :songsDetail="songsDetail" />
     <!-- 导航栏 -->
-    <menuTab ref="menuTab" />
+    <menuTab ref="menuTab" @changeActive="changeActive" :commentCount="comment.total" />
     <!-- 歌曲列表 -->
     <div v-loading="isLoading" element-loading-text="加载中...">
       <musicList v-show="activeIndex === '1'" :songsDetail="songsDetail" />
       <!-- 评论 -->
-      <comment />
+      <comment
+        :comment="comment"
+        v-show="activeIndex === '2'"
+        @getCommentPage="getCommentPage"
+      />
       <!-- 收藏者 -->
     </div>
     <br /><br /><br /><br /><br /><br />
@@ -47,6 +51,8 @@ export default {
       queryIds: "",
       // 歌曲数据
       songsDetail: {},
+      // 评论数据
+      comment: {},
     };
   },
   methods: {
@@ -67,6 +73,7 @@ export default {
           });
         });
       this.getSongDetail();
+      this.getCommentPage(0);
     },
     // 获取歌曲数据
     getSongDetail() {
@@ -79,6 +86,26 @@ export default {
         .then((res) => {
           console.log(res.data);
           this.songsDetail = res.data;
+        });
+    },
+    // 获取评论数据
+    getCommentPage(page) {
+      this.$store.dispatch("changeIsLoading", true);
+      this.$http
+        .get("comment/playlist", {
+          params: {
+            id: this.currentId,
+            limit: 20,
+            offset: page * 20,
+          },
+        })
+        .then((res) => {
+          if (page == 0) {
+            this.comment = res.data;
+          } else {
+            this.comment.comments = res.data.comments;
+          }
+          console.log(res.data);
           this.$store.dispatch("changeIsLoading", false);
         });
     },

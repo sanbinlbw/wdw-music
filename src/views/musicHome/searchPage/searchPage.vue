@@ -20,6 +20,11 @@
       v-show="this.$route.path == '/musicHome/searchPage/searchByVideo'"
       >找到{{ songAll.videoCount }}个视频</span
     >
+    <span
+      style="font-size: 10px; color: #adadad; font-weight: 400"
+      v-show="this.$route.path == '/musicHome/searchPage/searchBySongList'"
+      >找到{{ songAll.songListCount }}个歌单</span
+    >
     <div id="headTab">
       <!-- 头部导航栏 -->
       <searchHeadTab />
@@ -76,6 +81,10 @@ export default {
         videoCount: 0,
         //视频列表
         videoList: [],
+        //歌单总数
+        songListCount: 0,
+        //歌单列表
+        songList: [],
       },
     };
   },
@@ -158,6 +167,24 @@ export default {
               console.log(res.data.result);
               this.songAll.videoCount = res.data.result.videoCount;
               this.songAll.videoList = res.data.result.videos;
+              this.$store.dispatch("changeIsLoading", false);
+            });
+          break;
+        // 请求歌单数据
+        case "SongList":
+          this.$http
+            .get("/cloudsearch", {
+              params: {
+                keywords: this.searchInfo.trim(),
+                type: 1000,
+                limit: 20,
+                offset: offset * 20,
+              },
+            })
+            .then((res) => {
+              console.log(res.data.result);
+              this.songAll.songListCount = res.data.result.playlistCount;
+              this.songAll.songList = res.data.result.playlists;
               this.$store.dispatch("changeIsLoading", false);
             });
           break;

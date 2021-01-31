@@ -32,7 +32,7 @@ const router = new VueRouter({
                         },
                         // 歌单
                         {
-                            path: '/musicHome/findMusic/songList',
+                            path: '/musicHome/findMusic/songList/',
                             name: 'songList',
                             component: () =>
                                 import ('@/views/musicHome/findMusic/songList/songList')
@@ -64,8 +64,25 @@ const router = new VueRouter({
                 {
                     path: '/musicHome/recomVideo',
                     name: 'recomVideo',
+                    redirect: '/musicHome/recomVideo/mv',
                     component: () =>
-                        import ('@/views/musicHome/recomVideo/recomVideo')
+                        import ('@/views/musicHome/recomVideo/recomVideo'),
+                    children: [
+                        // 视频
+                        {
+                            path: '/musicHome/recomVideo/video',
+                            name: 'videoPage',
+                            component: () =>
+                                import ('@/views/musicHome/recomVideo/videoPage/videoPage')
+                        },
+                        // mv
+                        {
+                            path: '/musicHome/recomVideo/mv',
+                            name: 'mvPage',
+                            component: () =>
+                                import ('@/views/musicHome/recomVideo/mvPage/mvPage')
+                        },
+                    ]
                 },
                 // 我的音乐云盘模块
                 {
@@ -116,6 +133,13 @@ const router = new VueRouter({
                             name: 'searchByAlbum',
                             component: () =>
                                 import ('@/components/musicHome/searchPage/searchByAlbum')
+                        },
+                        // 歌单
+                        {
+                            path: '/musicHome/searchPage/searchBySongList',
+                            name: 'searchBySongList',
+                            component: () =>
+                                import ('@/components/musicHome/searchPage/searchBySongList')
                         },
                     ]
                 },

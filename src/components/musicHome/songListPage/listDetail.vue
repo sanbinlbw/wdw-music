@@ -47,12 +47,29 @@
       <div class="playAll" @click="allAddList">
         <i class="iconfont icon-bofang" style="font-size: 15px"></i> 播放全部
       </div>
+      <div class="orbtn">
+        <i class="iconfont Add a document icon-Adddocument" style="font-size: 15px"></i>
+        收藏({{
+          playList.subscribedCount >= 10000
+            ? (playList.subscribedCount / 10000).toFixed(0) + "万"
+            : playList.subscribedCount
+        }})
+      </div>
+      <div class="orbtn">
+        <i class="iconfont icon-fenxiang" style="font-size: 15px"></i> 分享({{
+          playList.shareCount >= 10000
+            ? (playList.shareCount / 10000).toFixed(0) + "万"
+            : playList.shareCount
+        }})
+      </div>
     </div>
     <!-- 介绍 -->
     <div class="listIntro">
       <div>
         标签：<span v-for="(item, index) in playList.tags" :key="index"
-          ><span style="color: #507daf; cursor: pointer">{{ item }}</span
+          ><span style="color: #507daf; cursor: pointer" @click="toSongListPage(item)">{{
+            item
+          }}</span
           >{{ index + 1 === playList.tags.length ? "" : " / " }}</span
         >
       </div>
@@ -158,6 +175,10 @@ export default {
           this.$store.dispatch("saveMusicUrl", res.data.data[0].url);
         });
     },
+    //点击歌单跳转界面
+    toSongListPage(tag) {
+      this.$router.push({ name: "songList", query: { tag: tag } });
+    },
   },
 };
 </script>
@@ -193,6 +214,8 @@ export default {
 }
 /* 播放键 */
 .playAll {
+  display: inline-block;
+  margin-right: 10px;
   border-radius: 20px;
   background: #d03535;
   padding: 5px 15px;
@@ -202,9 +225,21 @@ export default {
 .playAll:hover {
   background: #bb2929;
 }
+.orbtn {
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 20px;
+  border: 1px solid #d8d8d8;
+  padding: 5px 15px;
+  cursor: pointer;
+}
+.orbtn:hover {
+  background: #f2f2f2;
+}
 /* 介绍 */
 .listIntro {
   position: absolute;
+  height: 30%;
   left: 35vh;
   top: 65%;
   display: grid;

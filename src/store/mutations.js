@@ -104,6 +104,8 @@ const mutations = {
     playAllSong(state, list) {
         // 当前播放状态变成暂停
         state.isPlaying = true;
+        // 清空已经播放歌单
+        state.hasPlayList = [];
         // 当前播放歌曲id
         state.songId = list[0].id;
         // 当前播放列表

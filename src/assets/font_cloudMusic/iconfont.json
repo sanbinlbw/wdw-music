@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "19233277",
+      "name": "点赞",
+      "font_class": "dianzan",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
       "icon_id": "705660",
       "name": "地球",
       "font_class": "diqiu",
