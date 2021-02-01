@@ -13,6 +13,7 @@
             :src="item.cover"
             fit="fill"
             style="width: 100%; height: 220px; border-radius: 8px"
+            @click="toVideoPage(item.id)"
           ></el-image>
           <div
             style="
@@ -42,7 +43,7 @@
         </div>
         <!-- mv介绍 -->
         <div id="mvIntro">
-          <p id="mvName">{{ item.name }}</p>
+          <p id="mvName" @click="toVideoPage(item.id)">{{ item.name }}</p>
           <p id="mvArtistName">by {{ item.artistName }}</p>
         </div>
       </el-col>
@@ -56,6 +57,12 @@ export default {
   components: {},
   props: {
     hotMv: Array,
+  },
+  methods: {
+    //点击视频跳转界面
+    toVideoPage(id) {
+      this.$router.push("/musicHome/videoPage/" + id);
+    },
   },
   data() {
     return {};

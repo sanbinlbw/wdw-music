@@ -17,6 +17,7 @@
               :src="item.coverUrl"
               fit="fill"
               style="width: 100%; height: 220px; border-radius: 8px"
+              @click="toVideoPage(item.vid)"
             ></el-image>
             <div
               style="
@@ -46,7 +47,7 @@
           </div>
           <!-- mv介绍 -->
           <div id="mvIntro">
-            <p id="mvName">{{ item.title }}</p>
+            <p id="mvName" @click="toVideoPage(item.vid)">{{ item.title }}</p>
             <p id="mvArtistName">by {{ item.creator[0].userName }}</p>
           </div>
         </el-col>
@@ -79,6 +80,10 @@ export default {
     //获取指定页数歌曲
     getSongPage(offset, type) {
       this.$emit("getSongPage", offset, type);
+    },
+    //点击视频跳转界面
+    toVideoPage(id) {
+      this.$router.push("/musicHome/videoPage/" + id);
     },
   },
   created() {

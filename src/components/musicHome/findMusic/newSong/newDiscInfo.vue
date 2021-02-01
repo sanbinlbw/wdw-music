@@ -14,6 +14,7 @@
             :src="item.picUrl"
             fit="fill"
             style="border-radius: 10px; box-shadow: grey 0px 0px 2px 2px"
+            @click="toAlbumPage(item.id)"
           ></el-image>
           <!-- 鼠标停靠出现播放键 -->
           <div
@@ -32,7 +33,7 @@
         </div>
         <!-- 歌单介绍 -->
         <div class="playListIntro">
-          <p id="playIntro">{{ item.name }}</p>
+          <p id="playIntro" @click="toAlbumPage(item.id)">{{ item.name }}</p>
         </div>
       </div>
     </div>
@@ -61,6 +62,10 @@ export default {
     // 鼠标移出
     reducePlay() {
       this.currentIndex = -1;
+    },
+    //点击专辑跳转界面
+    toAlbumPage(id) {
+      this.$router.push("/musicHome/albumPage/" + id);
     },
   },
 };

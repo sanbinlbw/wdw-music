@@ -1,9 +1,9 @@
 <template>
-  <div class="neteaseMv">
+  <div class="mvList">
     <el-row :gutter="60">
       <el-col
         :span="8"
-        v-for="(item, index) in neteaseMv"
+        v-for="(item, index) in mvList"
         :key="index"
         style="margin-bottom: 30px"
       >
@@ -43,7 +43,7 @@
         </div>
         <!-- mv介绍 -->
         <div id="mvIntro">
-          <p id="mvName" @click="toVideoPage">{{ item.name }}</p>
+          <p id="mvName" @click="toVideoPage(item.id)">{{ item.name }}</p>
           <p id="mvArtistName">by {{ item.artistName }}</p>
         </div>
       </el-col>
@@ -53,10 +53,10 @@
 
 <script>
 export default {
-  name: "neteaseMv",
+  name: "mvList",
   components: {},
   props: {
-    neteaseMv: Array,
+    mvList: Array,
   },
   data() {
     return {};

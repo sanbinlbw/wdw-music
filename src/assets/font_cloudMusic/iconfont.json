@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "16130010",
+      "name": "人气、热度",
+      "font_class": "renqiredu",
+      "unicode": "e708",
+      "unicode_decimal": 59144
+    },
+    {
       "icon_id": "19233277",
       "name": "点赞",
       "font_class": "dianzan",

@@ -9,6 +9,7 @@
         v-for="(item, index) in songAll.albumList"
         :key="index"
         background="#f9f9f9"
+        @click="toAlbumPage(item.id)"
       >
         <!-- 专辑封面 -->
         <el-image
@@ -62,9 +63,9 @@ export default {
     getSongPage(offset, type) {
       this.$emit("getSongPage", offset, type);
     },
-    //点击歌单跳转界面
-    toSongListPage(id) {
-      this.$router.push("/musicHome/songList/" + id);
+    //点击专辑跳转界面
+    toAlbumPage(id) {
+      this.$router.push("/musicHome/albumPage/" + id);
     },
   },
   created() {

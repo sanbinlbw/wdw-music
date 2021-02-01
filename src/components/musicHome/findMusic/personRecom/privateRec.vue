@@ -9,6 +9,7 @@
             :src="item.sPicUrl"
             fit="fill"
             style="height: 200px; border-radius: 8px"
+            @click="toVideoPage(item.id)"
           ></el-image>
           <div style="position: absolute; top: 8%; left: 4%; opacity: 0.8">
             <img
@@ -20,7 +21,7 @@
         </div>
         <!-- 推送介绍 -->
         <div id="privateIntro">
-          <p id="introName">{{ item.name }}</p>
+          <p id="introName" @click="toVideoPage(item.id)">{{ item.name }}</p>
         </div>
       </el-col>
     </el-row>
@@ -36,6 +37,12 @@ export default {
   components: {},
   data() {
     return {};
+  },
+  methods: {
+    //点击视频跳转界面
+    toVideoPage(id) {
+      this.$router.push("/musicHome/videoPage/" + id);
+    },
   },
 };
 </script>

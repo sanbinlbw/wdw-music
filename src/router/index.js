@@ -148,6 +148,25 @@ const router = new VueRouter({
                     path: '/musicHome/songList/:id',
                     component: () =>
                         import ('@/views/musicHome/songListPage/songListPage'),
+                },
+                // 专辑详情模块
+                {
+                    path: '/musicHome/albumPage/:id',
+                    component: () =>
+                        import ('@/views/musicHome/album/albumPage'),
+                },
+                // 全部MV模块
+                {
+                    path: '/musicHome/allMv',
+                    name: 'allMv',
+                    component: () =>
+                        import ('@/views/musicHome/allMv/allMv'),
+                },
+                // 视频详情模块
+                {
+                    path: '/musicHome/videoPage/:id',
+                    component: () =>
+                        import ('@/views/musicHome/videoPage/videoPage'),
                 }
             ]
         }

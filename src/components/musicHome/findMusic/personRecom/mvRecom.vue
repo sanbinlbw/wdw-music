@@ -13,6 +13,7 @@
             :src="item.picUrl"
             fit="fill"
             style="width: 100%; height: 220px; border-radius: 8px"
+            @click="toVideoPage(item.id)"
           ></el-image>
           <div
             style="
@@ -51,7 +52,7 @@
         </div>
         <!-- mv介绍 -->
         <div id="mvIntro">
-          <p id="mvName">{{ item.name }}</p>
+          <p id="mvName" @click="toVideoPage(item.id)">{{ item.name }}</p>
           <p id="mvArtistName">{{ item.artistName }}</p>
         </div>
       </el-col>
@@ -80,6 +81,10 @@ export default {
     // 鼠标移出取消动画
     reduceDetail() {
       this.currentIndex = -1;
+    },
+    //点击视频跳转界面
+    toVideoPage(id) {
+      this.$router.push("/musicHome/videoPage/" + id);
     },
   },
 };
