@@ -50,14 +50,14 @@
       <div class="orbtn">
         <i class="iconfont Add a document icon-Adddocument" style="font-size: 15px"></i>
         收藏({{
-          playList.subscribedCount >= 10000
+          playList.subscribedCount >= 100000
             ? (playList.subscribedCount / 10000).toFixed(0) + "万"
             : playList.subscribedCount
         }})
       </div>
       <div class="orbtn">
         <i class="iconfont icon-fenxiang" style="font-size: 15px"></i> 分享({{
-          playList.shareCount >= 10000
+          playList.shareCount >= 100000
             ? (playList.shareCount / 10000).toFixed(0) + "万"
             : playList.shareCount
         }})
@@ -79,7 +79,7 @@
         </div>
         <div style="display: inline-block">
           播放：{{
-            playList.playCount >= 10000
+            playList.playCount >= 100000
               ? (playList.playCount / 10000).toFixed(0) + "万"
               : playList.playCount
           }}

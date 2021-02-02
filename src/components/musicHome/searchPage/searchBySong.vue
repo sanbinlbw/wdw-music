@@ -33,6 +33,7 @@
             class="iconfont icon-MV"
             style="color: #ec4141; cursor: pointer"
             v-show="item.mv != 0"
+            @click="toVideoPage(item.mv)"
           ></i>
           <i
             class="iconfont icon-vip-l"
@@ -150,6 +151,7 @@
             cursor: pointer;
             font-weight: 300;
           "
+          @click="toAlbumPage(item.al.id)"
         >
           {{ item.al.name }}
         </div>
@@ -299,6 +301,14 @@ export default {
     //返回第一页
     backNumOne() {
       this.$refs.pagination.backNumOne();
+    },
+    //点击视频跳转界面
+    toVideoPage(id) {
+      this.$router.push("/musicHome/videoPage/" + id);
+    },
+    //点击专辑跳转界面
+    toAlbumPage(id) {
+      this.$router.push("/musicHome/albumPage/" + id);
     },
   },
   created() {

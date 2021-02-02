@@ -29,6 +29,7 @@
           class="iconfont icon-MV"
           style="color: #ec4141; cursor: pointer"
           v-show="item.mv != 0"
+          @click="toVideoPage(item.mv)"
         ></i>
         <i
           class="iconfont icon-vip-l"
@@ -277,6 +278,10 @@ export default {
     //返回第一页
     backNumOne() {
       this.$refs.pagination.backNumOne();
+    },
+    //点击视频跳转界面
+    toVideoPage(id) {
+      this.$router.push("/musicHome/videoPage/" + id);
     },
   },
   created() {
