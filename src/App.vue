@@ -33,6 +33,8 @@ export default {
       //当前可播放范围
       "slider",
       "playDur",
+      //当前搜索历史
+      "searchHistory",
     ]),
   },
   methods: {
@@ -48,6 +50,7 @@ export default {
       sessionStorage.setItem("searchInfo", JSON.stringify(this.searchInfo));
       sessionStorage.setItem("slider", JSON.stringify(this.slider));
       sessionStorage.setItem("playDur", JSON.stringify(this.playDur));
+      sessionStorage.setItem("searchHistory", JSON.stringify(this.searchHistory));
     },
   },
   mounted() {

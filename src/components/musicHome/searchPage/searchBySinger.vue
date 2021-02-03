@@ -9,6 +9,7 @@
         v-for="(item, index) in songAll.singerList"
         :key="index"
         background="#f9f9f9"
+        @click="toArtistPage(item.id)"
       >
         <!-- 歌手封面 -->
         <el-image
@@ -63,6 +64,10 @@ export default {
     //获取指定页数歌手
     getSongPage(offset, type) {
       this.$emit("getSongPage", offset, type);
+    },
+    //点击歌手跳转界面
+    toArtistPage(id) {
+      this.$router.push("/musicHome/artistPage/" + id);
     },
   },
   created() {

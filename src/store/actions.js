@@ -76,6 +76,18 @@ const actions = {
     // 保存开始和结束时间
     saveAur({ commit }, payload) {
         commit('saveAur', payload)
-    }
+    },
+    // 保存搜索历史
+    saveSearchHistory({ commit }, payload) {
+        commit('saveSearchHistory', payload)
+    },
+    // 删除单个历史标签
+    deleteSearchHistory({ commit }, payload) {
+        commit('deleteSearchHistory', payload)
+    },
+    // 删除所有历史标签
+    deleteAllSearchHistory({ commit }) {
+        commit('deleteAllSearchHistory')
+    },
 }
 export default actions

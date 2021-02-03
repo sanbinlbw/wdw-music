@@ -133,9 +133,13 @@
               word-break: break-all;
             "
           >
-            <span style="cursor: pointer" v-for="(item, index) in item.ar" :key="index">{{
-              index === 0 ? item.name : "/" + item.name
-            }}</span>
+            <span
+              style="cursor: pointer"
+              v-for="(item, index) in item.ar"
+              :key="index"
+              @click="toArtistPage(item.id)"
+              >{{ index === 0 ? item.name : "/" + item.name }}</span
+            >
           </div>
         </div>
         <!-- 专辑 -->
@@ -309,6 +313,10 @@ export default {
     //点击专辑跳转界面
     toAlbumPage(id) {
       this.$router.push("/musicHome/albumPage/" + id);
+    },
+    //点击歌手跳转界面
+    toArtistPage(id) {
+      this.$router.push("/musicHome/artistPage/" + id);
     },
   },
   created() {

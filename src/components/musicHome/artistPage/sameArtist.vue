@@ -1,10 +1,11 @@
 <template>
-  <div class="singerListInfo">
+  <div class="sameArtist">
+    <div class="noSearch" v-if="sameArtist.length == 0">没有相关歌手</div>
     <div id="recomSongDiv">
       <!-- 歌单 -->
       <div
         id="recomItem"
-        v-for="(item, index) in singerList"
+        v-for="(item, index) in sameArtist"
         :key="index"
         style="margin-bottom: 30px"
       >
@@ -43,11 +44,11 @@
 
 <script>
 export default {
-  name: "singerListInfo",
+  name: "sameArtist",
   components: {},
   props: {
-    // 遍历的歌手数据
-    singerList: Array,
+    // 相似歌手
+    sameArtist: Array,
   },
   data() {
     return {};
@@ -62,27 +63,24 @@ export default {
 </script>
 
 <style scoped>
+/* 当搜索不到时页面展示 */
+.noSearch {
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  width: 70vw;
+  height: 30vh;
+}
 /* 布局 */
 
 #recomSongDiv {
   position: relative;
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   column-gap: 40px;
   margin-top: 30px;
 }
-/* .el-row {
-        margin-bottom: 20px;
-    }
-    
-    .el-col:last-child {
-        margin-bottom: 0;
-    } */
-/* .el-col {
-        width: 20%;
-    } */
-/* 歌单介绍 */
 
 .playListIntro {
   position: relative;
@@ -116,31 +114,5 @@ export default {
   height: 35px;
   border-radius: 100%;
   background: #f2f3f4;
-}
-/* 播放键出现 */
-
-.playAppear {
-  display: block;
-  position: absolute;
-  bottom: 5%;
-  right: 5%;
-  animation-name: play;
-  animation-duration: 0.8s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-}
-/* 播放动画 */
-
-@keyframes play {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.playNone {
-  display: none;
 }
 </style>

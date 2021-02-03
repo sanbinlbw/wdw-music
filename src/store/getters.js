@@ -35,6 +35,4 @@ export const isLoading = state => state.isLoading
 export const slider = state => state.slider
 export const playDur = state => state.playDur
     // 搜索历史
-    // export const searchHistory = state => {
-    //   return state.searchHistory
-    // }
+export const searchHistory = state => state.searchHistory

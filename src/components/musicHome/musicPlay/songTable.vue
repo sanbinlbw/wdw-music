@@ -76,9 +76,13 @@
             word-break: break-all;
           "
         >
-          <span style="cursor: pointer" v-for="(item, index) in item.ar" :key="index">{{
-            index === 0 ? item.name : "/" + item.name
-          }}</span>
+          <span
+            style="cursor: pointer"
+            v-for="(item, index) in item.ar"
+            :key="index"
+            @click="toArtistPage(item.id)"
+            >{{ index === 0 ? item.name : "/" + item.name }}</span
+          >
         </div>
         <span style="position: absolute; left: 80%">{{
           Math.floor(item.dt / 1000) | timeFormat
@@ -156,9 +160,13 @@
             word-break: break-all;
           "
         >
-          <span style="cursor: pointer" v-for="(item, index) in item.ar" :key="index">{{
-            index === 0 ? item.name : "/" + item.name
-          }}</span>
+          <span
+            style="cursor: pointer"
+            v-for="(item, index) in item.ar"
+            :key="index"
+            @click="toArtistPage(item.id)"
+            >{{ index === 0 ? item.name : "/" + item.name }}</span
+          >
         </div>
         <span style="position: absolute; left: 80%">{{
           Math.floor(item.dt / 1000) | timeFormat
@@ -273,6 +281,10 @@ export default {
     //删除历史歌单歌曲
     delHisListSong(musicId) {
       this.$store.dispatch("deleteHisListSong", musicId);
+    },
+    //点击歌手跳转界面
+    toArtistPage(id) {
+      this.$router.push("/musicHome/artistPage/" + id);
     },
   },
   created() {},

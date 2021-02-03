@@ -37,9 +37,9 @@ const state = {
     isLoading: false,
     // 试听片段开始和结束时间
     slider: sessionStorage.getItem('slider') ? JSON.parse(sessionStorage.getItem('slider')) : {},
-    playDur: sessionStorage.getItem('playDur') ? JSON.parse(sessionStorage.getItem('playDur')) : {}
-        // 搜索历史
-        // searchHistory: getSearch(),
+    playDur: sessionStorage.getItem('playDur') ? JSON.parse(sessionStorage.getItem('playDur')) : {},
+    // 搜索历史
+    searchHistory: sessionStorage.getItem('searchHistory') ? JSON.parse(sessionStorage.getItem('searchHistory')) : [],
 }
 
 export default state

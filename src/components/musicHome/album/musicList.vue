@@ -104,7 +104,7 @@
             word-break: break-all;
           "
         >
-          <span style="cursor: pointer" v-for="(item, index) in item.ar" :key="index">{{
+          <span style="cursor: pointer" v-for="(item, index) in item.ar" :key="index" @click="toArtistPage(item.id)">{{
             index === 0 ? item.name : "/" + item.name
           }}</span>
         </div>
@@ -122,6 +122,7 @@
           cursor: pointer;
           font-weight: 300;
         "
+        @click="toAlbumPage(item.al.id)"
       >
         {{ item.al.name }}
       </div>
@@ -274,9 +275,17 @@ export default {
     getSongPage(offset, type) {
       this.$emit("getSongPage", offset, type);
     },
+    //点击专辑跳转界面
+    toAlbumPage(id) {
+      this.$router.push("/musicHome/albumPage/" + id);
+    },
     //返回第一页
     backNumOne() {
       this.$refs.pagination.backNumOne();
+    },
+    //点击歌手跳转界面
+    toArtistPage(id) {
+      this.$router.push("/musicHome/artistPage/" + id);
     },
   },
   created() {

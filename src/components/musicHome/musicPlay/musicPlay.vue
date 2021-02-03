@@ -31,6 +31,7 @@
           v-for="(item, index) in musicDetail.ar"
           :key="index"
           style="cursor: pointer; font-size: 5px"
+          @click="toArtistPage(item.id)"
           >{{ index === 0 ? item.name : "/" + item.name }}</span
         >
       </div>
@@ -502,6 +503,10 @@ export default {
           }
           this.$store.dispatch("saveMusicUrl", res.data.data[0].url);
         });
+    },
+    //点击歌手跳转界面
+    toArtistPage(id) {
+      this.$router.push("/musicHome/artistPage/" + id);
     },
   },
   mounted() {

@@ -91,9 +91,13 @@
             word-break: break-all;
           "
         >
-          <span style="cursor: pointer" v-for="(item, index) in item.ar" :key="index">{{
-            index === 0 ? item.name : "/" + item.name
-          }}</span>
+          <span
+            style="cursor: pointer"
+            v-for="(item, index) in item.ar"
+            :key="index"
+            @click="toArtistPage(item.id)"
+            >{{ index === 0 ? item.name : "/" + item.name }}</span
+          >
         </div>
       </div>
       <!-- 专辑 -->
@@ -109,6 +113,7 @@
           cursor: pointer;
           font-weight: 300;
         "
+        @click="toAlbumPage(item.al.id)"
       >
         {{ item.al.name }}
       </div>
@@ -234,6 +239,14 @@ export default {
           }
           this.$store.dispatch("saveMusicUrl", res.data.data[0].url);
         });
+    },
+    //点击专辑跳转界面
+    toAlbumPage(id) {
+      this.$router.push("/musicHome/albumPage/" + id);
+    },
+    //点击歌手跳转界面
+    toArtistPage(id) {
+      this.$router.push("/musicHome/artistPage/" + id);
     },
   },
 };

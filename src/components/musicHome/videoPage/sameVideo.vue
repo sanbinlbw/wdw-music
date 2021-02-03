@@ -71,7 +71,6 @@ export default {
     //点击视频跳转界面
     toVideoPage(id) {
       this.$router.push("/musicHome/videoPage/" + id);
-      document.location.reload();
     },
   },
 };

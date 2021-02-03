@@ -1,5 +1,5 @@
 <template>
-  <div class="musicHome">
+  <div class="musicHome" @click="closeSuggest">
     <el-container>
       <!-- 头部 -->
       <el-header>
@@ -12,15 +12,34 @@
             style="cursor: pointer"
           ></i>
         </div>
-        <div id="searchDiv">
+        <div id="searchDiv" @mouseenter="isClose = false" @mouseleave="isClose = true">
           <el-input
             style="opacity: 0.5"
             placeholder="请输入歌曲名或歌手名"
             size="mini"
             v-model="searchData"
             @keyup.enter.native="search"
+            @focus="showSuggest = true"
           />
           <i class="elsearch el-icon-search" @click="search"></i>
+          <!-- 搜索建议 -->
+          <div class="searchSuggest" v-show="showSuggest">
+            <div style="opacity: 0.6; font-size: 18px" v-show="searchHistory.length > 0">
+              搜索历史
+              <i
+                class="iconfont icon-act_qingkong"
+                style="cursor: pointer"
+                @click="deleteAllSearchHistory()"
+              ></i>
+            </div>
+            <!-- 历史标签 -->
+            <div>
+              <div class="historyTag" v-for="(item, index) in searchHistory" :key="index">
+                {{ item }}
+                <i class="el-icon-close" @click="deleteSearchHistory(item)"></i>
+              </div>
+            </div>
+          </div>
         </div>
         <loginBar style="position: absolute; right: 5%" />
       </el-header>
@@ -78,6 +97,10 @@ export default {
       isEgg: false,
       //心动模式
       loveModel: false,
+      //搜索建议
+      showSuggest: false,
+      //是否能关闭
+      isClose: false,
     };
   },
   computed: {
@@ -94,6 +117,8 @@ export default {
       "hisMusicList",
       //播放过的歌曲歌单(避免上一首或者随机播放播放到重复的歌曲)
       "hasPlayList",
+      //搜索历史
+      "searchHistory",
     ]),
   },
   methods: {
@@ -116,8 +141,11 @@ export default {
       }
       //判断为空不进行搜索
       if (this.searchData.trim() === "") return;
+      // 关闭搜索建议
+      this.showSuggest = false;
       //保存当前搜索数据到vuex
       this.$store.dispatch("saveSearchInfo", this.searchData);
+      this.$store.dispatch("saveSearchHistory", this.searchData);
       //跳转到搜索界面
       if (this.$route.path !== "/musicHome/searchPage/searchBySong") {
         this.$router.push({
@@ -128,7 +156,14 @@ export default {
       this.$refs.child.getSongPage(0, "Song");
       this.$refs.child.backNumOne();
     },
-
+    //删除全部搜索记录
+    deleteAllSearchHistory() {
+      this.$store.dispatch("deleteAllSearchHistory");
+    },
+    //删除单个搜索记录
+    deleteSearchHistory(item) {
+      this.$store.dispatch("deleteSearchHistory", item);
+    },
     //是否展示歌单
     isShowSongList() {
       this.showSongList = !this.showSongList;
@@ -140,6 +175,11 @@ export default {
     //清空播放栏的歌曲时长
     cleanDur() {
       this.$refs.musicPlay.cleanDur();
+    },
+    //关闭搜索建议
+    closeSuggest() {
+      if (!this.isClose) return;
+      this.showSuggest = false;
     },
   },
   created() {},
@@ -176,7 +216,33 @@ export default {
   width: 305px;
   margin-top: -10px;
 }
-
+/* 搜索建议 */
+.searchSuggest {
+  position: absolute;
+  margin-top: 5px;
+  left: 15%;
+  width: 120%;
+  padding: 20px;
+  height: 300px;
+  z-index: 100;
+  border-radius: 2%;
+  box-shadow: #f0f0f0 0px 0px 1px 1px;
+  background: #fff;
+}
+/* 历史标签 */
+.historyTag {
+  display: inline-block;
+  margin-top: 20px;
+  margin-right: 10px;
+  border-radius: 20px;
+  border: 1px solid #d8d8d8;
+  padding: 5px 10px;
+  opacity: 0.7;
+  cursor: pointer;
+}
+.historyTag:hover {
+  background: #f2f2f2;
+}
 .el-header .el-input__inner {
   opacity: 0.5;
   margin-top: 25px;

@@ -125,6 +125,22 @@ export default {
       "isLoading",
     ]),
   },
+  watch: {
+    $route: function (newVal, oldVal) {
+      this.videoId = newVal.params.id;
+      if (newVal.params.id != oldVal.params.id) {
+        if (isNaN(this.videoId)) {
+      this.type = "video";
+    } else {
+      this.type = "mv";
+    }
+    this.getVideoDetail();
+    this.getVideoUrl();
+    this.getSameVideo();
+    this.getVideoComment(0);
+      }
+    },
+  },
   data() {
     return {
       // 视频id

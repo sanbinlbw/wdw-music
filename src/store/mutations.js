@@ -158,6 +158,35 @@ const mutations = {
         state.slider[slider[1]] = ''
         state.playDur = []
         state.playDur = slider
-    }
+    },
+    // 保存搜索历史
+    saveSearchHistory(state, searchHistory) {
+        for (let searchHisInfo of state.searchHistory) {
+            if (searchHisInfo === searchHistory) {
+                let index = state.searchHistory.indexOf(searchHisInfo);
+                if (index !== -1) {
+                    state.searchHistory.splice(index, 1);
+                    break;
+                }
+            }
+        }
+        state.searchHistory.unshift(searchHistory)
+    },
+    // 删除单个搜索历史标签
+    deleteSearchHistory(state, searchHistory) {
+        for (let searchHisInfo of state.searchHistory) {
+            if (searchHisInfo === searchHistory) {
+                let index = state.searchHistory.indexOf(searchHisInfo);
+                if (index !== -1) {
+                    state.searchHistory.splice(index, 1);
+                    break;
+                }
+            }
+        }
+    },
+    // 删除所有搜索历史
+    deleteAllSearchHistory(state) {
+        state.searchHistory = [];
+    },
 }
 export default mutations

@@ -54,8 +54,8 @@ export default {
             type: type,
             area: area,
             initial: initial,
-            limit: 18,
-            offset: page * 18,
+            limit: 12,
+            offset: page * 12,
           },
         })
         .then((res) => {
