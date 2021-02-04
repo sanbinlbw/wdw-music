@@ -173,6 +173,12 @@ const router = new VueRouter({
                     path: '/musicHome/videoPage/:id',
                     component: () =>
                         import ('@/views/musicHome/videoPage/videoPage'),
+                },
+                // 歌曲详情模块
+                {
+                    path: '/musicHome/songDetail',
+                    component: () =>
+                        import ('@/views/musicHome/songDetail/songDetail'),
                 }
             ]
         }

@@ -25,6 +25,9 @@ export const musicDetail = state => state.musicDetail
 // 当前播放歌曲id
 export const songId = state => state.songId
 
+// 当前进度条
+export const nowDuration = state => state.nowDuration
+
 // 当前搜索信息
 export const searchInfo = state => state.searchInfo
 

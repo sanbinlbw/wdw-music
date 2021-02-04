@@ -31,6 +31,8 @@ const state = {
     },
     //当前歌曲id
     songId: sessionStorage.getItem('songId') ? JSON.parse(sessionStorage.getItem('songId')) : "",
+    //歌曲当前进度
+    nowDuration: 0,
     //当前搜索信息
     searchInfo: sessionStorage.getItem('searchInfo') ? JSON.parse(sessionStorage.getItem('searchInfo')) : "",
     //当前是否在加载数据

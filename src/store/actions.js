@@ -77,6 +77,10 @@ const actions = {
     saveAur({ commit }, payload) {
         commit('saveAur', payload)
     },
+    // 保存进度条当前进度
+    saveNowDuration({ commit }, payload) {
+        commit('saveNowDuration', payload)
+    },
     // 保存搜索历史
     saveSearchHistory({ commit }, payload) {
         commit('saveSearchHistory', payload)

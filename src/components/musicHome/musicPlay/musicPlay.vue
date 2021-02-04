@@ -13,7 +13,8 @@
       <el-image
         :src="musicDetail.al.picUrl"
         fit="fill"
-        style="border-radius: 10%; height: 57px; width: 57px"
+        style="border-radius: 10%; height: 57px; width: 57px; cursor: pointer"
+        @click="toSongDetail()"
       ></el-image>
       <!-- 歌曲名 -->
       <div id="songName">
@@ -267,6 +268,7 @@ export default {
     durationUpdate() {
       if (this.isChange === true) return;
       this.musicDuration = this.$refs.audio.currentTime + this.playDur[0];
+      this.$store.dispatch("saveNowDuration", this.musicDuration);
       // this.musicDuration++;
     },
     //清除时长
@@ -507,6 +509,10 @@ export default {
     //点击歌手跳转界面
     toArtistPage(id) {
       this.$router.push("/musicHome/artistPage/" + id);
+    },
+    //点击跳转歌曲详情
+    toSongDetail() {
+      this.$router.push("/musicHome/songDetail");
     },
   },
   mounted() {

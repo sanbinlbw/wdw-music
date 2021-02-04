@@ -159,6 +159,10 @@ const mutations = {
         state.playDur = []
         state.playDur = slider
     },
+    // 保存当前播放进度
+    saveNowDuration(state, nowDuration) {
+        state.nowDuration = nowDuration
+    },
     // 保存搜索历史
     saveSearchHistory(state, searchHistory) {
         for (let searchHisInfo of state.searchHistory) {

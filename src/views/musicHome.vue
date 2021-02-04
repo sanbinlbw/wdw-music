@@ -35,8 +35,63 @@
             <!-- 历史标签 -->
             <div>
               <div class="historyTag" v-for="(item, index) in searchHistory" :key="index">
-                {{ item }}
+                <span style="color: #000; font-size: 15px" @click="toSearch(item)">{{
+                  item
+                }}</span>
                 <i class="el-icon-close" @click="deleteSearchHistory(item)"></i>
+              </div>
+            </div>
+            <!-- 热搜榜 -->
+            <div
+              style="opacity: 0.6; font-size: 18px; margin-top: 20px; margin-bottom: 20px"
+            >
+              热搜榜
+            </div>
+            <div
+              class="hotSearch"
+              v-for="(item, index) in hotSearchList"
+              :key="index"
+              @click="toSearch(item.searchWord)"
+            >
+              <div
+                style="position: absolute; width: 10%; top: 35%; left: 5%"
+                :class="{ frontTir: index <= 2, other: index > 2 }"
+              >
+                {{ index + 1 }}
+              </div>
+              <div
+                style="
+                  display: grid;
+                  grid-template-rows: repeat(2,1fr);
+                  position: absolute;
+                  height: 100%;
+                  width:80%
+                  top: 0;
+                  left: 15%;
+                "
+              >
+                <div style="margin-top: 5%">
+                  <div
+                    style="
+                      font-size: 15px;
+                      font-weight: 540;
+                      display: inline-block;
+                      margin-right: 5%;
+                    "
+                  >
+                    {{ item.searchWord }}
+                  </div>
+                  <img
+                    v-show="item.iconUrl"
+                    :src="item.iconUrl"
+                    alt=""
+                    style="width: 28px; height: 15px; margin-bottom: -1%"
+                  />
+                  <span style="color: #cfcfcf; font-size: 12px">{{ item.score }}</span>
+                </div>
+                <div style="font-size: 12px; color: #9f9f9f; margin-top: 3%">
+                  {{ item.content }}
+                </div>
               </div>
             </div>
           </div>
@@ -101,6 +156,8 @@ export default {
       showSuggest: false,
       //是否能关闭
       isClose: false,
+      //热搜列表
+      hotSearchList: [],
     };
   },
   computed: {
@@ -156,6 +213,11 @@ export default {
       this.$refs.child.getSongPage(0, "Song");
       this.$refs.child.backNumOne();
     },
+    // 选取历史记录搜索
+    toSearch(item) {
+      this.searchData = item;
+      this.search();
+    },
     //删除全部搜索记录
     deleteAllSearchHistory() {
       this.$store.dispatch("deleteAllSearchHistory");
@@ -181,8 +243,17 @@ export default {
       if (!this.isClose) return;
       this.showSuggest = false;
     },
+    //获取热搜列表
+    getHotSearch() {
+      this.$http.get("/search/hot/detail").then((res) => {
+        console.log(res.data);
+        this.hotSearchList = res.data.data;
+      });
+    },
   },
-  created() {},
+  created() {
+    this.getHotSearch();
+  },
   mounted() {},
 };
 </script>
@@ -222,9 +293,10 @@ export default {
   margin-top: 5px;
   left: 15%;
   width: 120%;
-  padding: 20px;
-  height: 300px;
+  padding: 20px 15px;
+  height: 400px;
   z-index: 100;
+  overflow-y: overlay;
   border-radius: 2%;
   box-shadow: #f0f0f0 0px 0px 1px 1px;
   background: #fff;
@@ -239,6 +311,22 @@ export default {
   padding: 5px 10px;
   opacity: 0.7;
   cursor: pointer;
+}
+/* 热搜列表 */
+.hotSearch {
+  position: relative;
+  width: 100%;
+  height: 20%;
+  cursor: pointer;
+}
+.hotSearch:hover {
+  background: #f2f2f2;
+}
+.frontTir {
+  color: #ff3b3b;
+}
+.other {
+  color: #cfcfcf;
 }
 .historyTag:hover {
   background: #f2f2f2;

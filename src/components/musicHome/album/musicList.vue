@@ -29,6 +29,7 @@
           class="iconfont icon-MV"
           style="color: #ec4141; cursor: pointer"
           v-show="item.mv != 0"
+          @click="toVideoPage(item.mv)"
         ></i>
         <i
           class="iconfont icon-vip-l"
@@ -104,9 +105,13 @@
             word-break: break-all;
           "
         >
-          <span style="cursor: pointer" v-for="(item, index) in item.ar" :key="index" @click="toArtistPage(item.id)">{{
-            index === 0 ? item.name : "/" + item.name
-          }}</span>
+          <span
+            style="cursor: pointer"
+            v-for="(item, index) in item.ar"
+            :key="index"
+            @click="toArtistPage(item.id)"
+            >{{ index === 0 ? item.name : "/" + item.name }}</span
+          >
         </div>
       </div>
       <!-- 专辑 -->
@@ -286,6 +291,10 @@ export default {
     //点击歌手跳转界面
     toArtistPage(id) {
       this.$router.push("/musicHome/artistPage/" + id);
+    },
+    //点击视频跳转界面
+    toVideoPage(id) {
+      this.$router.push("/musicHome/videoPage/" + id);
     },
   },
   created() {
