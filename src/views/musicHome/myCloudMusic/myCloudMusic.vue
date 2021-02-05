@@ -1,20 +1,15 @@
 <template>
-  <div class="myCloudMusic">
-    myCloudMusic
-  </div>
+  <div class="myCloudMusic">功能还在开发中</div>
 </template>
 
 <script>
 export default {
-  name: 'myCloudMusic',
+  name: "myCloudMusic",
   components: {},
   data() {
-    return {
-
-    }
-  }
-}
+    return {};
+  },
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

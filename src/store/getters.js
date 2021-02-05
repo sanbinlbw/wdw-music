@@ -37,5 +37,15 @@ export const isLoading = state => state.isLoading
 // 开始和结束时间段
 export const slider = state => state.slider
 export const playDur = state => state.playDur
-    // 搜索历史
+
+// 搜索历史
 export const searchHistory = state => state.searchHistory
+
+// 用户信息
+export const userInfo = state => state.userInfo
+
+// 用户歌单
+export const personalList = state => state.personalList
+
+// 是否打开登录面板
+export const showLogin = state => state.showLogin

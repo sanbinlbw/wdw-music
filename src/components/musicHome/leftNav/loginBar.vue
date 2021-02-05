@@ -1,25 +1,65 @@
 <template>
   <div class="loginBar">
-    <el-avatar icon="el-icon-user-solid" id="userHead"></el-avatar>
-    <span id="loginSta">未登录</span>
+    <div v-if="!userInfo" style="cursor: pointer" @click="changeShowLogin(true)">
+      <el-avatar
+        icon="el-icon-user-solid"
+        class="userHead"
+        style="vertical-align: middle"
+      ></el-avatar>
+      <span class="loginSta">未登录</span>
+    </div>
+    <div style="cursor: pointer" v-else>
+      <el-avatar
+        :src="userInfo.avatarUrl"
+        class="userHead"
+        style="vertical-align: middle"
+      ></el-avatar>
+      <span class="loginSta">{{ userInfo.nickname }}</span>
+      <span class="loginSta" @click="logout">退出</span>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "loginBar",
   components: {},
+  computed: {
+    ...mapGetters([
+      //用户信息
+      "userInfo",
+    ]),
+  },
   data() {
     return {};
+  },
+  methods: {
+    //打开登录窗口
+    changeShowLogin(isShow) {
+      this.$store.dispatch("changeShowLogin", isShow);
+    },
+    //登出
+    logout() {
+      this.$http
+        .get("/logout")
+        .then((res) => {
+          this.$message.success("成功退出");
+          this.$store.dispatch("saveUserInfo", null);
+          this.$store.dispatch("savePersonalList", []);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
 
 <style scoped>
-#loginSta {
-  margin-top: 15px;
+.loginSta {
   font-size: 15px;
-  margin-top: 20px;
+  margin-right: 5px;
 }
 
 .loginBar {
@@ -27,9 +67,9 @@ export default {
   height: 50px;
 }
 
-.loginBar #userHead {
+.loginBar .userHead {
   width: 40px;
   height: 40px;
-  margin-top: 5px;
+  margin-top: 0px;
 }
 </style>

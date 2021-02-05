@@ -98,7 +98,7 @@
         评论({{ comment.total }})
       </p>
       <div v-loading="isLoading" element-loading-text="加载中...">
-        <comment :comment="comment" @getVideoComment="getVideoComment" />
+        <comment :comment="comment" @getVideoComment="getVideoComment" :videoId="videoId"/>
       </div>
       <br /><br /><br /><br /><br /><br /><br />
     </div>

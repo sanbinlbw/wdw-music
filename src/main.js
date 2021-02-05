@@ -15,11 +15,11 @@ import '@/assets/font_cloudMusic/iconfont.css'
 Vue.prototype.$http = axios
 axios.defaults.baseURL = 'http://localhost:3000/'
     // axios.defaults.baseURL = '/api'
-    // axios.defaults.withCredentials = true;
-    //引入vuescroll
-    // import vuescroll from "vuescroll";
-    //引入vuescroll样式
-    // import "vuescroll/dist/vuescroll.css";
+axios.defaults.withCredentials = true;
+//引入vuescroll
+// import vuescroll from "vuescroll";
+//引入vuescroll样式
+// import "vuescroll/dist/vuescroll.css";
 
 
 // Vue.use(vuescroll); //使用

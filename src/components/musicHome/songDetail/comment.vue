@@ -180,13 +180,18 @@
         </div>
       </div>
       <br /><br />
-      <pagination :count="comment.total" @getCommentPage="getCommentPage" />
+      <pagination
+        :count="comment.total"
+        @getCommentPage="getCommentPage"
+        ref="pagination"
+      />
     </div>
-    <br /><br /><br /><br />
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import pagination from "./pagination";
 export default {
   name: "comment",
@@ -196,8 +201,12 @@ export default {
   props: {
     // 评论数据
     comment: Object,
-    // 歌单id
-    currentId: String,
+  },
+  computed: {
+    ...mapGetters([
+      // 获得歌曲id
+      "songId",
+    ]),
   },
   data() {
     return {
@@ -209,14 +218,18 @@ export default {
     getCommentPage(page) {
       this.$emit("getCommentPage", page);
     },
+    //返回第一页
+    backNumOne() {
+      this.$refs.pagination.backNumOne();
+    },
     // 发送评论
     sendComment() {
       this.$http
         .get("/comment", {
           params: {
             t: 1,
-            type: 2,
-            id: this.currentId,
+            type: 0,
+            id: this.songId,
             content: this.commentInfo,
           },
         })
@@ -237,7 +250,7 @@ export default {
   position: relative;
   margin-top: 30px;
   margin-left: 20px;
-  width: 70vw;
+  width: 49vw;
   height: 150px;
 }
 .orbtn {

@@ -6,7 +6,7 @@
           <img
             :src="musicDetail.al.picUrl"
             alt
-            style="width: 100%; filter: blur(80px); maxheight: 400px; border-radius: 50%"
+            style="width: 100%; filter: blur(80px); border-radius: 50%"
           />
         </div>
         <div class="singel-play-img">
@@ -57,7 +57,9 @@
                 "
               >
                 <span style="color: #000">专辑:</span
-                >{{ musicDetail.alia[0] || musicDetail.al.name }}
+                ><span style="cursor: pointer" @click="toAlbumPage(musicDetail.al.id)">{{
+                  musicDetail.alia[0] || musicDetail.al.name
+                }}</span>
               </div>
               <div
                 style="
@@ -71,23 +73,18 @@
                 "
               >
                 <span style="color: #000">歌手:</span
-                ><span>{{ musicDetail.ar[0].name }}</span>
+                ><span
+                  style="cursor: pointer"
+                  @click="toArtistPage(musicDetail.ar[0].id)"
+                  >{{ musicDetail.ar[0].name }}</span
+                >
               </div>
             </div>
           </div>
           <div class="lyric">
             <!--歌词-->
 
-            <div
-              style="
-                width: 350px;
-                height: 350px;
-                overflow: auto;
-                margin-top: 25px;
-                transition: scrollTop 0.3s;
-              "
-              ref="lyricScroll"
-            >
+            <div class="showLyric" ref="lyricScroll">
               <ul ref="lyric" v-if="lrcObject.length > 1">
                 <li
                   v-for="(item, index) in lrcObject"
@@ -111,14 +108,36 @@
         </div>
       </div>
     </div>
+    <!-- 底部信息 -->
+    <div class="singel-bottom">
+      <div class="showComment">
+        <!-- 评论区 -->
+        <p style="font-weight: 600; font-size: 20px; cursor: pointer; margin-left: 3%">
+          评论({{ comment.total }})
+        </p>
+        <div v-loading="isLoading" element-loading-text="加载中...">
+          <comment :comment="comment" @getCommentPage="getSongComment" ref="comment" />
+        </div>
+      </div>
+      <!-- 相似歌曲 -->
+      <div class="simiInfo">
+        <p style="font-weight: 600; font-size: 20px">相似歌曲</p>
+        <simiInfo :simiInfo="simiInfo" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
+import comment from "@/components/musicHome/songDetail/comment";
+import simiInfo from "@/components/musicHome/songDetail/simiInfo";
 export default {
   name: "Singel",
-  components: {},
+  components: {
+    comment,
+    simiInfo,
+  },
   computed: {
     ...mapGetters([
       //当前播放歌曲url
@@ -141,6 +160,8 @@ export default {
       "playDur",
       //当前进度条
       "nowDuration",
+      //是否加载
+      "isLoading",
     ]),
   },
   watch: {
@@ -148,15 +169,11 @@ export default {
     songId() {
       this.offsets = 0;
       this.timerId = 0;
-      this.routeNum = 0;
       this.lyricIndex = 0;
       this.getSongLyric(this.songId);
-      // this.getSongLyricComment(
-      //   this.songId,
-      //   this.limits,
-      //   this.offsets
-      // );
-      // this.getSongSimi(this.getNowMusicMenu.id);
+      this.getSongComment(0);
+      this.getSongSimi(this.songId);
+      this.$refs.comment.backNumOne();
     },
     //歌曲播放状态
     isPlaying() {},
@@ -175,8 +192,6 @@ export default {
           this.lyricIndex = i - 1;
           //动态绑定ref 根据距离顶部不同的位置来控制歌词滚动 (原生的滚动条动画效果未实现，需要的话可能需要换其他滚动条，eg:bater-scroll)
           //这里加入了一个效果就是滑下去查看歌词时，不会自动滑动 只有到了高亮显示在可视区才会滚动
-          // 175 是可视区的一半 55是出现离可视区距离 相当于一行高度 都可微调
-
           if (this.$refs.lyricRef[0].offsetTop > 100) {
             this.$refs.lyricScroll.scrollTop = this.$refs.lyricRef[0].offsetTop - 100;
           } else if (this.$refs.lyricRef[0].offsetTop < -100) {
@@ -193,37 +208,60 @@ export default {
   },
   data() {
     return {
+      // 歌词
       lyrics: "",
+      // 存放歌词数组
       lrcObject: [],
       lyricIndex: 0,
-      lyricComment: [],
-      limits: 20,
-      offsets: 0,
       timerId: 0,
-      routeNum: 0,
-      simis: {},
+      // 相似信息
+      simiInfo: [],
+      //歌曲评论
+      comment: {},
     };
   },
   methods: {
     //获取相似单曲
     getSongSimi(id) {
       this.$http
-        .get("song/detail", {
+        .get("/simi/song", {
           params: {
             id: id,
           },
         })
         .then((res) => {
           console.log(res.data);
-          // this.songsDetail = res.data;
+          this.simiInfo = res.data.songs;
+          for (let song of this.simiInfo) {
+            // 某些键值和之前请求的不符合，进行修改
+            song["al"] = song["album"];
+            delete song["album"];
+            song["alia"] = song["alias"];
+            delete song["alias"];
+            song["ar"] = song["artists"];
+            delete song["artists"];
+            song["dt"] = song["duration"];
+            delete song["duration"];
+          }
         });
     },
-    //唱片旋转
-    routeDeg() {},
-    //切换评论页码
-
     //获取单曲评论
-
+    getSongComment(page) {
+      this.$store.dispatch("changeIsLoading", true);
+      this.$http
+        .get("/comment/music", {
+          params: { id: this.songId, limit: 20, offset: page * 20 },
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (page == 0) {
+            this.comment = res.data;
+          } else {
+            this.comment.comments = res.data.comments;
+          }
+          this.$store.dispatch("changeIsLoading", false);
+        });
+    },
     //收缩页面
     comBack() {
       this.$router.back();
@@ -276,12 +314,19 @@ export default {
       });
       this.lrcObject = oLRC.ms;
     },
+    //点击歌手跳转界面
+    toArtistPage(id) {
+      this.$router.push("/musicHome/artistPage/" + id);
+    },
+    //点击专辑跳转界面
+    toAlbumPage(id) {
+      this.$router.push("/musicHome/albumPage/" + id);
+    },
   },
   created() {
     this.getSongLyric(this.songId);
-    // this.getSongLyricComment(this.getNowMusicMenu.id);
-    // this.getSongSimi(this.getNowMusicMenu.id);
-    //唱片滚动
+    this.getSongComment(0);
+    this.getSongSimi(this.songId);
   },
 };
 </script>
@@ -312,9 +357,9 @@ li {
 }
 .bck-img {
   position: absolute;
-  width: 70%;
+  width: 50%;
   top: 0;
-  left: 50%;
+  left: 40%;
   transform: translateX(-50%);
   z-index: 0;
 }
@@ -336,6 +381,10 @@ li {
   height: 100vh;
   padding-top: 20px;
   margin-top: -20px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+.singel:hover {
   overflow-y: overlay;
 }
 .singel-main {
@@ -346,6 +395,7 @@ li {
 .singel-top {
   display: flex;
   position: relative;
+  margin-bottom: 5%;
 }
 .singel-play-img {
   margin-left: 35px;
@@ -371,7 +421,7 @@ li {
 .play-bar {
   position: absolute;
   top: 0px;
-  left: 60%;
+  left: 55%;
   z-index: 10;
 }
 .play-disc {
@@ -380,5 +430,29 @@ li {
   animation-duration: 20s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+}
+.showLyric {
+  width: 350px;
+  height: 385px;
+  overflow: hidden;
+  margin-top: 25px;
+  transition: scrollTop 0.3s;
+}
+.showLyric:hover {
+  overflow-y: overlay;
+}
+/* 底部信息 */
+.singel-bottom {
+  width: 100%;
+}
+/* 评论区 */
+.showComment {
+  width: 58%;
+  float: left;
+}
+/* 相似部分 */
+.simiInfo {
+  width: 42%;
+  float: left;
 }
 </style>

@@ -12,6 +12,7 @@
         :comment="comment"
         v-show="activeIndex === '2'"
         @getCommentPage="getCommentPage"
+        :currentId = "currentId"
       />
       <!-- 收藏者 -->
     </div>
@@ -32,6 +33,15 @@ export default {
     menuTab,
     musicList,
     comment,
+  },
+  watch: {
+    $route: function (newVal, oldVal) {
+      this.currentId = newVal.params.id;
+      if (newVal.params.id != oldVal.params.id) {
+        this.queryIds = "";
+        this.getPlayListDetail();
+      }
+    },
   },
   computed: {
     ...mapGetters([

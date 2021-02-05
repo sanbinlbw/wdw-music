@@ -149,7 +149,7 @@ const router = new VueRouter({
                     component: () =>
                         import ('@/views/musicHome/songListPage/songListPage'),
                 },
-                // 歌单详情模块
+                // 歌手详情模块
                 {
                     path: '/musicHome/artistPage/:id',
                     component: () =>

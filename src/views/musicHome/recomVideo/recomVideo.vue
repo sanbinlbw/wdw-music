@@ -6,7 +6,7 @@
     </div>
     <div>
       <!-- 二级路由 -->
-      <router-view id="secondRoute" />
+      <router-view id="secondRoute"/>
     </div>
   </div>
 </template>
@@ -20,6 +20,8 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
   },
 };
 </script>

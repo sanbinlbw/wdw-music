@@ -11,7 +11,7 @@
         rows="4"
       >
       </el-input>
-      <div class="orbtn">评论</div>
+      <div class="orbtn" @click="sendComment()">评论</div>
     </div>
     <div style="margin-left: 20px" v-show="comment.hotComments.length > 0">
       <p style="font-weight: 600; cursor: default; margin-bottom: 2%">
@@ -196,6 +196,8 @@ export default {
   props: {
     // 评论数据
     comment: Object,
+    // 专辑id
+    currentId: String,
   },
   data() {
     return {
@@ -206,6 +208,25 @@ export default {
     // 获取评论页
     getCommentPage(page) {
       this.$emit("getCommentPage", page);
+    },
+    // 发送评论
+    sendComment() {
+      this.$http
+        .get("/comment", {
+          params: {
+            t: 1,
+            type: 3,
+            id: this.currentId,
+            content: this.commentInfo,
+          },
+        })
+        .then((res) => {
+          this.$message.success("评论成功,请刷新查看评论");
+        })
+        .catch((error) => {
+          this.$message.error("请登录后再使用该功能哟");
+          this.$store.dispatch("changeShowLogin", true);
+        });
     },
   },
 };

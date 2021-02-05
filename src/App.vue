@@ -35,6 +35,10 @@ export default {
       "playDur",
       //当前搜索历史
       "searchHistory",
+      //用户信息
+      'userInfo',
+      //用户歌单
+      'personalList'
     ]),
   },
   methods: {
@@ -51,6 +55,8 @@ export default {
       sessionStorage.setItem("slider", JSON.stringify(this.slider));
       sessionStorage.setItem("playDur", JSON.stringify(this.playDur));
       sessionStorage.setItem("searchHistory", JSON.stringify(this.searchHistory));
+      sessionStorage.setItem("userInfo", JSON.stringify(this.userInfo));
+      sessionStorage.setItem("personalList", JSON.stringify(this.personalList));
     },
   },
   mounted() {

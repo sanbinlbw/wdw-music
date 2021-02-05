@@ -96,11 +96,13 @@
             </div>
           </div>
         </div>
-        <loginBar style="position: absolute; right: 5%" />
+        <loginBar
+          style="position: absolute; right: 5%; top: 20%"
+        />
       </el-header>
       <el-container>
         <!-- 左部导航栏 -->
-        <el-aside width="16%"><leftNav /></el-aside>
+        <el-aside width="20%"><leftNav /></el-aside>
         <!-- 展示路由 -->
         <el-main
           ><router-view ref="child" :searchData="searchData" v-show="!isEgg"
@@ -121,12 +123,15 @@
       <loveLetter />
       <loveHeart :loveModel="loveModel" />
     </div>
+    <!-- 登录页 -->
+    <login v-show="!userInfo && showLogin"/>
   </div>
 </template>
 
 <script>
 import leftNav from "@/components/musicHome/leftNav/leftNav";
 import loginBar from "@/components/musicHome/leftNav/loginBar";
+import login from "@/components/musicHome/login/login";
 import musicPlay from "@/components/musicHome/musicPlay/musicPlay";
 import songTable from "@/components/musicHome/musicPlay/songTable";
 import loveLetter from "@/components/musicHome/playAnimation/loveLetter";
@@ -141,6 +146,7 @@ export default {
     songTable,
     loveLetter,
     loveHeart,
+    login,
   },
   data() {
     return {
@@ -176,6 +182,10 @@ export default {
       "hasPlayList",
       //搜索历史
       "searchHistory",
+      //个人信息
+      "userInfo",
+      //是否展示登录
+      'showLogin'
     ]),
   },
   methods: {
@@ -249,6 +259,10 @@ export default {
         console.log(res.data);
         this.hotSearchList = res.data.data;
       });
+    },
+    //打开登录窗口
+    changeShowLogin(isShow) {
+      this.$store.dispatch("changeShowLogin", isShow);
     },
   },
   created() {

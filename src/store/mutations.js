@@ -5,15 +5,18 @@ const mutations = {
     // };
 
     // 保存当前用户信息
-    // export const saveUserInfo = (state, currDbSource) => {
-    //   state.currDbSource = currDbSource;
-    // };
+    saveUserInfo(state, userInfo) {
+        state.userInfo = userInfo;
+    },
+    // 读取当前用户歌单列表
+    savePersonalList(state, personalList) {
+        state.personalList = personalList
+    },
 
-    // 保存歌手信息
-    // export const saveSinger = (state, currJobData) => {
-    //   state.currJobData = null;
-    //   state.currJobData = currJobData;
-    // };
+    // 是否展示登录界面
+    changeShowLogin(state, showLogin) {
+        state.showLogin = showLogin
+    },
 
     // 保存播放状态
     saveIsPlaying(state, isPlaying) {

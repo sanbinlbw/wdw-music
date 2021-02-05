@@ -42,7 +42,9 @@ export default {
           this.$store.dispatch("changeIsLoading", false);
         })
         .catch((error) => {
-          console.log(error);
+          this.$message.error("请登录后再使用该功能哟");
+          //打开登录窗口
+      this.$store.dispatch("changeShowLogin", true);
         });
     },
   },

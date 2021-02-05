@@ -10,6 +10,7 @@
       <!-- 评论 -->
       <comment
         :comment="comment"
+        :currentId="currentId"
         v-show="activeIndex === '2'"
         @getCommentPage="getCommentPage"
       />

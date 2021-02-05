@@ -2,7 +2,11 @@ const state = {
     // 是否登录
     loginStatu: null,
     // 用户信息
-    userInfo: null,
+    userInfo: sessionStorage.getItem('userInfo') ? JSON.parse(sessionStorage.getItem('userInfo')) : null,
+    // 私人歌单列表(需要登录)
+    personalList: sessionStorage.getItem('personalList') ? JSON.parse(sessionStorage.getItem('personalList')) : [],
+    // 是否打开登录面板
+    showLogin: false,
     // 歌手信息
     singer: {},
     // 播放状态

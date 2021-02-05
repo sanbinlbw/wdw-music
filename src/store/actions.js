@@ -4,7 +4,14 @@ const actions = {
     saveIsPlaying({ commit }, payload) {
         commit('saveIsPlaying', payload);
     },
-
+    // 保存用户信息
+    saveUserInfo({ commit }, payload) {
+        commit('saveUserInfo', payload)
+    },
+    // 保存用户歌单
+    savePersonalList({ commit }, payload) {
+        commit('savePersonalList', payload)
+    },
     //添加到当前播放列表
     unshiftPlayList({ commit }, payload) {
         commit('unshiftPlayList', payload)
@@ -93,5 +100,9 @@ const actions = {
     deleteAllSearchHistory({ commit }) {
         commit('deleteAllSearchHistory')
     },
+    // 是否显示登录面板
+    changeShowLogin({ commit }, payload) {
+        commit('changeShowLogin', payload)
+    }
 }
 export default actions
