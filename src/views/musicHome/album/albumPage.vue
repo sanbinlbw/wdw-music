@@ -15,7 +15,7 @@
         @getCommentPage="getCommentPage"
       />
       <!-- 详情 -->
-      <describe v-show="activeIndex === '3'" :description="albumDetail.description"/>
+      <describe v-show="activeIndex === '3'" :description="albumDetail.description" />
     </div>
     <br /><br /><br /><br /><br /><br />
   </div>
@@ -35,7 +35,7 @@ export default {
     menuTab,
     musicList,
     comment,
-    describe
+    describe,
   },
   computed: {
     ...mapGetters([

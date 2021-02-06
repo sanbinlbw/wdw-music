@@ -12,6 +12,10 @@ import '@/plugins/filter.js'
 import '@/assets/css/global.css'
 //引入自定义图标
 import '@/assets/font_cloudMusic/iconfont.css'
+//解决跨域
+import { VueJsonp } from 'vue-jsonp'
+
+Vue.use(VueJsonp)
 Vue.prototype.$http = axios
 axios.defaults.baseURL = 'http://localhost:3000/'
     // axios.defaults.baseURL = 'https://autumnfish.cn/'

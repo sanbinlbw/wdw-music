@@ -96,9 +96,7 @@
             </div>
           </div>
         </div>
-        <loginBar
-          style="position: absolute; right: 5%; top: 20%"
-        />
+        <loginBar style="position: absolute; right: 5%; top: 20%" />
       </el-header>
       <el-container>
         <!-- 左部导航栏 -->
@@ -124,7 +122,7 @@
       <loveHeart :loveModel="loveModel" />
     </div>
     <!-- 登录页 -->
-    <login v-show="!userInfo && showLogin"/>
+    <login v-show="!userInfo && showLogin" />
   </div>
 </template>
 
@@ -185,7 +183,7 @@ export default {
       //个人信息
       "userInfo",
       //是否展示登录
-      'showLogin'
+      "showLogin",
     ]),
   },
   methods: {
@@ -311,6 +309,7 @@ export default {
   height: 400px;
   z-index: 100;
   overflow-y: overlay;
+  overflow-y: auto;
   border-radius: 2%;
   box-shadow: #f0f0f0 0px 0px 1px 1px;
   background: #fff;
