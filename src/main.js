@@ -14,6 +14,7 @@ import '@/assets/css/global.css'
 import '@/assets/font_cloudMusic/iconfont.css'
 Vue.prototype.$http = axios
 axios.defaults.baseURL = 'http://localhost:3000/'
+    // axios.defaults.baseURL = 'https://autumnfish.cn/'
     // axios.defaults.baseURL = '/api'
 axios.defaults.withCredentials = true;
 //引入vuescroll
