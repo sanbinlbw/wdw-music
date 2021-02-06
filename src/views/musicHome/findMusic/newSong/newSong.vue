@@ -85,7 +85,7 @@ export default {
             song["dt"] = song["duration"];
             delete song["duration"];
           }
-          console.log(this.newSongList);
+          // console.log(this.newSongList);
           this.$store.dispatch("changeIsLoading", false);
         });
     },
@@ -95,7 +95,7 @@ export default {
       if (!this.isNewSongList) {
         this.$store.dispatch("changeIsLoading", true);
         this.$http.get("album/newest").then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.newDiscList = res.data.albums;
           this.$store.dispatch("changeIsLoading", false);
         });

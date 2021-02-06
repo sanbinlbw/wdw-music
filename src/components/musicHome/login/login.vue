@@ -85,7 +85,7 @@ export default {
     //点击登录
     async login() {
       await this.$http.get("login/cellphone", { params: this.login_form }).then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.status !== 200) return this.$message.error("登陆失败,请检查登录信息!");
         this.$message.success("登陆成功");
         this.$store.dispatch("saveUserInfo", res.data.profile);
@@ -96,7 +96,7 @@ export default {
     //查询用户私人歌单
     getUserPrivatePlayList(userId) {
       this.$http.get("user/playlist", { params: { uid: userId } }).then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         this.$store.dispatch("savePersonalList", res.data.playlist);
       });
     },

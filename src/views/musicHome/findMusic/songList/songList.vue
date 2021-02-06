@@ -128,7 +128,7 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.playLists = res.data.playlists;
           this.count = res.data.total;
           this.$store.dispatch("changeIsLoading", false);

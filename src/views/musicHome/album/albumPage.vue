@@ -68,7 +68,7 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.albumDetail = res.data.album;
           this.songs = res.data.songs;
         });
@@ -91,7 +91,7 @@ export default {
           } else {
             this.comment.comments = res.data.comments;
           }
-          console.log(res.data);
+          // console.log(res.data);
           this.$store.dispatch("changeIsLoading", false);
         });
     },

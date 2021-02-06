@@ -75,7 +75,7 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.mvList = res.data.data;
           if (page === 0) {
             this.mvCount = res.data.count;

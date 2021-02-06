@@ -51,7 +51,7 @@ export default {
     getRankList() {
       this.$store.dispatch("changeIsLoading", true);
       this.$http.get("toplist/detail").then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         this.officialListInfo = res.data.list.slice(0, 4);
         this.artistToplistInfo = res.data.artistToplist;
         this.globalListInfo = res.data.list.slice(4);

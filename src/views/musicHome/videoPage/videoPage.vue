@@ -2,7 +2,7 @@
   <div class="videoPage">
     <div class="videoDetail">
       <p style="font-weight: 600; font-size: 20px; cursor: pointer">MV详情</p>
-      <video width="95%" controls :src="videoUrl" autoplay></video>
+      <video width="95%" height="500px" controls :src="videoUrl" autoplay></video>
       <!-- 作者信息 -->
       <div class="creator">
         <!-- 作者头像 -->
@@ -98,7 +98,11 @@
         评论({{ comment.total }})
       </p>
       <div v-loading="isLoading" element-loading-text="加载中...">
-        <comment :comment="comment" @getVideoComment="getVideoComment" :videoId="videoId"/>
+        <comment
+          :comment="comment"
+          @getVideoComment="getVideoComment"
+          :videoId="videoId"
+        />
       </div>
       <br /><br /><br /><br /><br /><br /><br />
     </div>
@@ -130,14 +134,14 @@ export default {
       this.videoId = newVal.params.id;
       if (newVal.params.id != oldVal.params.id) {
         if (isNaN(this.videoId)) {
-      this.type = "video";
-    } else {
-      this.type = "mv";
-    }
-    this.getVideoDetail();
-    this.getVideoUrl();
-    this.getSameVideo();
-    this.getVideoComment(0);
+          this.type = "video";
+        } else {
+          this.type = "mv";
+        }
+        this.getVideoDetail();
+        this.getVideoUrl();
+        this.getSameVideo();
+        this.getVideoComment(0);
       }
     },
   },

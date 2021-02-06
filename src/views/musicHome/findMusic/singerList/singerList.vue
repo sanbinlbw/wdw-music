@@ -59,7 +59,7 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.singerList = this.singerList.concat(res.data.artists);
           this.more = res.data.more;
           this.$store.dispatch("changeIsLoading", false);

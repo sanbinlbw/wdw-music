@@ -111,7 +111,7 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.artistAlbum = res.data;
           this.$store.dispatch("changeIsLoading", false);
         });
@@ -128,7 +128,7 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.artistMv = res.data.mvs;
           this.$store.dispatch("changeIsLoading", false);
         });
@@ -142,7 +142,7 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.artistDesc = res.data;
         });
     },
@@ -155,7 +155,7 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.sameArtist = res.data.artists;
         });
     },
