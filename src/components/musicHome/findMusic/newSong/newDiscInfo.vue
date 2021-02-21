@@ -15,7 +15,15 @@
             fit="fill"
             style="border-radius: 10px; box-shadow: grey 0px 0px 2px 2px"
             @click="toAlbumPage(item.id)"
-          ></el-image>
+          >
+            <div slot="placeholder" class="image-slot">
+              <img
+                src="@/assets/image/loading.svg"
+                style="width: 100%; height: 100%"
+                alt=""
+              />
+            </div>
+          </el-image>
           <!-- 鼠标停靠出现播放键 -->
           <div
             :class="{

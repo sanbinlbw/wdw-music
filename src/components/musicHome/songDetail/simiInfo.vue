@@ -11,8 +11,8 @@
         <!-- 音乐封面 -->
         <el-image
           :src="item.al.picUrl"
-          fit="fill"
-          style="width: 25%; height: 25%; cursor: pointer"
+          fit="fit"
+          style="width: 25%; cursor: pointer"
         ></el-image>
         <!-- 音乐名字 -->
         <div id="newSongIntro">

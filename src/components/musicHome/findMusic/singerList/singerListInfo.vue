@@ -15,7 +15,11 @@
             fit="fill"
             style="border-radius: 10px; height: 180px"
             @click="toArtistPage(item.id)"
-          ></el-image>
+          >
+            <div slot="placeholder" class="image-slot">
+              <i class="el-icon-loading" style="font-size: 170px"></i>
+            </div>
+          </el-image>
         </div>
         <!-- 歌单介绍 -->
         <div class="playListIntro">

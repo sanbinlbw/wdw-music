@@ -52,7 +52,8 @@
           height: 110px;
           cursor: pointer;
         "
-      ></el-image>
+      >
+      </el-image>
       <!-- 播放键 -->
       <div style="position: absolute; top: 13%; left: 125px; transform: translateX(-50%)">
         <img

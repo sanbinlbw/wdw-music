@@ -36,9 +36,9 @@ export default {
       //当前搜索历史
       "searchHistory",
       //用户信息
-      'userInfo',
+      "userInfo",
       //用户歌单
-      'personalList'
+      "personalList",
     ]),
   },
   methods: {
@@ -104,4 +104,5 @@ div::-webkit-scrollbar-thumb:hover {
 div::-webkit-scrollbar-corner {
   background: #179a16;
 }
+
 </style>

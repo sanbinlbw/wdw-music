@@ -10,7 +10,7 @@
           />
         </div>
         <div class="singel-play-img">
-          <div class="play-bar" ref="playBar">
+          <div :class="{ playBar: isPlaying, playBarReverse: !isPlaying }" ref="playBar">
             <img src="@/assets/image/player_bar.png" />
           </div>
           <div
@@ -401,15 +401,51 @@ li {
   margin-left: 35px;
   position: relative;
 }
-@-webkit-keyframes record {
-  from {
-    -webkit-transform: rotate(0deg);
-  }
+/* 拨动片 */
+.playBar {
+  position: absolute;
+  top: 0px;
+  left: 55%;
+  z-index: 10;
+  transform: rotate(-45deg);
+  animation-name: bar;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  transform-origin: 0 0;
+}
+@keyframes bar {
   to {
-    -webkit-transform: rotate(360deg);
+    transform: rotate(0deg);
   }
 }
-
+.playBarReverse {
+  position: absolute;
+  top: 0px;
+  left: 55%;
+  z-index: 10;
+  transform: rotate(0deg);
+  animation-name: rebar;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  transform-origin: 0 0;
+}
+@keyframes rebar {
+  to {
+    transform: rotate(-45deg);
+  }
+}
+/* 唱片 */
+.play-disc {
+  margin-top: 50px;
+  animation-name: record;
+  animation-duration: 20s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
 @keyframes record {
   from {
     transform: rotate(0deg);
@@ -418,18 +454,13 @@ li {
     transform: rotate(360deg);
   }
 }
-.play-bar {
-  position: absolute;
-  top: 0px;
-  left: 55%;
-  z-index: 10;
-}
-.play-disc {
-  margin-top: 50px;
-  animation-name: record;
-  animation-duration: 20s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
+@-webkit-keyframes record {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }
 .showLyric {
   width: 350px;
