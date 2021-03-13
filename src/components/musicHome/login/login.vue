@@ -85,8 +85,8 @@ export default {
     //点击登录
     async login() {
       await this.$http.get("login/cellphone", { params: this.login_form }).then((res) => {
-        // console.log(res);
-        if (res.status !== 200) return this.$message.error("登陆失败,请检查登录信息!");
+        console.log(res.data);
+        if (res.data.code !== 200) return this.$message.error("登陆失败,请检查登录信息!");
         this.$message.success("登陆成功");
         this.$store.dispatch("saveUserInfo", res.data.profile);
         this.getUserPrivatePlayList(res.data.profile.userId);

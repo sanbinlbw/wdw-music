@@ -17,7 +17,7 @@
             @click="toArtistPage(item.id)"
           >
             <div slot="placeholder" class="image-slot">
-              <i class="el-icon-loading" style="font-size: 170px"></i>
+              <i class="el-icon-loading" style="font-size: 170px; color: #d03535"></i>
             </div>
           </el-image>
         </div>
