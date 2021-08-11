@@ -17,15 +17,15 @@ import { VueJsonp } from 'vue-jsonp'
 
 Vue.use(VueJsonp)
 Vue.prototype.$http = axios
-axios.defaults.baseURL = 'http://localhost:3000/'
+    // axios.defaults.baseURL = 'http://localhost:3000/'
     // axios.defaults.baseURL = 'https://autumnfish.cn/'
     // axios.defaults.baseURL = '/api'
-    // axios.defaults.baseURL = 'http://8.129.133.120:3000/'
-axios.defaults.withCredentials = true;
-//引入vuescroll
-// import vuescroll from "vuescroll";
-//引入vuescroll样式
-// import "vuescroll/dist/vuescroll.css";
+axios.defaults.baseURL = 'http://8.129.133.120:3000/'
+    // axios.defaults.withCredentials = true;
+    //引入vuescroll
+    // import vuescroll from "vuescroll";
+    //引入vuescroll样式
+    // import "vuescroll/dist/vuescroll.css";
 
 
 // Vue.use(vuescroll); //使用
